@@ -35,7 +35,7 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 15px;
+            padding: 10px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -43,16 +43,16 @@
 
         header {
             text-align: center;
-            margin-bottom: 15px;
-            padding: 15px;
+            margin-bottom: 10px;
+            padding: 12px;
             background: rgba(13, 20, 38, 0.9);
-            border-radius: 15px;
+            border-radius: 12px;
             border: 2px solid var(--accent);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         h1 {
-            font-size: 2.2rem;
+            font-size: 2rem;
             color: var(--accent);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             margin-bottom: 5px;
@@ -60,46 +60,46 @@
         }
 
         .subtitle {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--light);
             opacity: 0.9;
         }
 
         .game-layout {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             flex: 1;
-            min-height: 500px;
+            min-height: 450px;
         }
 
         .team-sidebar {
-            flex: 0 0 220px;
+            flex: 0 0 200px;
             background: linear-gradient(135deg, rgba(253, 187, 45, 0.1), rgba(26, 42, 108, 0.2));
-            border-radius: 15px;
-            padding: 15px;
+            border-radius: 12px;
+            padding: 12px;
             border: 2px solid rgba(253, 187, 45, 0.4);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
         }
 
         .team-sidebar.active {
             background: linear-gradient(135deg, rgba(46, 204, 113, 0.3), rgba(39, 174, 96, 0.2));
             border-color: var(--success);
-            box-shadow: 0 0 25px rgba(46, 204, 113, 0.5);
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
             transform: translateY(-2px);
         }
 
         .team-name {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: var(--accent);
-            padding: 12px;
+            padding: 10px;
             background: rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
+            border-radius: 8px;
             border: 2px solid var(--accent);
         }
 
@@ -109,13 +109,13 @@
         }
 
         .score {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 800;
             text-align: center;
-            margin: 15px 0;
-            padding: 15px;
+            margin: 12px 0;
+            padding: 12px;
             background: rgba(0, 0, 0, 0.6);
-            border-radius: 10px;
+            border-radius: 8px;
             border: 2px solid var(--accent);
             position: relative;
             overflow: hidden;
@@ -130,18 +130,18 @@
             flex: 1;
             overflow-y: auto;
             background: rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
-            padding: 10px;
+            border-radius: 8px;
+            padding: 8px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .player-item {
-            padding: 10px;
-            margin: 6px 0;
+            padding: 8px;
+            margin: 5px 0;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-            border-radius: 8px;
+            border-radius: 6px;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -157,28 +157,28 @@
             display: flex;
             flex-direction: column;
             background: rgba(13, 20, 38, 0.9);
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 15px;
             border: 2px solid var(--accent);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         .timer-section {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .timer {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 800;
             color: var(--danger);
             background: rgba(0, 0, 0, 0.7);
-            padding: 15px;
-            border-radius: 15px;
+            padding: 12px;
+            border-radius: 12px;
             border: 3px solid var(--danger);
-            margin: 10px 0;
+            margin: 8px 0;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.3);
         }
 
         .word-display {
@@ -187,10 +187,10 @@
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
-            border-radius: 15px;
-            margin: 15px 0;
+            border-radius: 12px;
+            margin: 12px 0;
             border: 3px solid var(--accent);
-            min-height: 180px;
+            min-height: 150px;
             position: relative;
             overflow: hidden;
         }
@@ -212,11 +212,11 @@
         }
 
         .word {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 800;
             color: var(--accent);
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
         }
 
@@ -227,29 +227,29 @@
 
         .controls {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
-            margin-top: 15px;
+            margin-top: 12px;
             flex-wrap: wrap;
         }
 
         button {
-            padding: 12px 20px;
-            font-size: 1rem;
+            padding: 10px 16px;
+            font-size: 0.9rem;
             font-weight: 600;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            gap: 6px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
         }
 
         button:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
         }
 
         button:disabled {
@@ -281,21 +281,21 @@
         .correct-btn {
             background: linear-gradient(135deg, var(--success), #27ae60);
             color: white;
-            padding: 10px 20px;
+            padding: 8px 16px;
         }
 
         .wrong-btn {
             background: linear-gradient(135deg, var(--danger), #c0392b);
             color: white;
-            padding: 10px 20px;
+            padding: 8px 16px;
         }
 
         .answer-controls {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
-            margin-top: 15px;
+            margin-top: 12px;
             align-items: center;
         }
 
@@ -305,12 +305,12 @@
 
         .round-info {
             text-align: center;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            font-size: 1rem;
+            margin-bottom: 8px;
             color: var(--accent);
             background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 10px;
+            padding: 8px;
+            border-radius: 8px;
             border: 1px solid var(--accent);
             font-weight: 600;
         }
@@ -318,28 +318,28 @@
         .stats-container {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 15px 0;
+            gap: 15px;
+            margin: 12px 0;
             flex-wrap: wrap;
         }
 
         .stat-box {
             text-align: center;
             background: rgba(0, 0, 0, 0.4);
-            padding: 12px;
-            border-radius: 10px;
+            padding: 10px;
+            border-radius: 8px;
             border: 2px solid var(--accent);
-            min-width: 130px;
+            min-width: 120px;
         }
 
         .stat-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--light);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         .stat-value {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 800;
             color: var(--accent);
         }
@@ -356,47 +356,47 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            padding: 20px;
+            padding: 15px;
         }
 
         .results-content {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 40px;
-            border-radius: 20px;
-            border: 4px solid var(--accent);
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid var(--accent);
             text-align: center;
-            max-width: 600px;
+            max-width: 550px;
             width: 90%;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
         }
 
         .results-title {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: var(--accent);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .results-points {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 800;
             color: var(--success);
-            margin: 20px 0;
+            margin: 15px 0;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
         }
 
         .money-input {
-            margin: 30px 0;
+            margin: 25px 0;
         }
 
         .money-input input {
-            padding: 15px;
-            font-size: 1.5rem;
+            padding: 12px;
+            font-size: 1.3rem;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             text-align: center;
-            width: 250px;
+            width: 220px;
             background: rgba(255, 255, 255, 0.95);
             font-weight: 600;
             box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -410,25 +410,25 @@
         }
 
         .total-money {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--accent);
-            margin: 25px 0;
+            margin: 20px 0;
             font-weight: 700;
         }
 
         .money-calculation {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--light);
-            margin: 15px 0;
+            margin: 12px 0;
             background: rgba(0, 0, 0, 0.4);
-            padding: 15px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .setup-screen {
             text-align: center;
-            padding: 30px 15px;
+            padding: 25px 10px;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -437,19 +437,19 @@
 
         .team-setup {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             justify-content: center;
-            margin: 20px 0;
+            margin: 15px 0;
             flex-wrap: wrap;
         }
 
         .team-input {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-            padding: 25px;
-            border-radius: 15px;
+            padding: 20px;
+            border-radius: 12px;
             border: 2px solid var(--accent);
-            width: 320px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            width: 300px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease;
         }
 
@@ -459,19 +459,19 @@
 
         .team-input h3 {
             color: var(--accent);
-            margin-bottom: 20px;
-            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
             font-weight: 700;
         }
 
         input {
             width: 100%;
-            padding: 12px;
-            margin: 8px 0;
+            padding: 10px;
+            margin: 6px 0;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             background: rgba(255, 255, 255, 0.95);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
@@ -485,8 +485,8 @@
 
         .player-input {
             display: flex;
-            gap: 10px;
-            margin: 12px 0;
+            gap: 8px;
+            margin: 10px 0;
             align-items: center;
         }
 
@@ -495,13 +495,13 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -509,16 +509,16 @@
 
         .add-player-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
 
         .player-list {
-            margin-top: 15px;
-            max-height: 200px;
+            margin-top: 12px;
+            max-height: 180px;
             overflow-y: auto;
             background: rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
-            padding: 12px;
+            border-radius: 8px;
+            padding: 10px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -526,11 +526,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            margin: 6px 0;
+            padding: 8px;
+            margin: 5px 0;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-            border-radius: 8px;
-            font-size: 0.9rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
             font-weight: 500;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -546,10 +546,10 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 25px;
-            height: 25px;
+            width: 22px;
+            height: 22px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
@@ -562,13 +562,13 @@
 
         .answering-player {
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--accent);
-            margin-bottom: 8px;
-            padding: 10px;
+            margin-bottom: 6px;
+            padding: 8px;
             background: rgba(0, 0, 0, 0.4);
-            border-radius: 8px;
+            border-radius: 6px;
             border: 1px solid var(--accent);
         }
 
@@ -582,16 +582,22 @@
             animation: scoreAnimation 0.3s ease-in-out;
         }
 
+        .menu-btn {
+            background: linear-gradient(135deg, var(--info), #2980b9);
+            color: white;
+            margin-top: 15px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .game-layout {
                 flex-direction: column;
-                gap: 10px;
+                gap: 8px;
             }
             
             .team-sidebar {
                 flex: 0 0 auto;
-                min-height: 200px;
+                min-height: 180px;
             }
             
             .team-setup {
@@ -600,28 +606,28 @@
             }
             
             .word {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
             }
             
             .timer {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
             }
             
             .stats-container {
-                gap: 10px;
+                gap: 8px;
             }
             
             .stat-box {
-                min-width: 110px;
-                padding: 10px;
+                min-width: 100px;
+                padding: 8px;
             }
             
             .stat-label {
-                font-size: 0.8rem;
+                font-size: 0.75rem;
             }
             
             .stat-value {
-                font-size: 1.3rem;
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -656,7 +662,7 @@
             </div>
         </div>
         
-        <button class="start-btn" id="startGameBtn" style="padding: 15px 30px; margin: 0 auto;">
+        <button class="start-btn" id="startGameBtn" style="padding: 12px 25px; margin: 0 auto;">
             <i class="fas fa-play-circle"></i> INIZIA IL GIOCO
         </button>
     </div>
@@ -723,7 +729,7 @@
                     <div class="answering-player" id="answeringPlayer">
                         <i class="fas fa-user"></i> Risponde: Squadra A
                     </div>
-                    <div style="display: flex; gap: 15px;">
+                    <div style="display: flex; gap: 12px;">
                         <button class="correct-btn" id="correctBtn">
                             <i class="fas fa-check"></i> ESATTA
                         </button>
@@ -748,14 +754,14 @@
         <div class="results-content">
             <div class="results-title" id="resultsTitle"><i class="fas fa-trophy"></i> RISULTATI SQUADRA A</div>
             
-            <div style="font-size: 1.3rem; margin-bottom: 20px;">
+            <div style="font-size: 1.2rem; margin-bottom: 15px;">
                 Punti totalizzati in questo passo:
             </div>
             
             <div class="results-points" id="resultsPoints">0</div>
             
             <div class="money-input">
-                <div style="font-size: 1.2rem; margin-bottom: 15px;">
+                <div style="font-size: 1.1rem; margin-bottom: 12px;">
                     <i class="fas fa-money-bill-wave"></i> Soldi accumulati prima:
                 </div>
                 <input type="number" id="previousMoney" placeholder="Inserisci importo in €" value="0">
@@ -767,8 +773,12 @@
             
             <div class="total-money" id="totalMoney"><i class="fas fa-coins"></i> TOTALE: €0</div>
             
-            <button class="start-btn" id="continueBtn" style="padding: 15px 40px; font-size: 1.2rem; margin-top: 20px;">
+            <button class="start-btn" id="continueBtn" style="padding: 12px 35px; font-size: 1.1rem; margin-top: 15px;">
                 <i class="fas fa-arrow-right"></i> AVANTI
+            </button>
+            
+            <button class="menu-btn" id="menuBtn" style="padding: 10px 25px; font-size: 1rem; display: none;">
+                <i class="fas fa-home"></i> TORNA AL MENU
             </button>
         </div>
     </div>
@@ -792,6 +802,7 @@
         let puntiTotalizzati = 0;
         let isRaddoppioAttivo = false;
         let raddoppioPerParola = false;
+        let gameCompleted = false;
 
         // Database di parole - SOLO PAROLE SINGOLE
         const words = [
@@ -825,12 +836,15 @@
         const resultsTitle = document.getElementById('resultsTitle');
         const totalMoney = document.getElementById('totalMoney');
         const moneyCalculation = document.getElementById('moneyCalculation');
+        const continueBtn = document.getElementById('continueBtn');
+        const menuBtn = document.getElementById('menuBtn');
 
         // Setup giocatori
         document.getElementById('addTeamAPlayer').addEventListener('click', () => addPlayer('A'));
         document.getElementById('addTeamBPlayer').addEventListener('click', () => addPlayer('B'));
         document.getElementById('startGameBtn').addEventListener('click', startGame);
-        document.getElementById('continueBtn').addEventListener('click', continueToNext);
+        continueBtn.addEventListener('click', continueToNext);
+        menuBtn.addEventListener('click', returnToMenu);
 
         function addPlayer(team) {
             const input = document.getElementById(`team${team}PlayerInput`);
@@ -908,6 +922,7 @@
             puntiTotalizzati = 0;
             isRaddoppioAttivo = false;
             raddoppioPerParola = false;
+            gameCompleted = false;
         }
 
         function updateActiveTeam() {
@@ -1131,6 +1146,17 @@
             
             updateTotalMoney();
             
+            // Controlla se il gioco è completato (entrambe le squadre hanno finito i 3 passi)
+            if (currentTeam === 'B' && currentPasso >= totalPassi) {
+                gameCompleted = true;
+                continueBtn.style.display = 'none';
+                menuBtn.style.display = 'block';
+                resultsTitle.innerHTML = `<i class="fas fa-flag-checkered"></i> GIOCO COMPLETATO`;
+            } else {
+                continueBtn.style.display = 'block';
+                menuBtn.style.display = 'none';
+            }
+            
             gameScreen.classList.add('hidden');
             resultsScreen.classList.remove('hidden');
         }
@@ -1181,6 +1207,21 @@
             // Aggiorna il testo del pulsante start
             const teamName = currentTeam === 'A' ? document.getElementById('displayTeamA').textContent : document.getElementById('displayTeamB').textContent;
             document.getElementById('startTurnBtn').innerHTML = `<i class="fas fa-play"></i> TOCCA A ${teamName.toUpperCase()} - INIZIA`;
+        }
+
+        function returnToMenu() {
+            // Torna alla schermata iniziale
+            resultsScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+            
+            // Resetta il gioco
+            puntiA = 0;
+            puntiB = 0;
+            currentTeam = 'A';
+            currentPasso = 1;
+            passiUtilizzati = 0;
+            raddoppiUtilizzati = 0;
+            gameCompleted = false;
         }
 
         // Aggiorna totale quando cambia l'input
