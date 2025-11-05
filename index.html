@@ -290,13 +290,24 @@
             color: white;
         }
 
+        .passo.raddoppio {
+            background: var(--info);
+            color: white;
+            border: 2px solid var(--info);
+        }
+
+        .passo.raddoppio.active {
+            background: var(--info);
+            color: white;
+        }
+
         .results-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -307,47 +318,57 @@
 
         .results-content {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 30px;
+            padding: 40px;
             border-radius: 20px;
-            border: 3px solid var(--accent);
+            border: 4px solid var(--accent);
             text-align: center;
-            max-width: 500px;
+            max-width: 600px;
             width: 90%;
         }
 
         .results-title {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--accent);
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             font-weight: 700;
         }
 
         .results-points {
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: 800;
             color: var(--success);
-            margin: 15px 0;
-        }
-
-        .money-input {
             margin: 20px 0;
         }
 
+        .money-input {
+            margin: 30px 0;
+        }
+
         .money-input input {
-            padding: 12px;
-            font-size: 1.2rem;
+            padding: 15px;
+            font-size: 1.5rem;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             text-align: center;
-            width: 200px;
+            width: 250px;
             background: rgba(255, 255, 255, 0.95);
+            font-weight: 600;
         }
 
         .total-money {
-            font-size: 1.5rem;
+            font-size: 2rem;
             color: var(--accent);
+            margin: 25px 0;
+            font-weight: 700;
+        }
+
+        .money-calculation {
+            font-size: 1.2rem;
+            color: var(--light);
             margin: 15px 0;
-            font-weight: 600;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 10px;
         }
 
         .setup-screen {
@@ -492,7 +513,7 @@
     <div class="container setup-screen" id="setupScreen">
         <header>
             <h1>🎯 INTESA VINCENTE</h1>
-            <p class="subtitle">3 passi per squadra - 1 punto per parola</p>
+            <p class="subtitle">3 passi per squadra - 2 raddoppi</p>
         </header>
         
         <div class="team-setup">
@@ -533,7 +554,7 @@
             <!-- Squadra A -->
             <div class="team-sidebar" id="teamASidebar">
                 <div class="team-name" id="displayTeamA">Squadra A</div>
-                <div class="score" id="scoreA">0 Punti</div>
+                <div class="score" id="scoreA">€0</div>
                 <div class="players-list" id="teamAPlayersList"></div>
             </div>
             
@@ -543,7 +564,7 @@
                     <div class="timer" id="timer">60</div>
                     <div class="passi-container" id="passiContainer">
                         <div class="passo active" id="passo1">1</div>
-                        <div class="passo" id="passo2">2</div>
+                        <div class="passo raddoppio" id="passo2">2</div>
                         <div class="passo" id="passo3">3</div>
                     </div>
                 </div>
@@ -582,7 +603,7 @@
             <!-- Squadra B -->
             <div class="team-sidebar" id="teamBSidebar">
                 <div class="team-name" id="displayTeamB">Squadra B</div>
-                <div class="score" id="scoreB">0 Punti</div>
+                <div class="score" id="scoreB">€0</div>
                 <div class="players-list" id="teamBPlayersList"></div>
             </div>
         </div>
@@ -592,14 +613,27 @@
     <div class="results-screen hidden" id="resultsScreen">
         <div class="results-content">
             <div class="results-title" id="resultsTitle">RISULTATI SQUADRA A</div>
-            <div>Punti totalizzati in questo passo:</div>
+            
+            <div style="font-size: 1.3rem; margin-bottom: 20px;">
+                Punti totalizzati in questo passo:
+            </div>
+            
             <div class="results-points" id="resultsPoints">0</div>
+            
             <div class="money-input">
-                <div>Soldi accumulati prima:</div>
+                <div style="font-size: 1.2rem; margin-bottom: 15px;">
+                    Soldi accumulati prima:
+                </div>
                 <input type="number" id="previousMoney" placeholder="Inserisci importo in €" value="0">
             </div>
-            <div class="total-money" id="totalMoney">Totale: €0</div>
-            <button class="start-btn" id="continueBtn" style="margin-top: 20px;">
+            
+            <div class="money-calculation" id="moneyCalculation">
+                Calcolo: 0 punti × €2.000 = €0
+            </div>
+            
+            <div class="total-money" id="totalMoney">TOTALE: €0</div>
+            
+            <button class="start-btn" id="continueBtn" style="padding: 15px 40px; font-size: 1.2rem; margin-top: 20px;">
                 AVANTI
             </button>
         </div>
@@ -609,8 +643,8 @@
         // Variabili globali
         let teamAPlayers = [];
         let teamBPlayers = [];
-        let scoreA = 0;
-        let scoreB = 0;
+        let moneyA = 0;
+        let moneyB = 0;
         let currentTeam = 'A';
         let currentPasso = 1;
         let totalPassi = 3;
@@ -619,6 +653,7 @@
         let gameActive = false;
         let currentWordIndex = 0;
         let puntiTotalizzati = 0;
+        let isRaddoppio = false;
 
         // Database di parole
         const words = [
@@ -634,6 +669,11 @@
             "SMARTPHONE", "TABLET", "NOTEBOOK", "SMARTWATCH", "DRONE"
         ];
 
+        const doublePhrases = [
+            "VIGILI DEL FUOCO", "LUNA PARK", "CAPO STAZIONE", "CENTRALE OPERATIVA",
+            "PARCO NAZIONALE", "BANCA D'ITALIA", "CORPO DI BALLO", "SQUADRA SPECIALE"
+        ];
+
         // Elementi DOM
         const setupScreen = document.getElementById('setupScreen');
         const gameScreen = document.getElementById('gameScreen');
@@ -645,6 +685,7 @@
         const resultsPoints = document.getElementById('resultsPoints');
         const resultsTitle = document.getElementById('resultsTitle');
         const totalMoney = document.getElementById('totalMoney');
+        const moneyCalculation = document.getElementById('moneyCalculation');
 
         // Setup giocatori
         document.getElementById('addTeamAPlayer').addEventListener('click', () => addPlayer('A'));
@@ -720,12 +761,13 @@
         }
 
         function initGame() {
-            updateScores();
+            updateMoney();
             updateActiveTeam();
             updateRoundInfo();
             updatePassi();
             currentWordDisplay.classList.add('hidden');
             puntiTotalizzati = 0;
+            isRaddoppio = currentPasso === 2;
         }
 
         function updateActiveTeam() {
@@ -741,14 +783,15 @@
             document.getElementById('answeringPlayer').textContent = `Risponde: ${currentTeam === 'A' ? document.getElementById('displayTeamA').textContent : document.getElementById('displayTeamB').textContent}`;
         }
 
-        function updateScores() {
-            document.getElementById('scoreA').textContent = `${scoreA} Punti`;
-            document.getElementById('scoreB').textContent = `${scoreB} Punti`;
+        function updateMoney() {
+            document.getElementById('scoreA').textContent = `€${moneyA.toLocaleString()}`;
+            document.getElementById('scoreB').textContent = `€${moneyB.toLocaleString()}`;
         }
 
         function updateRoundInfo() {
             const teamName = currentTeam === 'A' ? document.getElementById('displayTeamA').textContent : document.getElementById('displayTeamB').textContent;
-            roundInfo.textContent = `${teamName} - Passo ${currentPasso} di ${totalPassi}`;
+            const raddoppioText = isRaddoppio ? " - RADDOPPIO!" : "";
+            roundInfo.textContent = `${teamName} - Passo ${currentPasso} di ${totalPassi}${raddoppioText}`;
         }
 
         function updatePassi() {
@@ -756,6 +799,11 @@
             for (let i = 1; i <= 3; i++) {
                 const passo = document.getElementById(`passo${i}`);
                 passo.classList.remove('active', 'completed');
+                
+                // Imposta il passo 2 come raddoppio
+                if (i === 2) {
+                    passo.classList.add('raddoppio');
+                }
             }
             
             // Imposta il passo corrente come attivo
@@ -768,7 +816,9 @@
         }
 
         function showNextWord() {
-            if (currentWordIndex < words.length) {
+            if (isRaddoppio && currentWordIndex < doublePhrases.length) {
+                currentWordDisplay.textContent = doublePhrases[currentWordIndex];
+            } else if (currentWordIndex < words.length) {
                 currentWordDisplay.textContent = words[currentWordIndex];
             } else {
                 currentWordDisplay.textContent = "FINE PAROLE";
@@ -795,12 +845,14 @@
             timerDisplay.textContent = timeLeft;
             currentWordIndex = 0;
             puntiTotalizzati = 0;
+            isRaddoppio = currentPasso === 2;
             
             document.getElementById('startTurnBtn').disabled = true;
             document.getElementById('stopTimerBtn').disabled = false;
             document.getElementById('nextWordBtn').disabled = false;
             document.getElementById('answerControls').classList.add('hidden');
             
+            updateRoundInfo();
             showNextWord();
             startTimer();
         }
@@ -825,16 +877,9 @@
         }
 
         function handleCorrectAnswer() {
-            puntiTotalizzati++;
+            const punti = isRaddoppio ? 2 : 1;
+            puntiTotalizzati += punti;
             
-            if (currentTeam === 'A') {
-                scoreA++;
-            } else {
-                scoreB++;
-            }
-            
-            updateScores();
-            animateScore(currentTeam);
             document.getElementById('answerControls').classList.add('hidden');
             document.getElementById('stopTimerBtn').disabled = false;
             
@@ -843,29 +888,16 @@
         }
 
         function handleWrongAnswer() {
-            if (currentTeam === 'A' && scoreA > 0) {
-                scoreA--;
-                puntiTotalizzati--;
-            } else if (currentTeam === 'B' && scoreB > 0) {
-                scoreB--;
-                puntiTotalizzati--;
+            const punti = isRaddoppio ? 2 : 1;
+            if (puntiTotalizzati >= punti) {
+                puntiTotalizzati -= punti;
             }
             
-            updateScores();
-            animateScore(currentTeam);
             document.getElementById('answerControls').classList.add('hidden');
             document.getElementById('stopTimerBtn').disabled = false;
             
             showNextWord();
             startTimer();
-        }
-
-        function animateScore(team) {
-            const scoreElement = document.getElementById(team === 'A' ? 'scoreA' : 'scoreB');
-            scoreElement.classList.add('score-animation');
-            setTimeout(() => {
-                scoreElement.classList.remove('score-animation');
-            }, 300);
         }
 
         function nextWord() {
@@ -890,7 +922,7 @@
             const teamName = currentTeam === 'A' ? document.getElementById('displayTeamA').textContent : document.getElementById('displayTeamB').textContent;
             resultsTitle.textContent = `RISULTATI ${teamName}`;
             resultsPoints.textContent = puntiTotalizzati;
-            previousMoneyInput.value = '0';
+            previousMoneyInput.value = currentTeam === 'A' ? moneyA : moneyB;
             updateTotalMoney();
             
             gameScreen.classList.add('hidden');
@@ -901,18 +933,21 @@
             const previousMoney = parseInt(previousMoneyInput.value) || 0;
             const newMoney = puntiTotalizzati * 2000;
             const total = previousMoney + newMoney;
-            totalMoney.textContent = `Totale: €${total.toLocaleString()}`;
+            
+            moneyCalculation.textContent = `Calcolo: ${puntiTotalizzati} punti × €2.000 = €${newMoney.toLocaleString()}`;
+            totalMoney.textContent = `TOTALE: €${total.toLocaleString()}`;
         }
 
         function continueToNext() {
-            // Aggiorna il punteggio con i soldi
+            // Aggiorna il denaro della squadra
             const previousMoney = parseInt(previousMoneyInput.value) || 0;
             const newMoney = puntiTotalizzati * 2000;
+            const total = previousMoney + newMoney;
             
             if (currentTeam === 'A') {
-                scoreA += newMoney / 2000; // Converti in punti per mantenere consistenza
+                moneyA = total;
             } else {
-                scoreB += newMoney / 2000;
+                moneyB = total;
             }
             
             // Passa al passo successivo o cambia squadra
@@ -922,7 +957,6 @@
                 // Cambia squadra
                 currentTeam = currentTeam === 'A' ? 'B' : 'A';
                 currentPasso = 1;
-                totalPassi = 2; // La seconda squadra ha solo 2 passi
             }
             
             // Torna alla schermata di gioco
@@ -930,10 +964,14 @@
             gameScreen.classList.remove('hidden');
             
             // Aggiorna l'interfaccia
-            updateScores();
+            updateMoney();
             updateActiveTeam();
             updateRoundInfo();
             updatePassi();
+            
+            // Aggiorna il testo del pulsante start
+            const teamName = currentTeam === 'A' ? document.getElementById('displayTeamA').textContent : document.getElementById('displayTeamB').textContent;
+            document.getElementById('startTurnBtn').innerHTML = `▶️ TOCCA A ${teamName.toUpperCase()} - INIZIA`;
         }
 
         // Aggiorna totale quando cambia l'input
