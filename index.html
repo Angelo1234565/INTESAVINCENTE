@@ -260,24 +260,94 @@
             border-radius: 10px;
         }
 
-        .points-info {
-            text-align: center;
-            font-size: 1rem;
-            color: var(--accent);
-            background: rgba(0, 0, 0, 0.5);
-            padding: 8px;
-            border-radius: 8px;
-            margin: 8px 0;
+        .passi-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
         }
 
-        .double-badge {
-            background: var(--info);
+        .passo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border: 2px solid var(--accent);
+        }
+
+        .passo.active {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        .passo.completed {
+            background: var(--success);
             color: white;
-            padding: 4px 8px;
-            border-radius: 15px;
-            font-size: 0.8rem;
+        }
+
+        .results-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .results-content {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 30px;
+            border-radius: 20px;
+            border: 3px solid var(--accent);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .results-title {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .results-points {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--success);
+            margin: 15px 0;
+        }
+
+        .money-input {
+            margin: 20px 0;
+        }
+
+        .money-input input {
+            padding: 12px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            width: 200px;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .total-money {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin: 15px 0;
             font-weight: 600;
-            margin-left: 8px;
         }
 
         .setup-screen {
@@ -422,7 +492,7 @@
     <div class="container setup-screen" id="setupScreen">
         <header>
             <h1>🎯 INTESA VINCENTE</h1>
-            <p class="subtitle">Indovina più parole possibili in 60 secondi!</p>
+            <p class="subtitle">3 passi per squadra - 1 punto per parola</p>
         </header>
         
         <div class="team-setup">
@@ -456,7 +526,7 @@
     <div class="container hidden" id="gameScreen">
         <header>
             <h1>🎯 INTESA VINCENTE</h1>
-            <div class="round-info" id="roundInfo">Turno 1 - Squadra A</div>
+            <div class="round-info" id="roundInfo">Squadra A - Passo 1 di 3</div>
         </header>
         
         <div class="game-layout">
@@ -471,9 +541,10 @@
             <div class="game-center">
                 <div class="timer-section">
                     <div class="timer" id="timer">60</div>
-                    <div class="points-info" id="pointsInfo">
-                        Punti in palio: 1 punto
-                        <span class="double-badge hidden" id="doubleBadge">RADDOPPIO!</span>
+                    <div class="passi-container" id="passiContainer">
+                        <div class="passo active" id="passo1">1</div>
+                        <div class="passo" id="passo2">2</div>
+                        <div class="passo" id="passo3">3</div>
                     </div>
                 </div>
                 
@@ -517,6 +588,23 @@
         </div>
     </div>
 
+    <!-- Schermata Risultati -->
+    <div class="results-screen hidden" id="resultsScreen">
+        <div class="results-content">
+            <div class="results-title" id="resultsTitle">RISULTATI SQUADRA A</div>
+            <div>Punti totalizzati in questo passo:</div>
+            <div class="results-points" id="resultsPoints">0</div>
+            <div class="money-input">
+                <div>Soldi accumulati prima:</div>
+                <input type="number" id="previousMoney" placeholder="Inserisci importo in €" value="0">
+            </div>
+            <div class="total-money" id="totalMoney">Totale: €0</div>
+            <button class="start-btn" id="continueBtn" style="margin-top: 20px;">
+                AVANTI
+            </button>
+        </div>
+    </div>
+
     <script>
         // Variabili globali
         let teamAPlayers = [];
@@ -524,11 +612,13 @@
         let scoreA = 0;
         let scoreB = 0;
         let currentTeam = 'A';
-        let currentTurn = 1;
+        let currentPasso = 1;
+        let totalPassi = 3;
         let timeLeft = 60;
         let timerInterval;
         let gameActive = false;
         let currentWordIndex = 0;
+        let puntiTotalizzati = 0;
 
         // Database di parole
         const words = [
@@ -544,25 +634,23 @@
             "SMARTPHONE", "TABLET", "NOTEBOOK", "SMARTWATCH", "DRONE"
         ];
 
-        const doublePhrases = [
-            "VIGILI DEL FUOCO", "LUNA PARK", "CAPO STAZIONE", "CENTRALE OPERATIVA",
-            "PARCO NAZIONALE", "BANCA D'ITALIA", "CORPO DI BALLO", "SQUADRA SPECIALE",
-            "TORRE EIFFEL", "GRANDE MELA", "OCCHIALI DA SOLE", "MACCHINA FOTOGRAFICA"
-        ];
-
         // Elementi DOM
         const setupScreen = document.getElementById('setupScreen');
         const gameScreen = document.getElementById('gameScreen');
+        const resultsScreen = document.getElementById('resultsScreen');
         const timerDisplay = document.getElementById('timer');
         const currentWordDisplay = document.getElementById('currentWord');
-        const pointsInfo = document.getElementById('pointsInfo');
         const roundInfo = document.getElementById('roundInfo');
-        const doubleBadge = document.getElementById('doubleBadge');
+        const previousMoneyInput = document.getElementById('previousMoney');
+        const resultsPoints = document.getElementById('resultsPoints');
+        const resultsTitle = document.getElementById('resultsTitle');
+        const totalMoney = document.getElementById('totalMoney');
 
         // Setup giocatori
         document.getElementById('addTeamAPlayer').addEventListener('click', () => addPlayer('A'));
         document.getElementById('addTeamBPlayer').addEventListener('click', () => addPlayer('B'));
         document.getElementById('startGameBtn').addEventListener('click', startGame);
+        document.getElementById('continueBtn').addEventListener('click', continueToNext);
 
         function addPlayer(team) {
             const input = document.getElementById(`team${team}PlayerInput`);
@@ -635,7 +723,9 @@
             updateScores();
             updateActiveTeam();
             updateRoundInfo();
+            updatePassi();
             currentWordDisplay.classList.add('hidden');
+            puntiTotalizzati = 0;
         }
 
         function updateActiveTeam() {
@@ -657,25 +747,28 @@
         }
 
         function updateRoundInfo() {
-            const isDoubleRound = currentTurn === 2 || currentTurn === 4;
             const teamName = currentTeam === 'A' ? document.getElementById('displayTeamA').textContent : document.getElementById('displayTeamB').textContent;
-            roundInfo.textContent = `Turno ${currentTurn} - ${teamName}`;
+            roundInfo.textContent = `${teamName} - Passo ${currentPasso} di ${totalPassi}`;
+        }
+
+        function updatePassi() {
+            // Reset tutti i passi
+            for (let i = 1; i <= 3; i++) {
+                const passo = document.getElementById(`passo${i}`);
+                passo.classList.remove('active', 'completed');
+            }
             
-            if (isDoubleRound) {
-                pointsInfo.innerHTML = `Punti in palio: <span style="color: var(--info); font-weight: 700;">2 punti</span>`;
-                doubleBadge.classList.remove('hidden');
-            } else {
-                pointsInfo.innerHTML = `Punti in palio: <span style="color: var(--accent); font-weight: 700;">1 punto</span>`;
-                doubleBadge.classList.add('hidden');
+            // Imposta il passo corrente come attivo
+            document.getElementById(`passo${currentPasso}`).classList.add('active');
+            
+            // Imposta i passi precedenti come completati
+            for (let i = 1; i < currentPasso; i++) {
+                document.getElementById(`passo${i}`).classList.add('completed');
             }
         }
 
         function showNextWord() {
-            const isDoubleRound = currentTurn === 2 || currentTurn === 4;
-            
-            if (isDoubleRound && currentWordIndex < doublePhrases.length) {
-                currentWordDisplay.textContent = doublePhrases[currentWordIndex];
-            } else if (currentWordIndex < words.length) {
+            if (currentWordIndex < words.length) {
                 currentWordDisplay.textContent = words[currentWordIndex];
             } else {
                 currentWordDisplay.textContent = "FINE PAROLE";
@@ -701,6 +794,7 @@
             timeLeft = 60;
             timerDisplay.textContent = timeLeft;
             currentWordIndex = 0;
+            puntiTotalizzati = 0;
             
             document.getElementById('startTurnBtn').disabled = true;
             document.getElementById('stopTimerBtn').disabled = false;
@@ -731,13 +825,12 @@
         }
 
         function handleCorrectAnswer() {
-            const isDoubleRound = currentTurn === 2 || currentTurn === 4;
-            const points = isDoubleRound ? 2 : 1;
+            puntiTotalizzati++;
             
             if (currentTeam === 'A') {
-                scoreA += points;
+                scoreA++;
             } else {
-                scoreB += points;
+                scoreB++;
             }
             
             updateScores();
@@ -750,13 +843,12 @@
         }
 
         function handleWrongAnswer() {
-            const isDoubleRound = currentTurn === 2 || currentTurn === 4;
-            const points = isDoubleRound ? 2 : 1;
-            
-            if (currentTeam === 'A' && scoreA >= points) {
-                scoreA -= points;
-            } else if (currentTeam === 'B' && scoreB >= points) {
-                scoreB -= points;
+            if (currentTeam === 'A' && scoreA > 0) {
+                scoreA--;
+                puntiTotalizzati--;
+            } else if (currentTeam === 'B' && scoreB > 0) {
+                scoreB--;
+                puntiTotalizzati--;
             }
             
             updateScores();
@@ -790,17 +882,62 @@
             document.getElementById('answerControls').classList.add('hidden');
             currentWordDisplay.classList.add('hidden');
             
-            // Cambia squadra
-            currentTeam = currentTeam === 'A' ? 'B' : 'A';
-            currentTurn++;
+            // Mostra schermata risultati
+            showResults();
+        }
+
+        function showResults() {
+            const teamName = currentTeam === 'A' ? document.getElementById('displayTeamA').textContent : document.getElementById('displayTeamB').textContent;
+            resultsTitle.textContent = `RISULTATI ${teamName}`;
+            resultsPoints.textContent = puntiTotalizzati;
+            previousMoneyInput.value = '0';
+            updateTotalMoney();
             
-            if (currentTurn > 5) {
-                currentTurn = 1;
+            gameScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        }
+
+        function updateTotalMoney() {
+            const previousMoney = parseInt(previousMoneyInput.value) || 0;
+            const newMoney = puntiTotalizzati * 2000;
+            const total = previousMoney + newMoney;
+            totalMoney.textContent = `Totale: €${total.toLocaleString()}`;
+        }
+
+        function continueToNext() {
+            // Aggiorna il punteggio con i soldi
+            const previousMoney = parseInt(previousMoneyInput.value) || 0;
+            const newMoney = puntiTotalizzati * 2000;
+            
+            if (currentTeam === 'A') {
+                scoreA += newMoney / 2000; // Converti in punti per mantenere consistenza
+            } else {
+                scoreB += newMoney / 2000;
             }
             
+            // Passa al passo successivo o cambia squadra
+            currentPasso++;
+            
+            if (currentPasso > totalPassi) {
+                // Cambia squadra
+                currentTeam = currentTeam === 'A' ? 'B' : 'A';
+                currentPasso = 1;
+                totalPassi = 2; // La seconda squadra ha solo 2 passi
+            }
+            
+            // Torna alla schermata di gioco
+            resultsScreen.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
+            
+            // Aggiorna l'interfaccia
+            updateScores();
             updateActiveTeam();
             updateRoundInfo();
+            updatePassi();
         }
+
+        // Aggiorna totale quando cambia l'input
+        previousMoneyInput.addEventListener('input', updateTotalMoney);
 
         // Inizializzazione
         window.addEventListener('load', () => {
