@@ -253,17 +253,6 @@
         .hidden {
             display: none !important;
         }
-        .round-info {
-            text-align: center;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            color: var(--primary);
-            background: #f0f0f0;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            font-weight: 600;
-        }
         .stats-container {
             display: flex;
             justify-content: center;
@@ -696,7 +685,7 @@
     <div class="container setup-screen" id="setupScreen">
         <header>
             <h1>🎯 INTESA VINCENTE</h1>
-            <p class="subtitle">3 passi per squadra - 2 raddoppi. Inizia sempre Squadra A.</p>
+            <p class="subtitle">60 secondi per squadra. Inizia sempre Squadra A.</p>
         </header>
       
         <div class="team-setup">
@@ -708,12 +697,6 @@
                     <button class="add-player-btn" id="addTeamAPlayer"><i class="fas fa-plus"></i></button>
                 </div>
                 <div class="player-list" id="teamAPlayerList"></div>
-                <div class="money-input">
-                    <div style="font-size: 1rem; margin-top: 10px;">
-                        <i class="fas fa-money-bill-wave"></i> Soldi iniziali Squadra A (€):
-                    </div>
-                    <input type="number" id="teamAMoney" placeholder="Inserisci importo in €" value="0">
-                </div>
             </div>
           
             <div class="team-input">
@@ -724,12 +707,6 @@
                     <button class="add-player-btn" id="addTeamBPlayer"><i class="fas fa-plus"></i></button>
                 </div>
                 <div class="player-list" id="teamBPlayerList"></div>
-                <div class="money-input">
-                    <div style="font-size: 1rem; margin-top: 10px;">
-                        <i class="fas fa-money-bill-wave"></i> Soldi iniziali Squadra B (€):
-                    </div>
-                    <input type="number" id="teamBMoney" placeholder="Inserisci importo in €" value="0">
-                </div>
             </div>
         </div>
       
@@ -741,7 +718,6 @@
     <div class="container hidden" id="gameScreen">
         <header>
             <h1>🎯 INTESA VINCENTE</h1>
-            <!-- Rimosso il round-info dall'header -->
         </header>
       
         <div class="game-layout">
@@ -749,7 +725,6 @@
             <div class="team-sidebar" id="teamASidebar">
                 <div class="team-name" id="displayTeamA"><i class="fas fa-users"></i> Squadra A</div>
                 <div class="score" id="scoreA">0 Punti</div>
-                <div class="money" id="moneyA">€0</div>
                 <div class="players-list" id="teamAPlayersList"></div>
             </div>
           
@@ -759,24 +734,6 @@
                     <div class="timer" id="timer">
                         <span>60</span>
                         <span class="seconds-label">SECONDI</span>
-                    </div>
-                    <div class="stats-container" id="statsContainer">
-                        <div class="stat-box">
-                            <div class="stat-label">PASSI UTILIZZATI</div>
-                            <div class="stat-value" id="passiUtilizzati">0</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">PASSI RESTANTI</div>
-                            <div class="stat-value" id="passiRestanti">3</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">RADDOPPI UTILIZZATI</div>
-                            <div class="stat-value" id="raddoppiUtilizzati">0</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">RADDOPPI RESTANTI</div>
-                            <div class="stat-value" id="raddoppiRestanti">2</div>
-                        </div>
                     </div>
                 </div>
               
@@ -818,35 +775,8 @@
             <div class="team-sidebar" id="teamBSidebar">
                 <div class="team-name" id="displayTeamB"><i class="fas fa-users"></i> Squadra B</div>
                 <div class="score" id="scoreB">0 Punti</div>
-                <div class="money" id="moneyB">€0</div>
                 <div class="players-list" id="teamBPlayersList"></div>
             </div>
-        </div>
-    </div>
-    <!-- Schermata Risultati -->
-    <div class="results-screen hidden" id="resultsScreen">
-        <div class="results-content">
-            <div class="results-title" id="resultsTitle"><i class="fas fa-trophy"></i> RISULTATI SQUADRA A</div>
-          
-            <div style="font-size: 1.3rem; margin-bottom: 20px;">
-                Punti totalizzati in questo passo:
-            </div>
-          
-            <div class="results-points" id="resultsPoints">0</div>
-          
-            <div class="money-calculation" id="moneyCalculation">
-                <i class="fas fa-calculator"></i> Calcolo: 0 punti × €2.000 = €0
-            </div>
-          
-            <div class="total-money" id="totalMoney"><i class="fas fa-coins"></i> TOTALE: €0</div>
-          
-            <button class="start-btn" id="continueBtn" style="padding: 15px 40px; font-size: 1.2rem; margin-top: 20px;">
-                <i class="fas fa-arrow-right"></i> AVANTI
-            </button>
-          
-            <button class="menu-btn" id="menuBtn" style="padding: 12px 30px; font-size: 1.1rem; display: none;">
-                <i class="fas fa-trophy"></i> VAI AL GIOCO FINALE
-            </button>
         </div>
     </div>
     
@@ -911,18 +841,7 @@
         let teamBPlayers = [];
         let puntiA = 0;
         let puntiB = 0;
-        let teamAMoney = 0;
-        let teamBMoney = 0;
         let currentTeam = 'A';
-        let teamA_completedRounds = 0;
-        let teamB_completedRounds = 0;
-        let totalPassi = 3;
-        let teamA_passiUtilizzati = 0;
-        let teamB_passiUtilizzati = 0;
-        let teamA_raddoppiUtilizzati = 0;
-        let teamB_raddoppiUtilizzati = 0;
-        let maxPassi = 3;
-        let maxRaddoppi = 2;
         let timeLeft = 60;
         let timerInterval;
         let gameActive = false;
@@ -931,7 +850,6 @@
         let puntiTotalizzati = 0;
         let isRaddoppioAttivo = false;
         let raddoppioPerParola = false;
-        let gameCompleted = false;
         let availableWords = [];
         let availableDoubleWords = [];
         
@@ -939,7 +857,7 @@
         let finalGameActive = false;
         let finalChainWords = [];
         let finalHiddenWords = [];
-        let finalCurrentWordIndex = 1; // Inizia dalla seconda parola (posizione 2)
+        let finalCurrentWordIndex = 1;
         let finalPrizePercentage = 100;
         let finalJollyCount = 2;
         let finalCurrentPlayerIndex = 0;
@@ -949,78 +867,23 @@
         let winningTeam = '';
         let winningTeamPlayers = [];
         
-        // Database di parole - PAROLE SINGOLE (espanso per maggiore varietà)
+        // Database di parole
         const words = [
             "LAMPADINA", "TRENO", "PIZZA", "CANE", "OMBRELLO",
             "SOLDATO", "MARE", "COMPUTER", "DOTTORE", "LUNA",
             "MARTELLO", "CHITARRA", "SCUOLA", "BAMBINO", "CAFFÈ",
-            "AEREO", "SCARPE", "GIARDINO", "LEONE", "TAVOLO",
-            "GELATO", "TELEFONO", "OROLOGIO", "NUVOLA", "BIBLIOTECA",
-            "CAVALLO", "SCIMMIA", "SPAZZOLINO", "FORNO", "CALCIO",
-            "SPIAGGIA", "MURO", "ALBERO", "SALE", "PESCE",
-            "BICICLETTA", "PANTALONI", "DINOSAURO", "PALESTRA", "RAGNO",
-            "DENTISTA", "FINESTRA", "FIUME", "LAMPIONE", "ZAINO",
-            "CUSCINO", "VENTO", "PORTA", "SEDIA", "TOPO",
-            "CHIESA", "SABBIA", "SPECCHIO", "FIORE", "TIGRE",
-            "CAMINO", "LATTE", "OCCHIALI", "SASSO", "VULCANO",
-            "COCOMERO", "BOTTIGLIA", "CHIODO", "NEVE", "PIANOFORTE",
-            "TELEVISORE", "LIBRO", "FARFALLA", "CANDELA", "CAVOLFIORE",
-            "SCOPA", "TARTARUGA", "CIELO", "TRAMONTO", "PIPISTRELLO",
-            "ZEBRA", "MACCHINA", "TAPPETO", "ZUCCHERO", "ARANCIA",
-            "BICCHIERE", "SCARAFAGGIO", "APE", "MONTE", "RISTORANTE",
-            "CAROTA", "TENDA", "SQUALO", "BANDIERA", "CORDA",
-            "CIGNO", "VALIGIA", "TESCHIO", "MEDAGLIA", "PIUMA",
-            "TORRE", "SERPENTE", "FERRO", "CUORE", "CARTA",
-            "FUNGO", "QUADERNO", "PENNA", "MATITA", "GOMMA",
-            "RIGHELLO", "COMPASSO", "ZUCCA", "MELONE", "PERA",
-            "BANANA", "KIWI", "LIMONE", "MELA", "PESCA",
-            "ALBICOCCA", "CILIEGIA", "FRAGOLA", "LAMPO", "TUONO",
-            "PIOGGIA", "SOLE", "STELLA", "STELLA", "PIANETA", "GALASSIA"
+            "AEREO", "SCARPE", "GIARDINO", "LEONE", "TAVOLO"
         ];
-        // Database di frasi doppie per i raddoppi (espanso)
+
         const doublePhrases = [
             "CAVALLO MARINO", "CARTA IGIENICA", "TELEFONO FISSO", "ACQUA CALDA",
-            "LETTO MATRIMONIALE", "OCCHIALI DA SOLE", "PORTA FINESTRA", "SPAZZOLINO DENTI",
-            "ASCIUGA CAPELLI", "FRIGO BAR", "TRENO MERCI", "MACCHINA FOTOGRAFICA",
-            "TAVOLO PRANZO", "BORSA TERMICA", "GIACCA VENTO", "AEREO LINEA",
-            "CANE CACCIA", "PESCE SPADA", "POMODORO SECCO", "CAPPELLO SOLE",
-            "FINESTRA APERTA", "SCATOLA NERA", "PUNTO LUCE", "OROLOGIO POLSO",
-            "SCARPE GINNASTICA", "ZAINO MONTAGNA", "LETTERA AMORE", "SEDIA PIEGHEVOLE",
-            "LAGO ARTIFICIALE", "MARE APERTO", "MANO DESTRA", "PIANETA TERRA",
-            "LAMPADA TAVOLO", "PIUMONE MATRIMONIALE", "FERRO STIRO", "TORTA CIOCCOLATO",
-            "MELA VERDE", "CANE LUPO", "FIUME PO", "SALE GROSSO",
-            "PEPE NERO", "CARTA PARATI", "CALCIO ANGOLO", "BANDIERA ITALIANA",
-            "SCARPA SINISTRA", "PIANO BAR", "LIBRO GIALLO", "BICCHIERE VINO",
-            "TENDA CAMPEGGIO", "FINESTRA CHIUSA", "MACCHINA SCRIVERE", "RADIO PORTATILE",
-            "FILO SPINATO", "CACCIAVITE CROCE", "CAPPOTTO LUNGO", "BUSTA PAGA",
-            "TRENO ALTA", "AEREO CACCIA", "VINO ROSSO", "BIRRA ARTIGIANALE",
-            "ACQUA MINERALE", "PANE INTEGRALE", "OLIO OLIVA", "ZUCCHERO VELO",
-            "CAFFÈ MACCHIATO", "LATTE CALDO", "UOVO SODO", "FORMAGGIO STAGIONATO",
-            "CAVOLO CAPPUCCIO", "PATATA FRITTA", "PESCE ROSSO", "LAMPIONE STRADA",
-            "SCUOLA ELEMENTARE", "CASA EDITRICE", "CINEMA APERTO", "TEATRO COMUNALE",
-            "CENTRO COMMERCIALE", "CAMPO CALCIO", "STADIO OLIMPICO", "AUTO EPOCA",
-            "CAMICIA BIANCA", "PANTALONE CORTO", "GONNA LUNGA", "SCARPA TACCO",
-            "ZAINO SCOLASTICO", "PORTAFOGLIO VUOTO", "SPECCHIO RETROVISORE", "CHIAVE INGLESE",
-            "TAPPETO ROSSO", "DIVANO LETTO", "CUSCINO DECORATIVO", "QUADRO MODERNO",
-            "CORNICE DORATA", "LIBRERIA MURO", "TELEFONO CELLULARE", "COMPUTER PORTATILE",
-            "MOUSE WIRELESS", "STAMPANTE LASER", "BOTTIGLIA ACQUA", "BIGLIETTO VISITA",
-            "PORTA CHIAVI", "PORTA USB", "CAVO ELETTRICO", "BATTERIA AUTO",
-            "RUOTA BICICLETTA", "VOLANTE MACCHINA", "FRENO MANO", "CAMBIO MARCIA",
-            "SEDILE PASSEGGERO", "CRUSCOTTO AUTO"
+            "LETTO MATRIMONIALE", "OCCHIALI DA SOLE", "PORTA FINESTRA", "SPAZZOLINO DENTI"
         ];
         
         // Catene per il gioco finale
         const finalChains = [
             {
                 words: ["SOLE", "CALDO", "ESTATE", "VACANZA", "SPIAGGIA", "MARE", "ONDA", "SURF", "SPORT", "COMPETIZIONE", "VINCITORE", "PREMIO", "FELICITÀ"],
-                hiddenWords: [1, 3, 5, 7, 9, 11] // Indici delle parole nascoste (posizioni pari)
-            },
-            {
-                words: ["LIBRO", "PAGINA", "LETTURA", "CONOSCENZA", "UNIVERSITÀ", "LAUREA", "CERIMONIA", "FESTA", "AMICI", "ALLEGRIA", "RICORDO", "FOTOGRAFIA", "IMMAGINE"],
-                hiddenWords: [1, 3, 5, 7, 9, 11]
-            },
-            {
-                words: ["NOTTE", "STELLA", "CIELO", "LUNA", "MARE", "NAVIGAZIONE", "VIAGGIO", "AVVENTURA", "SCOPERTA", "TESORO", "RICCHEZZA", "FELICITÀ", "SUCCESSO"],
                 hiddenWords: [1, 3, 5, 7, 9, 11]
             }
         ];
@@ -1028,16 +891,9 @@
         // Elementi DOM
         const setupScreen = document.getElementById('setupScreen');
         const gameScreen = document.getElementById('gameScreen');
-        const resultsScreen = document.getElementById('resultsScreen');
         const finalGameScreen = document.getElementById('finalGameScreen');
         const timerDisplay = document.getElementById('timer');
         const currentWordDisplay = document.getElementById('currentWord');
-        const resultsPoints = document.getElementById('resultsPoints');
-        const resultsTitle = document.getElementById('resultsTitle');
-        const totalMoney = document.getElementById('totalMoney');
-        const moneyCalculation = document.getElementById('moneyCalculation');
-        const continueBtn = document.getElementById('continueBtn');
-        const menuBtn = document.getElementById('menuBtn');
         
         // Elementi DOM per il gioco finale
         const winningTeamName = document.getElementById('winningTeamName');
@@ -1056,8 +912,6 @@
         document.getElementById('addTeamAPlayer').addEventListener('click', () => addPlayer('A'));
         document.getElementById('addTeamBPlayer').addEventListener('click', () => addPlayer('B'));
         document.getElementById('startGameBtn').addEventListener('click', startGame);
-        continueBtn.addEventListener('click', continueToNext);
-        menuBtn.addEventListener('click', startFinalGameScreen);
         
         // Event listeners per il gioco finale
         finalStartBtn.addEventListener('click', startFinalGame);
@@ -1105,10 +959,6 @@
             document.getElementById('displayTeamA').textContent = document.getElementById('teamAName').value;
             document.getElementById('displayTeamB').textContent = document.getElementById('teamBName').value;
           
-            // Salva soldi iniziali
-            teamAMoney = parseInt(document.getElementById('teamAMoney').value) || 0;
-            teamBMoney = parseInt(document.getElementById('teamBMoney').value) || 0;
-          
             // Aggiorna liste giocatori
             updatePlayersInSidebars();
           
@@ -1137,24 +987,15 @@
         }
         
         function initGame() {
-            // Mescola le parole una volta sola all'inizio del gioco
+            // Mescola le parole
             shuffleWords();
           
             updatePunti();
-            updateMoney();
             updateActiveTeam();
-            updateStats();
             currentWordDisplay.classList.add('hidden');
             puntiTotalizzati = 0;
             isRaddoppioAttivo = false;
             raddoppioPerParola = false;
-            gameCompleted = false;
-            teamA_completedRounds = 0;
-            teamB_completedRounds = 0;
-            teamA_passiUtilizzati = 0;
-            teamB_passiUtilizzati = 0;
-            teamA_raddoppiUtilizzati = 0;
-            teamB_raddoppiUtilizzati = 0;
             normalWordIndex = 0;
             doubleWordIndex = 0;
         }
@@ -1191,20 +1032,6 @@
         function updatePunti() {
             document.getElementById('scoreA').textContent = `${puntiA} Punti`;
             document.getElementById('scoreB').textContent = `${puntiB} Punti`;
-        }
-        
-        function updateMoney() {
-            document.getElementById('moneyA').textContent = `€${teamAMoney.toLocaleString()}`;
-            document.getElementById('moneyB').textContent = `€${teamBMoney.toLocaleString()}`;
-        }
-        
-        function updateStats() {
-            const passiUtilizzati = currentTeam === 'A' ? teamA_passiUtilizzati : teamB_passiUtilizzati;
-            const raddoppiUtilizzati = currentTeam === 'A' ? teamA_raddoppiUtilizzati : teamB_raddoppiUtilizzati;
-            document.getElementById('passiUtilizzati').textContent = passiUtilizzati;
-            document.getElementById('passiRestanti').textContent = Math.max(0, maxPassi - passiUtilizzati);
-            document.getElementById('raddoppiUtilizzati').textContent = raddoppiUtilizzati;
-            document.getElementById('raddoppiRestanti').textContent = Math.max(0, maxRaddoppi - raddoppiUtilizzati);
         }
         
         function showNextWord() {
@@ -1279,39 +1106,19 @@
         }
         
         function attivaRaddoppio() {
-            const raddoppiUtilizzati = currentTeam === 'A' ? teamA_raddoppiUtilizzati : teamB_raddoppiUtilizzati;
-            if (!gameActive || isRaddoppioAttivo || raddoppiUtilizzati >= maxRaddoppi) return;
+            if (!gameActive || isRaddoppioAttivo) return;
           
             isRaddoppioAttivo = true;
             raddoppioPerParola = true;
-            if (currentTeam === 'A') {
-                teamA_raddoppiUtilizzati++;
-            } else {
-                teamB_raddoppiUtilizzati++;
-            }
             document.getElementById('raddoppioBtn').disabled = true;
             document.getElementById('raddoppioBtn').innerHTML = '<i class="fas fa-bolt"></i> RADDOPPIO ATTIVO';
-            updateStats();
           
             // Mostra subito una parola doppia
             showNextWord();
         }
         
         function usaPasso() {
-            const passiUtilizzati = currentTeam === 'A' ? teamA_passiUtilizzati : teamB_passiUtilizzati;
-            if (!gameActive || passiUtilizzati >= maxPassi) return;
-          
-            if (currentTeam === 'A') {
-                teamA_passiUtilizzati++;
-            } else {
-                teamB_passiUtilizzati++;
-            }
-            updateStats();
-          
-            // Se abbiamo usato tutti i passi, disabilita il pulsante
-            if ((currentTeam === 'A' ? teamA_passiUtilizzati : teamB_passiUtilizzati) >= maxPassi) {
-                document.getElementById('passoBtn').disabled = true;
-            }
+            if (!gameActive) return;
           
             // Passa alla parola successiva
             showNextWord();
@@ -1384,50 +1191,17 @@
             document.getElementById('answerControls').classList.add('hidden');
             currentWordDisplay.classList.add('hidden');
           
-            // Incrementa i round completati per la squadra corrente
+            // Controlla se entrambe le squadre hanno giocato
             if (currentTeam === 'A') {
-                teamA_completedRounds++;
+                // Squadra A ha finito, passa a Squadra B
+                currentTeam = 'B';
+                updateActiveTeam();
+                document.getElementById('startTurnBtn').innerHTML = `<i class="fas fa-play"></i> TOCCA A ${document.getElementById('displayTeamB').textContent.toUpperCase()} - INIZIA`;
             } else {
-                teamB_completedRounds++;
-            }
-          
-            // Mostra schermata risultati
-            showResults();
-        }
-        
-        function showResults() {
-            const teamName = currentTeam === 'A' ? document.getElementById('displayTeamA').textContent : document.getElementById('displayTeamB').textContent;
-            resultsTitle.textContent = `RISULTATI ${teamName}`;
-            resultsPoints.textContent = puntiTotalizzati;
-          
-            // Calcola i soldi precedenti in base ai punti
-            const previousMoney = currentTeam === 'A' ? teamAMoney : teamBMoney;
-            const newMoney = puntiTotalizzati * 2000;
-            const total = previousMoney + newMoney;
-          
-            moneyCalculation.textContent = `Calcolo: ${puntiTotalizzati} punti × €2.000 = €${newMoney.toLocaleString()}`;
-            totalMoney.textContent = `TOTALE: €${total.toLocaleString()}`;
-          
-            // Controlla se il gioco è completato
-            gameCompleted = (teamA_completedRounds === 3 && teamB_completedRounds === 3);
-            if (gameCompleted) {
-                continueBtn.style.display = 'none';
-                menuBtn.style.display = 'block';
-                resultsTitle.innerHTML = `<i class="fas fa-flag-checkered"></i> GIOCO COMPLETATO`;
-                
-                // Determina la squadra vincente
+                // Entrambe le squadre hanno giocato, determina la vincitrice
                 determineWinningTeam();
-                
-                // Cambia il testo del pulsante per andare al gioco finale
-                menuBtn.innerHTML = `<i class="fas fa-trophy"></i> VAI AL GIOCO FINALE`;
-                menuBtn.onclick = startFinalGameScreen;
-            } else {
-                continueBtn.style.display = 'block';
-                menuBtn.style.display = 'none';
+                startFinalGameScreen();
             }
-          
-            gameScreen.classList.add('hidden');
-            resultsScreen.classList.remove('hidden');
         }
         
         function determineWinningTeam() {
@@ -1439,23 +1213,14 @@
                 winningTeam = 'B';
                 winningTeamPlayers = teamBPlayers;
             } else {
-                // In caso di pareggio, la squadra con più soldi vince
-                if (teamAMoney > teamBMoney) {
-                    winningTeam = 'A';
-                    winningTeamPlayers = teamAPlayers;
-                } else if (teamBMoney > teamAMoney) {
-                    winningTeam = 'B';
-                    winningTeamPlayers = teamBPlayers;
-                } else {
-                    // In caso di ulteriore pareggio, scegli a caso
-                    winningTeam = Math.random() < 0.5 ? 'A' : 'B';
-                    winningTeamPlayers = winningTeam === 'A' ? teamAPlayers : teamBPlayers;
-                }
+                // In caso di pareggio, scegli a caso
+                winningTeam = Math.random() < 0.5 ? 'A' : 'B';
+                winningTeamPlayers = winningTeam === 'A' ? teamAPlayers : teamBPlayers;
             }
         }
         
         function startFinalGameScreen() {
-            resultsScreen.classList.add('hidden');
+            gameScreen.classList.add('hidden');
             finalGameScreen.classList.remove('hidden');
             
             // Inizializza il gioco finale
@@ -1472,7 +1237,7 @@
             finalHiddenWords = selectedChain.hiddenWords;
             
             // Inizializza le variabili di gioco
-            finalCurrentWordIndex = 1; // Inizia dalla seconda parola (posizione 2)
+            finalCurrentWordIndex = 1;
             finalPrizePercentage = 100;
             finalJollyCount = 2;
             finalCurrentPlayerIndex = 0;
@@ -1480,7 +1245,7 @@
             
             // Inizializza le lettere rivelate per ogni parola nascosta
             for (let i = 0; i < finalHiddenWords.length; i++) {
-                finalRevealedLetters[i] = [0]; // Solo la prima lettera inizialmente
+                finalRevealedLetters[i] = [0];
             }
             
             // Aggiorna l'interfaccia
@@ -1526,7 +1291,6 @@
                 
                 // Controlla se questa è una parola nascosta
                 if (finalHiddenWords.includes(i)) {
-                    // È una parola nascosta
                     const hiddenWordIndex = finalHiddenWords.indexOf(i);
                     
                     if (hiddenWordIndex === finalCurrentWordIndex - 1) {
@@ -1761,43 +1525,7 @@
             // Reset di tutte le variabili del gioco
             puntiA = 0;
             puntiB = 0;
-            teamAMoney = 0;
-            teamBMoney = 0;
             currentTeam = 'A';
-            teamA_completedRounds = 0;
-            teamB_completedRounds = 0;
-            teamA_passiUtilizzati = 0;
-            teamB_passiUtilizzati = 0;
-            teamA_raddoppiUtilizzati = 0;
-            teamB_raddoppiUtilizzati = 0;
-            gameCompleted = false;
-        }
-        
-        function continueToNext() {
-            // Aggiorna i soldi della squadra
-            const newMoney = puntiTotalizzati * 2000;
-            if (currentTeam === 'A') {
-                teamAMoney += newMoney;
-            } else {
-                teamBMoney += newMoney;
-            }
-          
-            // Cambia squadra
-            currentTeam = currentTeam === 'A' ? 'B' : 'A';
-          
-            // Torna alla schermata di gioco
-            resultsScreen.classList.add('hidden');
-            gameScreen.classList.remove('hidden');
-          
-            // Aggiorna l'interfaccia
-            updatePunti();
-            updateMoney();
-            updateActiveTeam();
-            updateStats();
-          
-            // Aggiorna il testo del pulsante start
-            const teamName = currentTeam === 'A' ? document.getElementById('displayTeamA').textContent : document.getElementById('displayTeamB').textContent;
-            document.getElementById('startTurnBtn').innerHTML = `<i class="fas fa-play"></i> TOCCA A ${teamName.toUpperCase()} - INIZIA`;
         }
         
         // Inizializzazione
