@@ -477,6 +477,166 @@
             color: white;
             margin-top: 15px;
         }
+        
+        /* Stili per il gioco finale */
+        .final-game-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+            color: white;
+        }
+        .final-game-content {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 16px;
+            border: 2px solid rgba(253, 187, 45, 0.3);
+            text-align: center;
+            max-width: 800px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+        }
+        .final-game-title {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 30px;
+            font-weight: 800;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+        }
+        .final-game-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: white;
+        }
+        .final-game-info {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .chain-display {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 30px 0;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .chain-word {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .chain-word.revealed {
+            background: linear-gradient(135deg, rgba(253, 187, 45, 0.4), rgba(253, 187, 45, 0.2));
+            border-left: 4px solid var(--accent);
+            transform: translateX(4px);
+        }
+        .chain-word.hidden {
+            background: linear-gradient(135deg, rgba(178, 31, 31, 0.3), rgba(178, 31, 31, 0.2));
+            border-left: 4px solid var(--secondary);
+            color: transparent;
+        }
+        .chain-word.partial {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.3), rgba(41, 128, 185, 0.2));
+            border-left: 4px solid var(--info);
+        }
+        .final-game-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .final-game-btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .final-start-btn {
+            background: linear-gradient(135deg, var(--success), #27ae60);
+            color: white;
+        }
+        .final-jolly-btn {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+        }
+        .final-answer-btn {
+            background: linear-gradient(135deg, var(--info), #2980b9);
+            color: white;
+        }
+        .final-next-btn {
+            background: linear-gradient(135deg, var(--accent), #f39c12);
+            color: var(--dark);
+        }
+        .final-game-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .final-game-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .prize-display {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(46, 204, 113, 0.3);
+            border-radius: 12px;
+            border: 2px solid var(--success);
+        }
+        .player-turn {
+            font-size: 1.3rem;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .final-timer {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(231, 76, 60, 0.3);
+            border-radius: 12px;
+            border: 2px solid var(--danger);
+        }
+        .letter-reveal {
+            font-size: 1.8rem;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(52, 152, 219, 0.3);
+            border-radius: 10px;
+            border: 1px solid var(--info);
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .game-layout {
@@ -513,6 +673,20 @@
             }
             .stat-value {
                 font-size: 1.3rem;
+            }
+            .final-game-title {
+                font-size: 2rem;
+            }
+            .final-game-subtitle {
+                font-size: 1.2rem;
+            }
+            .chain-word {
+                font-size: 1.2rem;
+                padding: 12px;
+            }
+            .final-game-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
             }
         }
     </style>
@@ -675,6 +849,62 @@
             </button>
         </div>
     </div>
+    
+    <!-- Schermata Gioco Finale -->
+    <div class="final-game-screen hidden" id="finalGameScreen">
+        <div class="final-game-content">
+            <div class="final-game-title">
+                <i class="fas fa-trophy"></i> REAZIONE A CATENA
+            </div>
+            
+            <div class="final-game-subtitle">
+                La squadra <span id="winningTeamName">VINCITRICE</span> accede al gioco finale!
+            </div>
+            
+            <div class="final-game-info">
+                <p><strong>Regole del gioco:</strong></p>
+                <p>La catena è composta da 13 parole. Sono visibili le parole in posizione dispari (1ª, 3ª, 5ª, ...).</p>
+                <p>Dovete indovinare le 6 parole nascoste in posizione pari (2ª, 4ª, 6ª, ...).</p>
+                <p>Ogni errore dimezza il montepremi. Avete 2 jolly a disposizione.</p>
+            </div>
+            
+            <div class="prize-display" id="finalPrizeDisplay">
+                Montepremi attuale: <span id="currentPrize">100</span>%
+            </div>
+            
+            <div class="player-turn" id="playerTurnDisplay">
+                Turno di: <span id="currentPlayer">Giocatore 1</span>
+            </div>
+            
+            <div class="chain-display" id="chainDisplay">
+                <!-- Le parole della catena verranno inserite qui dinamicamente -->
+            </div>
+            
+            <div class="letter-reveal" id="letterRevealDisplay">
+                Lettere rivelate: <span id="revealedLetters">X</span>
+            </div>
+            
+            <div class="final-timer" id="finalTimer">
+                20
+            </div>
+            
+            <div class="final-game-controls">
+                <button class="final-start-btn" id="finalStartBtn">
+                    <i class="fas fa-play"></i> INIZIA
+                </button>
+                <button class="final-jolly-btn" id="finalJollyBtn" disabled>
+                    <i class="fas fa-star"></i> USA JOLLY (<span id="jollyCount">2</span>)
+                </button>
+                <button class="final-answer-btn" id="finalAnswerBtn" disabled>
+                    <i class="fas fa-bullhorn"></i> RISPOSTA
+                </button>
+                <button class="final-next-btn" id="finalNextBtn" disabled>
+                    <i class="fas fa-forward"></i> PROSSIMA
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Variabili globali
         let teamAPlayers = [];
@@ -704,6 +934,21 @@
         let gameCompleted = false;
         let availableWords = [];
         let availableDoubleWords = [];
+        
+        // Variabili per il gioco finale
+        let finalGameActive = false;
+        let finalChainWords = [];
+        let finalHiddenWords = [];
+        let finalCurrentWordIndex = 1; // Inizia dalla seconda parola (posizione 2)
+        let finalPrizePercentage = 100;
+        let finalJollyCount = 2;
+        let finalCurrentPlayerIndex = 0;
+        let finalRevealedLetters = [];
+        let finalTimerInterval;
+        let finalTimeLeft = 20;
+        let winningTeam = '';
+        let winningTeamPlayers = [];
+        
         // Database di parole - PAROLE SINGOLE (espanso per maggiore varietà)
         const words = [
             "LAMPADINA", "TRENO", "PIZZA", "CANE", "OMBRELLO",
@@ -763,10 +1008,28 @@
             "RUOTA BICICLETTA", "VOLANTE MACCHINA", "FRENO MANO", "CAMBIO MARCIA",
             "SEDILE PASSEGGERO", "CRUSCOTTO AUTO"
         ];
+        
+        // Catene per il gioco finale
+        const finalChains = [
+            {
+                words: ["SOLE", "CALDO", "ESTATE", "VACANZA", "SPIAGGIA", "MARE", "ONDA", "SURF", "SPORT", "COMPETIZIONE", "VINCITORE", "PREMIO", "FELICITÀ"],
+                hiddenWords: [1, 3, 5, 7, 9, 11] // Indici delle parole nascoste (posizioni pari)
+            },
+            {
+                words: ["LIBRO", "PAGINA", "LETTURA", "CONOSCENZA", "UNIVERSITÀ", "LAUREA", "CERIMONIA", "FESTA", "AMICI", "ALLEGRIA", "RICORDO", "FOTOGRAFIA", "IMMAGINE"],
+                hiddenWords: [1, 3, 5, 7, 9, 11]
+            },
+            {
+                words: ["NOTTE", "STELLA", "CIELO", "LUNA", "MARE", "NAVIGAZIONE", "VIAGGIO", "AVVENTURA", "SCOPERTA", "TESORO", "RICCHEZZA", "FELICITÀ", "SUCCESSO"],
+                hiddenWords: [1, 3, 5, 7, 9, 11]
+            }
+        ];
+        
         // Elementi DOM
         const setupScreen = document.getElementById('setupScreen');
         const gameScreen = document.getElementById('gameScreen');
         const resultsScreen = document.getElementById('resultsScreen');
+        const finalGameScreen = document.getElementById('finalGameScreen');
         const timerDisplay = document.getElementById('timer');
         const currentWordDisplay = document.getElementById('currentWord');
         const roundInfo = document.getElementById('roundInfo');
@@ -776,12 +1039,33 @@
         const moneyCalculation = document.getElementById('moneyCalculation');
         const continueBtn = document.getElementById('continueBtn');
         const menuBtn = document.getElementById('menuBtn');
+        
+        // Elementi DOM per il gioco finale
+        const winningTeamName = document.getElementById('winningTeamName');
+        const finalPrizeDisplay = document.getElementById('currentPrize');
+        const playerTurnDisplay = document.getElementById('currentPlayer');
+        const chainDisplay = document.getElementById('chainDisplay');
+        const letterRevealDisplay = document.getElementById('revealedLetters');
+        const finalTimer = document.getElementById('finalTimer');
+        const finalStartBtn = document.getElementById('finalStartBtn');
+        const finalJollyBtn = document.getElementById('finalJollyBtn');
+        const finalAnswerBtn = document.getElementById('finalAnswerBtn');
+        const finalNextBtn = document.getElementById('finalNextBtn');
+        const jollyCount = document.getElementById('jollyCount');
+        
         // Setup giocatori
         document.getElementById('addTeamAPlayer').addEventListener('click', () => addPlayer('A'));
         document.getElementById('addTeamBPlayer').addEventListener('click', () => addPlayer('B'));
         document.getElementById('startGameBtn').addEventListener('click', startGame);
         continueBtn.addEventListener('click', continueToNext);
         menuBtn.addEventListener('click', returnToMenu);
+        
+        // Event listeners per il gioco finale
+        finalStartBtn.addEventListener('click', startFinalGame);
+        finalJollyBtn.addEventListener('click', useJolly);
+        finalAnswerBtn.addEventListener('click', showAnswerInput);
+        finalNextBtn.addEventListener('click', nextFinalWord);
+        
         function addPlayer(team) {
             const input = document.getElementById(`team${team}PlayerInput`);
             const list = document.getElementById(`team${team}PlayerList`);
@@ -794,11 +1078,13 @@
                 input.value = '';
             }
         }
+        
         function removePlayer(team, index) {
             const players = team === 'A' ? teamAPlayers : teamBPlayers;
             players.splice(index, 1);
             updatePlayerList(team);
         }
+        
         function updatePlayerList(team) {
             const list = document.getElementById(`team${team}PlayerList`);
             const players = team === 'A' ? teamAPlayers : teamBPlayers;
@@ -814,6 +1100,7 @@
                 list.appendChild(playerItem);
             });
         }
+        
         function startGame() {
             // Aggiorna nomi squadre
             document.getElementById('displayTeamA').textContent = document.getElementById('teamAName').value;
@@ -833,10 +1120,12 @@
             // Inizializza il gioco
             initGame();
         }
+        
         function updatePlayersInSidebars() {
             updatePlayersInSidebar('teamAPlayersList', teamAPlayers);
             updatePlayersInSidebar('teamBPlayersList', teamBPlayers);
         }
+        
         function updatePlayersInSidebar(elementId, players) {
             const element = document.getElementById(elementId);
             element.innerHTML = '';
@@ -847,6 +1136,7 @@
                 element.appendChild(playerItem);
             });
         }
+        
         function initGame() {
             // Mescola le parole una volta sola all'inizio del gioco
             shuffleWords();
@@ -870,6 +1160,7 @@
             normalWordIndex = 0;
             doubleWordIndex = 0;
         }
+        
         function shuffleWords() {
             // Mescola le parole singole
             availableWords = [...words];
@@ -885,6 +1176,7 @@
                 [availableDoubleWords[i], availableDoubleWords[j]] = [availableDoubleWords[j], availableDoubleWords[i]];
             }
         }
+        
         function updateActiveTeam() {
             document.getElementById('teamASidebar').classList.remove('active');
             document.getElementById('teamBSidebar').classList.remove('active');
@@ -897,20 +1189,24 @@
           
             document.getElementById('answeringPlayer').innerHTML = `<i class="fas fa-user"></i> Risponde: ${currentTeam === 'A' ? document.getElementById('displayTeamA').textContent : document.getElementById('displayTeamB').textContent}`;
         }
+        
         function updatePunti() {
             document.getElementById('scoreA').textContent = `${puntiA} Punti`;
             document.getElementById('scoreB').textContent = `${puntiB} Punti`;
         }
+        
         function updateMoney() {
             document.getElementById('moneyA').textContent = `€${teamAMoney.toLocaleString()}`;
             document.getElementById('moneyB').textContent = `€${teamBMoney.toLocaleString()}`;
         }
+        
         function updateRoundInfo() {
             const teamName = currentTeam === 'A' ? document.getElementById('displayTeamA').textContent : document.getElementById('displayTeamB').textContent;
             const teamPasso = currentTeam === 'A' ? teamA_completedRounds + 1 : teamB_completedRounds + 1;
             const raddoppioText = isRaddoppioAttivo ? " - RADDOPPIO ATTIVO!" : "";
             roundInfo.textContent = `${teamName} - Passo ${teamPasso} di ${totalPassi}${raddoppioText}`;
         }
+        
         function updateStats() {
             const passiUtilizzati = currentTeam === 'A' ? teamA_passiUtilizzati : teamB_passiUtilizzati;
             const raddoppiUtilizzati = currentTeam === 'A' ? teamA_raddoppiUtilizzati : teamB_raddoppiUtilizzati;
@@ -919,6 +1215,7 @@
             document.getElementById('raddoppiUtilizzati').textContent = raddoppiUtilizzati;
             document.getElementById('raddoppiRestanti').textContent = Math.max(0, maxRaddoppi - raddoppiUtilizzati);
         }
+        
         function showNextWord() {
             if (isRaddoppioAttivo && raddoppioPerParola) {
                 if (doubleWordIndex < availableDoubleWords.length) {
@@ -940,6 +1237,7 @@
           
             currentWordDisplay.classList.remove('hidden');
         }
+        
         // Controlli di gioco
         document.getElementById('startTurnBtn').addEventListener('click', startTurn);
         document.getElementById('stopTimerBtn').addEventListener('click', stopTimer);
@@ -947,6 +1245,7 @@
         document.getElementById('passoBtn').addEventListener('click', usaPasso);
         document.getElementById('correctBtn').addEventListener('click', handleCorrectAnswer);
         document.getElementById('wrongBtn').addEventListener('click', handleWrongAnswer);
+        
         function startTurn() {
             if (gameActive) return;
           
@@ -967,6 +1266,7 @@
             showNextWord();
             startTimer();
         }
+        
         function startTimer() {
             timerInterval = setInterval(() => {
                 timeLeft--;
@@ -977,6 +1277,7 @@
                 }
             }, 1000);
         }
+        
         function stopTimer() {
             if (!gameActive) return;
           
@@ -986,6 +1287,7 @@
             document.getElementById('raddoppioBtn').disabled = true;
             document.getElementById('passoBtn').disabled = true;
         }
+        
         function attivaRaddoppio() {
             const raddoppiUtilizzati = currentTeam === 'A' ? teamA_raddoppiUtilizzati : teamB_raddoppiUtilizzati;
             if (!gameActive || isRaddoppioAttivo || raddoppiUtilizzati >= maxRaddoppi) return;
@@ -1005,6 +1307,7 @@
             // Mostra subito una parola doppia
             showNextWord();
         }
+        
         function usaPasso() {
             const passiUtilizzati = currentTeam === 'A' ? teamA_passiUtilizzati : teamB_passiUtilizzati;
             if (!gameActive || passiUtilizzati >= maxPassi) return;
@@ -1024,6 +1327,7 @@
             // Passa alla parola successiva
             showNextWord();
         }
+        
         function handleCorrectAnswer() {
             const punti = isRaddoppioAttivo && raddoppioPerParola ? 2 : 1;
             puntiTotalizzati += punti;
@@ -1051,6 +1355,7 @@
             showNextWord();
             startTimer();
         }
+        
         function handleWrongAnswer() {
             const punti = isRaddoppioAttivo && raddoppioPerParola ? 2 : 1;
           
@@ -1080,6 +1385,7 @@
             showNextWord();
             startTimer();
         }
+        
         function endTurn() {
             clearInterval(timerInterval);
             gameActive = false;
@@ -1101,6 +1407,7 @@
             // Mostra schermata risultati
             showResults();
         }
+        
         function showResults() {
             const teamName = currentTeam === 'A' ? document.getElementById('displayTeamA').textContent : document.getElementById('displayTeamB').textContent;
             resultsTitle.textContent = `RISULTATI ${teamName}`;
@@ -1120,6 +1427,9 @@
                 continueBtn.style.display = 'none';
                 menuBtn.style.display = 'block';
                 resultsTitle.innerHTML = `<i class="fas fa-flag-checkered"></i> GIOCO COMPLETATO`;
+                
+                // Determina la squadra vincente
+                determineWinningTeam();
             } else {
                 continueBtn.style.display = 'block';
                 menuBtn.style.display = 'none';
@@ -1128,6 +1438,354 @@
             gameScreen.classList.add('hidden');
             resultsScreen.classList.remove('hidden');
         }
+        
+        function determineWinningTeam() {
+            // Determina la squadra con più punti
+            if (puntiA > puntiB) {
+                winningTeam = 'A';
+                winningTeamPlayers = teamAPlayers;
+            } else if (puntiB > puntiA) {
+                winningTeam = 'B';
+                winningTeamPlayers = teamBPlayers;
+            } else {
+                // In caso di pareggio, la squadra con più soldi vince
+                if (teamAMoney > teamBMoney) {
+                    winningTeam = 'A';
+                    winningTeamPlayers = teamAPlayers;
+                } else if (teamBMoney > teamAMoney) {
+                    winningTeam = 'B';
+                    winningTeamPlayers = teamBPlayers;
+                } else {
+                    // In caso di ulteriore pareggio, scegli a caso
+                    winningTeam = Math.random() < 0.5 ? 'A' : 'B';
+                    winningTeamPlayers = winningTeam === 'A' ? teamAPlayers : teamBPlayers;
+                }
+            }
+            
+            // Aggiorna il pulsante per iniziare il gioco finale
+            menuBtn.innerHTML = `<i class="fas fa-trophy"></i> ACCEDI AL GIOCO FINALE`;
+            menuBtn.onclick = startFinalGameScreen;
+        }
+        
+        function startFinalGameScreen() {
+            resultsScreen.classList.add('hidden');
+            finalGameScreen.classList.remove('hidden');
+            
+            // Inizializza il gioco finale
+            initFinalGame();
+        }
+        
+        function initFinalGame() {
+            finalGameActive = false;
+            
+            // Seleziona una catena casuale
+            const randomChainIndex = Math.floor(Math.random() * finalChains.length);
+            const selectedChain = finalChains[randomChainIndex];
+            finalChainWords = selectedChain.words;
+            finalHiddenWords = selectedChain.hiddenWords;
+            
+            // Inizializza le variabili di gioco
+            finalCurrentWordIndex = 1; // Inizia dalla seconda parola (posizione 2)
+            finalPrizePercentage = 100;
+            finalJollyCount = 2;
+            finalCurrentPlayerIndex = 0;
+            finalRevealedLetters = [];
+            
+            // Inizializza le lettere rivelate per ogni parola nascosta
+            for (let i = 0; i < finalHiddenWords.length; i++) {
+                finalRevealedLetters[i] = [0]; // Solo la prima lettera inizialmente
+            }
+            
+            // Aggiorna l'interfaccia
+            updateFinalGameUI();
+            
+            // Mostra il nome della squadra vincente
+            const winningTeamNameText = winningTeam === 'A' ? 
+                document.getElementById('teamAName').value : 
+                document.getElementById('teamBName').value;
+            winningTeamName.textContent = winningTeamNameText;
+        }
+        
+        function updateFinalGameUI() {
+            // Aggiorna il display del premio
+            finalPrizeDisplay.textContent = finalPrizePercentage;
+            
+            // Aggiorna il conteggio dei jolly
+            jollyCount.textContent = finalJollyCount;
+            
+            // Aggiorna il turno del giocatore
+            const currentPlayer = winningTeamPlayers[finalCurrentPlayerIndex];
+            playerTurnDisplay.textContent = currentPlayer;
+            
+            // Aggiorna la visualizzazione della catena
+            updateChainDisplay();
+            
+            // Aggiorna le lettere rivelate per la parola corrente
+            updateLetterRevealDisplay();
+            
+            // Aggiorna lo stato dei pulsanti
+            finalStartBtn.disabled = finalGameActive;
+            finalJollyBtn.disabled = !finalGameActive || finalJollyCount === 0;
+            finalAnswerBtn.disabled = !finalGameActive;
+            finalNextBtn.disabled = !finalGameActive;
+        }
+        
+        function updateChainDisplay() {
+            chainDisplay.innerHTML = '';
+            
+            for (let i = 0; i < finalChainWords.length; i++) {
+                const wordElement = document.createElement('div');
+                wordElement.className = 'chain-word';
+                
+                // Controlla se questa è una parola nascosta
+                if (finalHiddenWords.includes(i)) {
+                    // È una parola nascosta
+                    const hiddenWordIndex = finalHiddenWords.indexOf(i);
+                    
+                    if (hiddenWordIndex === finalCurrentWordIndex - 1) {
+                        // Parola corrente - mostra le lettere rivelate
+                        const revealed = finalRevealedLetters[hiddenWordIndex];
+                        const word = finalChainWords[i];
+                        let displayText = '';
+                        
+                        for (let j = 0; j < word.length; j++) {
+                            if (revealed.includes(j)) {
+                                displayText += word[j];
+                            } else {
+                                displayText += '_';
+                            }
+                        }
+                        
+                        wordElement.textContent = displayText;
+                        wordElement.classList.add('partial');
+                    } else if (hiddenWordIndex < finalCurrentWordIndex - 1) {
+                        // Parola già indovinata
+                        wordElement.textContent = finalChainWords[i];
+                        wordElement.classList.add('revealed');
+                    } else {
+                        // Parola non ancora raggiunta
+                        wordElement.textContent = '?';
+                        wordElement.classList.add('hidden');
+                    }
+                } else {
+                    // Parola sempre visibile
+                    wordElement.textContent = finalChainWords[i];
+                    wordElement.classList.add('revealed');
+                }
+                
+                chainDisplay.appendChild(wordElement);
+            }
+        }
+        
+        function updateLetterRevealDisplay() {
+            if (finalCurrentWordIndex <= finalHiddenWords.length) {
+                const hiddenWordIndex = finalCurrentWordIndex - 1;
+                const revealed = finalRevealedLetters[hiddenWordIndex];
+                const word = finalChainWords[finalHiddenWords[hiddenWordIndex]];
+                let displayText = '';
+                
+                for (let j = 0; j < word.length; j++) {
+                    if (revealed.includes(j)) {
+                        displayText += word[j];
+                    } else {
+                        displayText += '_';
+                    }
+                }
+                
+                letterRevealDisplay.textContent = displayText;
+            } else {
+                letterRevealDisplay.textContent = 'Completato!';
+            }
+        }
+        
+        function startFinalGame() {
+            if (finalGameActive) return;
+            
+            finalGameActive = true;
+            finalTimeLeft = 20;
+            finalTimer.textContent = finalTimeLeft;
+            
+            // Aggiorna l'interfaccia
+            updateFinalGameUI();
+            
+            // Avvia il timer
+            startFinalTimer();
+        }
+        
+        function startFinalTimer() {
+            clearInterval(finalTimerInterval);
+            finalTimerInterval = setInterval(() => {
+                finalTimeLeft--;
+                finalTimer.textContent = finalTimeLeft;
+                
+                if (finalTimeLeft <= 0) {
+                    clearInterval(finalTimerInterval);
+                    handleFinalTimeExpired();
+                }
+            }, 1000);
+        }
+        
+        function handleFinalTimeExpired() {
+            // Tempo scaduto - aggiungi una lettera e passa al giocatore successivo
+            revealAdditionalLetter();
+            nextPlayer();
+            
+            // Riprendi il gioco
+            finalTimeLeft = 20;
+            finalTimer.textContent = finalTimeLeft;
+            startFinalTimer();
+        }
+        
+        function useJolly() {
+            if (!finalGameActive || finalJollyCount === 0) return;
+            
+            finalJollyCount--;
+            revealAdditionalLetter();
+            
+            // Aggiorna l'interfaccia
+            updateFinalGameUI();
+        }
+        
+        function revealAdditionalLetter() {
+            if (finalCurrentWordIndex > finalHiddenWords.length) return;
+            
+            const hiddenWordIndex = finalCurrentWordIndex - 1;
+            const word = finalChainWords[finalHiddenWords[hiddenWordIndex]];
+            const revealed = finalRevealedLetters[hiddenWordIndex];
+            
+            // Trova la prossima lettera non rivelata
+            for (let i = 0; i < word.length; i++) {
+                if (!revealed.includes(i)) {
+                    revealed.push(i);
+                    break;
+                }
+            }
+            
+            // Aggiorna l'interfaccia
+            updateChainDisplay();
+            updateLetterRevealDisplay();
+        }
+        
+        function showAnswerInput() {
+            if (!finalGameActive) return;
+            
+            // Ferma il timer
+            clearInterval(finalTimerInterval);
+            
+            // Mostra un prompt per inserire la risposta
+            const answer = prompt("Inserisci la parola nascosta:");
+            
+            if (answer) {
+                checkFinalAnswer(answer.toUpperCase());
+            } else {
+                // Riprendi il timer se non è stata data risposta
+                startFinalTimer();
+            }
+        }
+        
+        function checkFinalAnswer(answer) {
+            const hiddenWordIndex = finalCurrentWordIndex - 1;
+            const correctWord = finalChainWords[finalHiddenWords[hiddenWordIndex]];
+            
+            if (answer === correctWord) {
+                // Risposta corretta
+                alert(`Esatto! La parola è "${correctWord}"`);
+                
+                // Passa alla parola successiva
+                finalCurrentWordIndex++;
+                
+                // Controlla se il gioco è finito
+                if (finalCurrentWordIndex > finalHiddenWords.length) {
+                    endFinalGame(true);
+                } else {
+                    // Passa al giocatore successivo
+                    nextPlayer();
+                    
+                    // Riprendi il gioco
+                    finalTimeLeft = 20;
+                    finalTimer.textContent = finalTimeLeft;
+                    startFinalTimer();
+                    
+                    // Aggiorna l'interfaccia
+                    updateFinalGameUI();
+                }
+            } else {
+                // Risposta errata - dimezza il premio
+                finalPrizePercentage = Math.floor(finalPrizePercentage / 2);
+                alert(`Risposta errata! Il montepremi si dimezza. La parola corretta era "${correctWord}"`);
+                
+                // Aggiungi una lettera
+                revealAdditionalLetter();
+                
+                // Passa al giocatore successivo
+                nextPlayer();
+                
+                // Riprendi il gioco
+                finalTimeLeft = 20;
+                finalTimer.textContent = finalTimeLeft;
+                startFinalTimer();
+                
+                // Aggiorna l'interfaccia
+                updateFinalGameUI();
+            }
+        }
+        
+        function nextPlayer() {
+            finalCurrentPlayerIndex = (finalCurrentPlayerIndex + 1) % winningTeamPlayers.length;
+        }
+        
+        function nextFinalWord() {
+            if (!finalGameActive) return;
+            
+            // Passa alla parola successiva
+            finalCurrentWordIndex++;
+            
+            // Controlla se il gioco è finito
+            if (finalCurrentWordIndex > finalHiddenWords.length) {
+                endFinalGame(false);
+            } else {
+                // Passa al giocatore successivo
+                nextPlayer();
+                
+                // Aggiorna l'interfaccia
+                updateFinalGameUI();
+            }
+        }
+        
+        function endFinalGame(isSuccess) {
+            finalGameActive = false;
+            clearInterval(finalTimerInterval);
+            
+            if (isSuccess) {
+                alert(`Complimenti! Avete completato la catena e vinto il ${finalPrizePercentage}% del montepremi!`);
+            } else {
+                alert(`Gioco completato! Avete vinto il ${finalPrizePercentage}% del montepremi.`);
+            }
+            
+            // Torna al menu principale
+            finalGameScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+            
+            // Reset del gioco
+            resetGame();
+        }
+        
+        function resetGame() {
+            // Reset di tutte le variabili del gioco
+            puntiA = 0;
+            puntiB = 0;
+            teamAMoney = 0;
+            teamBMoney = 0;
+            currentTeam = 'A';
+            teamA_completedRounds = 0;
+            teamB_completedRounds = 0;
+            teamA_passiUtilizzati = 0;
+            teamB_passiUtilizzati = 0;
+            teamA_raddoppiUtilizzati = 0;
+            teamB_raddoppiUtilizzati = 0;
+            gameCompleted = false;
+        }
+        
         function continueToNext() {
             // Aggiorna i soldi della squadra
             const newMoney = puntiTotalizzati * 2000;
@@ -1155,25 +1813,16 @@
             const teamName = currentTeam === 'A' ? document.getElementById('displayTeamA').textContent : document.getElementById('displayTeamB').textContent;
             document.getElementById('startTurnBtn').innerHTML = `<i class="fas fa-play"></i> TOCCA A ${teamName.toUpperCase()} - INIZIA`;
         }
+        
         function returnToMenu() {
             // Torna alla schermata iniziale
             resultsScreen.classList.add('hidden');
             setupScreen.classList.remove('hidden');
           
             // Resetta il gioco
-            puntiA = 0;
-            puntiB = 0;
-            teamAMoney = 0;
-            teamBMoney = 0;
-            currentTeam = 'A';
-            teamA_completedRounds = 0;
-            teamB_completedRounds = 0;
-            teamA_passiUtilizzati = 0;
-            teamB_passiUtilizzati = 0;
-            teamA_raddoppiUtilizzati = 0;
-            teamB_raddoppiUtilizzati = 0;
-            gameCompleted = false;
+            resetGame();
         }
+        
         // Inizializzazione
         window.addEventListener('load', () => {
             updatePlayerList('A');
