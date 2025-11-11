@@ -489,49 +489,72 @@
             border-radius: 16px;
             border: 2px solid rgba(253, 187, 45, 0.3);
             text-align: center;
-            max-width: 800px;
-            width: 90%;
+            max-width: 1000px;
+            width: 95%;
             backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
         }
         .final-game-title {
             font-size: 3rem;
             color: var(--accent);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-weight: 800;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
         }
         .final-game-subtitle {
             font-size: 1.5rem;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             color: white;
         }
         .final-game-info {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
             background: rgba(0, 0, 0, 0.3);
             padding: 20px;
             border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
+        }
+        .prize-display {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(46, 204, 113, 0.3);
+            border-radius: 12px;
+            border: 2px solid var(--success);
+        }
+        .player-turn {
+            font-size: 1.3rem;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .chain-display {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin: 30px 0;
+            gap: 12px;
+            margin: 25px 0;
             background: rgba(0, 0, 0, 0.4);
             padding: 25px;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .chain-word {
-            padding: 15px;
+            padding: 18px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 600;
             text-align: center;
             transition: all 0.3s ease;
             border-left: 4px solid transparent;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .chain-word.revealed {
             background: linear-gradient(135deg, rgba(253, 187, 45, 0.4), rgba(253, 187, 45, 0.2));
@@ -547,16 +570,39 @@
             background: linear-gradient(135deg, rgba(52, 152, 219, 0.3), rgba(41, 128, 185, 0.2));
             border-left: 4px solid var(--info);
         }
+        .chain-word.current {
+            box-shadow: 0 0 15px rgba(253, 187, 45, 0.8);
+            transform: scale(1.02);
+        }
+        .letter-reveal {
+            font-size: 1.6rem;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(52, 152, 219, 0.3);
+            border-radius: 10px;
+            border: 1px solid var(--info);
+            font-family: monospace;
+            letter-spacing: 3px;
+        }
+        .final-timer {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(231, 76, 60, 0.3);
+            border-radius: 12px;
+            border: 2px solid var(--danger);
+        }
         .final-game-controls {
             display: flex;
             gap: 15px;
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 25px;
             flex-wrap: wrap;
         }
         .final-game-btn {
-            padding: 15px 30px;
-            font-size: 1.2rem;
+            padding: 15px 25px;
+            font-size: 1.1rem;
             font-weight: bold;
             border: none;
             border-radius: 50px;
@@ -591,39 +637,13 @@
             opacity: 0.6;
             cursor: not-allowed;
         }
-        .prize-display {
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 20px 0;
-            padding: 20px;
-            background: rgba(46, 204, 113, 0.3);
-            border-radius: 12px;
-            border: 2px solid var(--success);
-        }
-        .player-turn {
-            font-size: 1.3rem;
-            margin: 20px 0;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .final-timer {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin: 20px 0;
-            padding: 20px;
-            background: rgba(231, 76, 60, 0.3);
-            border-radius: 12px;
-            border: 2px solid var(--danger);
-        }
-        .letter-reveal {
-            font-size: 1.8rem;
-            margin: 15px 0;
-            padding: 15px;
-            background: rgba(52, 152, 219, 0.3);
-            border-radius: 10px;
-            border: 1px solid var(--info);
+        .jolly-counter {
+            font-size: 1.1rem;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(155, 89, 182, 0.3);
+            border-radius: 8px;
+            border: 1px solid #9b59b6;
         }
         
         /* Responsive */
@@ -670,12 +690,20 @@
                 font-size: 1.2rem;
             }
             .chain-word {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
                 padding: 12px;
+                min-height: 60px;
             }
             .final-game-btn {
                 padding: 12px 20px;
                 font-size: 1rem;
+            }
+            .final-timer {
+                font-size: 1.8rem;
+                padding: 15px;
+            }
+            .final-game-content {
+                padding: 20px;
             }
         }
     </style>
@@ -714,6 +742,7 @@
             <i class="fas fa-play-circle"></i> INIZIA IL GIOCO
         </button>
     </div>
+
     <!-- Schermata di Gioco -->
     <div class="container hidden" id="gameScreen">
         <header>
@@ -779,7 +808,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Schermata Gioco Finale -->
     <div class="final-game-screen hidden" id="finalGameScreen">
         <div class="final-game-content">
@@ -793,13 +822,19 @@
             
             <div class="final-game-info">
                 <p><strong>Regole del gioco:</strong></p>
-                <p>La catena è composta da 13 parole. Sono visibili le parole in posizione dispari (1ª, 3ª, 5ª, ...).</p>
-                <p>Dovete indovinare le 6 parole nascoste in posizione pari (2ª, 4ª, 6ª, ...).</p>
-                <p>Ogni errore dimezza il montepremi. Avete 2 jolly a disposizione.</p>
+                <p>• La catena è composta da 13 parole. Sono visibili le parole in posizione dispari (1ª, 3ª, 5ª, ...).</p>
+                <p>• Dovete indovinare le 6 parole nascoste in posizione pari (2ª, 4ª, 6ª, ...).</p>
+                <p>• Ogni errore dimezza il montepremi.</p>
+                <p>• Avete 2 jolly a disposizione che rivelano una lettera senza penalità.</p>
+                <p>• Senza jolly, ogni errore dimezza il premio e rivela una lettera.</p>
             </div>
             
             <div class="prize-display" id="finalPrizeDisplay">
                 Montepremi attuale: <span id="currentPrize">100</span>%
+            </div>
+            
+            <div class="jolly-counter">
+                <i class="fas fa-star"></i> JOLLY DISPONIBILI: <span id="jollyCount">2</span>
             </div>
             
             <div class="player-turn" id="playerTurnDisplay">
@@ -823,7 +858,7 @@
                     <i class="fas fa-play"></i> INIZIA
                 </button>
                 <button class="final-jolly-btn" id="finalJollyBtn" disabled>
-                    <i class="fas fa-star"></i> USA JOLLY (<span id="jollyCount">2</span>)
+                    <i class="fas fa-star"></i> USA JOLLY
                 </button>
                 <button class="final-answer-btn" id="finalAnswerBtn" disabled>
                     <i class="fas fa-bullhorn"></i> RISPOSTA
@@ -880,10 +915,10 @@
             "LETTO MATRIMONIALE", "OCCHIALI DA SOLE", "PORTA FINESTRA", "SPAZZOLINO DENTI"
         ];
         
-        // Catene per il gioco finale
+        // Catene per il gioco finale - Tema BRASILE
         const finalChains = [
             {
-                words: ["SOLE", "CALDO", "ESTATE", "VACANZA", "SPIAGGIA", "MARE", "ONDA", "SURF", "SPORT", "COMPETIZIONE", "VINCITORE", "PREMIO", "FELICITÀ"],
+                words: ["SAMBA", "CARNEVALE", "COPACABANA", "CAIPIRINHA", "AMAZZONIA", "PALME", "CALCIO", "PELÉ", "CARIOCA", "FESTA", "COLORE", "CALORE", "PASSIONE"],
                 hiddenWords: [1, 3, 5, 7, 9, 11]
             }
         ];
@@ -996,6 +1031,13 @@
             puntiTotalizzati = 0;
             isRaddoppioAttivo = false;
             raddoppioPerParola = false;
+            gameCompleted = false;
+            teamA_completedRounds = 0;
+            teamB_completedRounds = 0;
+            teamA_passiUtilizzati = 0;
+            teamB_passiUtilizzati = 0;
+            teamA_raddoppiUtilizzati = 0;
+            teamB_raddoppiUtilizzati = 0;
             normalWordIndex = 0;
             doubleWordIndex = 0;
         }
@@ -1106,19 +1148,39 @@
         }
         
         function attivaRaddoppio() {
-            if (!gameActive || isRaddoppioAttivo) return;
+            const raddoppiUtilizzati = currentTeam === 'A' ? teamA_raddoppiUtilizzati : teamB_raddoppiUtilizzati;
+            if (!gameActive || isRaddoppioAttivo || raddoppiUtilizzati >= maxRaddoppi) return;
           
             isRaddoppioAttivo = true;
             raddoppioPerParola = true;
+            if (currentTeam === 'A') {
+                teamA_raddoppiUtilizzati++;
+            } else {
+                teamB_raddoppiUtilizzati++;
+            }
             document.getElementById('raddoppioBtn').disabled = true;
             document.getElementById('raddoppioBtn').innerHTML = '<i class="fas fa-bolt"></i> RADDOPPIO ATTIVO';
+            updateStats();
           
             // Mostra subito una parola doppia
             showNextWord();
         }
         
         function usaPasso() {
-            if (!gameActive) return;
+            const passiUtilizzati = currentTeam === 'A' ? teamA_passiUtilizzati : teamB_passiUtilizzati;
+            if (!gameActive || passiUtilizzati >= maxPassi) return;
+          
+            if (currentTeam === 'A') {
+                teamA_passiUtilizzati++;
+            } else {
+                teamB_passiUtilizzati++;
+            }
+            updateStats();
+          
+            // Se abbiamo usato tutti i passi, disabilita il pulsante
+            if ((currentTeam === 'A' ? teamA_passiUtilizzati : teamB_passiUtilizzati) >= maxPassi) {
+                document.getElementById('passoBtn').disabled = true;
+            }
           
             // Passa alla parola successiva
             showNextWord();
@@ -1191,6 +1253,13 @@
             document.getElementById('answerControls').classList.add('hidden');
             currentWordDisplay.classList.add('hidden');
           
+            // Incrementa i round completati per la squadra corrente
+            if (currentTeam === 'A') {
+                teamA_completedRounds++;
+            } else {
+                teamB_completedRounds++;
+            }
+          
             // Controlla se entrambe le squadre hanno giocato
             if (currentTeam === 'A') {
                 // Squadra A ha finito, passa a Squadra B
@@ -1227,6 +1296,7 @@
             initFinalGame();
         }
         
+        // GIOCO FINALE - REAZIONE A CATENA
         function initFinalGame() {
             finalGameActive = false;
             
@@ -1245,7 +1315,7 @@
             
             // Inizializza le lettere rivelate per ogni parola nascosta
             for (let i = 0; i < finalHiddenWords.length; i++) {
-                finalRevealedLetters[i] = [0];
+                finalRevealedLetters[i] = [0]; // Solo la prima lettera inizialmente
             }
             
             // Aggiorna l'interfaccia
@@ -1264,6 +1334,7 @@
             
             // Aggiorna il conteggio dei jolly
             jollyCount.textContent = finalJollyCount;
+            finalJollyBtn.disabled = !finalGameActive || finalJollyCount === 0;
             
             // Aggiorna il turno del giocatore
             const currentPlayer = winningTeamPlayers[finalCurrentPlayerIndex];
@@ -1277,7 +1348,6 @@
             
             // Aggiorna lo stato dei pulsanti
             finalStartBtn.disabled = finalGameActive;
-            finalJollyBtn.disabled = !finalGameActive || finalJollyCount === 0;
             finalAnswerBtn.disabled = !finalGameActive;
             finalNextBtn.disabled = !finalGameActive;
         }
@@ -1291,6 +1361,7 @@
                 
                 // Controlla se questa è una parola nascosta
                 if (finalHiddenWords.includes(i)) {
+                    // È una parola nascosta
                     const hiddenWordIndex = finalHiddenWords.indexOf(i);
                     
                     if (hiddenWordIndex === finalCurrentWordIndex - 1) {
@@ -1308,7 +1379,7 @@
                         }
                         
                         wordElement.textContent = displayText;
-                        wordElement.classList.add('partial');
+                        wordElement.classList.add('partial', 'current');
                     } else if (hiddenWordIndex < finalCurrentWordIndex - 1) {
                         // Parola già indovinata
                         wordElement.textContent = finalChainWords[i];
@@ -1395,6 +1466,8 @@
             
             // Aggiorna l'interfaccia
             updateFinalGameUI();
+            
+            alert('Jolly utilizzato! Una lettera aggiuntiva è stata rivelata.');
         }
         
         function revealAdditionalLetter() {
@@ -1461,24 +1534,44 @@
                     updateFinalGameUI();
                 }
             } else {
-                // Risposta errata - dimezza il premio
-                finalPrizePercentage = Math.floor(finalPrizePercentage / 2);
-                alert(`Risposta errata! Il montepremi si dimezza. La parola corretta era "${correctWord}"`);
-                
-                // Aggiungi una lettera
-                revealAdditionalLetter();
-                
-                // Passa al giocatore successivo
-                nextPlayer();
-                
-                // Riprendi il gioco
-                finalTimeLeft = 20;
-                finalTimer.textContent = finalTimeLeft;
-                startFinalTimer();
-                
-                // Aggiorna l'interfaccia
-                updateFinalGameUI();
+                // Risposta errata
+                if (finalJollyCount > 0) {
+                    // Se ci sono jolly disponibili, chiedi se vuoi usarne uno
+                    const useJolly = confirm(`Risposta errata! Vuoi usare un jolly per rivelare una lettera senza penalità?\n\nJolly disponibili: ${finalJollyCount}`);
+                    
+                    if (useJolly) {
+                        useJolly();
+                        startFinalTimer(); // Riprendi il timer
+                    } else {
+                        // Dimezza il premio e aggiungi una lettera
+                        handleWrongAnswer();
+                    }
+                } else {
+                    // Nessun jolly disponibile, dimezza il premio
+                    handleWrongAnswer();
+                }
             }
+        }
+        
+        function handleWrongAnswer() {
+            // Dimezza il premio
+            finalPrizePercentage = Math.floor(finalPrizePercentage / 2);
+            
+            // Aggiungi una lettera
+            revealAdditionalLetter();
+            
+            alert(`Risposta errata! Il montepremi si dimezza. La parola corretta era "${finalChainWords[finalHiddenWords[finalCurrentWordIndex - 1]]}"`);
+            
+            // Passa al giocatore successivo
+            nextPlayer();
+            
+            // Riprendi il gioco
+            finalTimeLeft = 20;
+            finalTimer.textContent = finalTimeLeft;
+            startFinalTimer();
+            
+            // Aggiorna l'interfaccia
+            updateFinalGameUI();
         }
         
         function nextPlayer() {
@@ -1513,12 +1606,12 @@
                 alert(`Gioco completato! Avete vinto il ${finalPrizePercentage}% del montepremi.`);
             }
             
-            // Torna al menu principale
-            finalGameScreen.classList.add('hidden');
-            setupScreen.classList.remove('hidden');
-            
-            // Reset del gioco
-            resetGame();
+            // Torna al menu principale dopo 3 secondi
+            setTimeout(() => {
+                finalGameScreen.classList.add('hidden');
+                setupScreen.classList.remove('hidden');
+                resetGame();
+            }, 3000);
         }
         
         function resetGame() {
@@ -1526,6 +1619,34 @@
             puntiA = 0;
             puntiB = 0;
             currentTeam = 'A';
+            teamA_completedRounds = 0;
+            teamB_completedRounds = 0;
+            teamA_passiUtilizzati = 0;
+            teamB_passiUtilizzati = 0;
+            teamA_raddoppiUtilizzati = 0;
+            teamB_raddoppiUtilizzati = 0;
+            gameCompleted = false;
+            
+            // Aggiorna l'interfaccia
+            updatePunti();
+            updateActiveTeam();
+        }
+        
+        // Variabili per i passi e raddoppi (necessarie per il gioco principale)
+        let teamA_completedRounds = 0;
+        let teamB_completedRounds = 0;
+        let teamA_passiUtilizzati = 0;
+        let teamB_passiUtilizzati = 0;
+        let teamA_raddoppiUtilizzati = 0;
+        let teamB_raddoppiUtilizzati = 0;
+        let maxPassi = 3;
+        let maxRaddoppi = 2;
+        let gameCompleted = false;
+        
+        function updateStats() {
+            const passiUtilizzati = currentTeam === 'A' ? teamA_passiUtilizzati : teamB_passiUtilizzati;
+            const raddoppiUtilizzati = currentTeam === 'A' ? teamA_raddoppiUtilizzati : teamB_raddoppiUtilizzati;
+            // Questa funzione può essere implementata se si vuole mostrare le statistiche
         }
         
         // Inizializzazione
