@@ -1293,21 +1293,21 @@
             document.getElementById('answerControls').classList.add('hidden');
             currentWordDisplay.classList.add('hidden');
 
-            // Incrementa i round completati per la squadra corrente
+            // Segna che la squadra corrente ha completato il suo turno
             if (currentTeam === 'A') {
-                teamA_completedRounds++;
+                teamA_completedRounds = 1;
+                console.log("Squadra A ha completato il turno");
             } else {
-                teamB_completedRounds++;
+                teamB_completedRounds = 1;
+                console.log("Squadra B ha completato il turno");
             }
 
-            console.log(`Team A completati: ${teamA_completedRounds}, Team B completati: ${teamB_completedRounds}`);
-
-            // CONTROLLO PRINCIPALE CORRETTO: se entrambe le squadre hanno completato 3 round
-            if (teamA_completedRounds >= 3 && teamB_completedRounds >= 3) {
-                console.log("ENTRAMBE LE SQUADRE HANNO COMPLETATO 3 TURNI - AVVIO GIOCO FINALE");
+            // CONTROLLO PRINCIPALE: se entrambe le squadre hanno completato il loro turno
+            if (teamA_completedRounds === 1 && teamB_completedRounds === 1) {
+                console.log("ENTRAMBE LE SQUADRE HANNO COMPLETATO I LORO TURNI - AVVIO GIOCO FINALE");
                 determineWinningTeam();
                 startFinalGameScreen();
-                return; // IMPORTANTE: esci dalla funzione qui
+                return; // Esci dalla funzione qui
             }
 
             // Se non è il caso di andare al gioco finale, passa alla squadra successiva
