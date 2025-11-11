@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -524,6 +524,7 @@
             z-index: 2000;
             padding: 15px;
             color: white;
+            overflow-y: auto;
         }
         .final-game-content {
             background: rgba(255, 255, 255, 0.15);
@@ -535,6 +536,7 @@
             width: 95%;
             backdrop-filter: blur(15px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            margin: 20px 0;
         }
         .final-game-title {
             font-size: 2.5rem;
@@ -564,12 +566,10 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            height: 100%;
             gap: 15px;
         }
         
         .chain-display-section {
-            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
