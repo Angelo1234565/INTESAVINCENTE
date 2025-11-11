@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -650,18 +650,20 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 10px;
+            padding: 15px;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 12px;
             gap: 15px;
+            margin-top: 20px;
         }
         
         .chain-main-controls {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
             width: 100%;
             flex-wrap: wrap;
+            margin: 15px 0;
         }
         
         .chain-timer {
@@ -707,6 +709,7 @@
             justify-content: center;
             gap: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            min-width: 160px;
         }
         
         .final-game-btn:hover:not(:disabled) {
@@ -732,6 +735,61 @@
         .final-answer-btn {
             background: linear-gradient(135deg, var(--info), #2980b9);
             color: white;
+        }
+
+        /* PULSANTI ESATTA/ERRATA - GARANTITI VISIBILI */
+        .final-answer-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            width: 100%;
+        }
+
+        .final-answer-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .final-correct-btn, .final-wrong-btn {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            min-width: 150px;
+        }
+
+        .final-correct-btn {
+            background: linear-gradient(135deg, var(--success), #2e7d32);
+            color: white;
+        }
+
+        .final-wrong-btn {
+            background: linear-gradient(135deg, var(--danger), #c62828);
+            color: white;
+        }
+
+        .final-answering-player {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
         }
 
         /* Total Money Display */
@@ -887,6 +945,7 @@
             .final-game-btn {
                 padding: 12px 20px;
                 font-size: 0.9rem;
+                min-width: 140px;
             }
             
             .final-game-content {
@@ -918,6 +977,12 @@
             
             .chain-controls-section {
                 width: 100%;
+            }
+
+            .final-correct-btn, .final-wrong-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+                min-width: 130px;
             }
         }
 
@@ -953,6 +1018,26 @@
             
             .final-game-title {
                 font-size: 1.8rem;
+            }
+
+            .chain-main-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .final-game-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .final-answer-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .final-correct-btn, .final-wrong-btn {
+                width: 100%;
+                max-width: 200px;
             }
         }
     </style>
@@ -1185,6 +1270,7 @@
                 <div class="chain-controls-section">
                     <div class="message" id="finalMessage"><i class="fas fa-bullseye"></i> Premi "INIZIA CATENA" per cominciare!</div>
                     
+                    <!-- PULSANTI PRINCIPALI - SEMPRE VISIBILI -->
                     <div class="chain-main-controls">
                         <button class="final-game-btn final-start-btn" id="finalStartBtn">
                             <i class="fas fa-rocket"></i> INIZIA CATENA
@@ -1197,11 +1283,16 @@
                         </button>
                     </div>
                     
-                    <div class="answer-controls hidden" id="finalAnswerControls">
-                        <div class="player-name" id="finalAnsweringPlayer"></div>
-                        <div style="display: flex; gap: 8px;">
-                            <button class="correct-btn" id="finalCorrectBtn"><i class="fas fa-check"></i> ESATTA</button>
-                            <button class="wrong-btn" id="finalWrongBtn"><i class="fas fa-times"></i> ERRATA</button>
+                    <!-- PULSANTI ESATTA/ERRATA - APPAIONO QUANDO SI PREME BUZZER -->
+                    <div class="final-answer-controls hidden" id="finalAnswerControls">
+                        <div class="final-answering-player" id="finalAnsweringPlayer"></div>
+                        <div class="final-answer-buttons">
+                            <button class="final-correct-btn" id="finalCorrectBtn">
+                                <i class="fas fa-check"></i> ESATTA
+                            </button>
+                            <button class="final-wrong-btn" id="finalWrongBtn">
+                                <i class="fas fa-times"></i> ERRATA
+                            </button>
                         </div>
                     </div>
                 </div>
