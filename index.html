@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intesa Vincente</title>
+    <title>Intesa Vincente - Versione Compatta</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -31,20 +31,20 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: #333;
-            overflow: auto;
+            overflow-x: hidden;
             font-size: 14px;
+            padding: 10px;
         }
         .container {
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
             padding: 10px;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            gap: 10px;
         }
         header {
             text-align: center;
-            margin-bottom: 10px;
             padding: 15px;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 12px;
@@ -52,25 +52,28 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         }
         h1 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--primary);
             margin-bottom: 8px;
             font-weight: 800;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
         }
         .subtitle {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--secondary);
             font-weight: 600;
         }
-        .game-layout {
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .teams-container {
             display: flex;
             gap: 10px;
-            flex: 1;
-            min-height: 400px;
+            justify-content: space-between;
         }
-        .team-sidebar {
-            flex: 0 0 200px;
+        .team-card {
+            flex: 1;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 12px;
             padding: 15px;
@@ -78,168 +81,150 @@
             display: flex;
             flex-direction: column;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            min-height: 180px;
         }
-        .team-sidebar.active {
+        .team-card.active {
             border-color: var(--success);
             background: rgba(76, 175, 80, 0.1);
             transform: scale(1.02);
-            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.25);
         }
         .team-name {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             color: var(--primary);
-            padding: 12px;
+            padding: 10px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 8px;
-            border: 2px solid var(--accent);
             color: white;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
-        .team-sidebar.active .team-name {
+        .team-card.active .team-name {
             background: linear-gradient(135deg, var(--success), #2e7d32);
-            color: white;
         }
         .score {
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             font-weight: 700;
             text-align: center;
-            margin: 12px 0;
-            padding: 12px;
+            margin: 8px 0;
+            padding: 8px;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 8px;
             border: 2px solid var(--primary);
             color: var(--primary);
         }
-        .team-sidebar.active .score {
-            border-color: var(--success);
-            color: var(--success);
-        }
         .money-display {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
             text-align: center;
-            margin: 8px 0;
-            padding: 10px;
+            margin: 5px 0;
+            padding: 8px;
             background: linear-gradient(135deg, var(--gold), var(--warning));
             border-radius: 8px;
             border: 2px solid var(--accent);
             color: white;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        }
-        .players-list {
-            flex: 1;
-            overflow-y: auto;
-            background: rgba(248, 249, 250, 0.8);
-            border-radius: 8px;
-            padding: 12px;
-            border: 2px solid var(--info);
-            font-size: 0.85rem;
-        }
-        .player-item {
-            padding: 10px;
-            margin: 6px 0;
-            background: white;
-            border-radius: 6px;
-            text-align: center;
-            font-size: 0.8rem;
-            font-weight: 500;
-            border: 2px solid var(--info);
-            transition: all 0.3s ease;
-        }
-        .player-item:hover {
-            background: var(--info);
-            color: white;
-            transform: translateY(-2px);
         }
         .game-center {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 12px;
-            padding: 20px;
+            padding: 15px;
             border: 2px solid var(--accent);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
         .timer-section {
             text-align: center;
-            margin-bottom: 15px;
         }
         .timer {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 800;
             color: var(--danger);
             background: linear-gradient(135deg, #fff, #f0f0f0);
-            padding: 15px 30px;
+            padding: 12px 20px;
             border-radius: 12px;
             border: 3px solid var(--danger);
-            margin: 12px 0;
+            margin: 8px 0;
             display: inline-flex;
             align-items: center;
-            gap: 15px;
-            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.25);
+            gap: 10px;
         }
         .seconds-label {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--danger);
         }
         .word-display {
-            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 12px;
-            margin: 15px 0;
+            padding: 20px;
             border: 3px solid var(--primary);
-            min-height: 150px;
-            box-shadow: inset 0 4px 15px rgba(0, 0, 0, 0.3);
+            min-height: 120px;
         }
         .word {
-            font-size: 2.8rem;
+            font-size: 2rem;
             font-weight: 800;
             color: white;
             text-align: center;
-            padding: 20px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         .word.hidden {
             color: transparent;
             text-shadow: none;
         }
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .stat-box {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px;
+            border-radius: 8px;
+            border: 2px solid var(--primary);
+            min-width: 100px;
+        }
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--primary);
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
         .controls {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
-            margin-top: 15px;
             flex-wrap: wrap;
         }
         button {
-            padding: 12px 20px;
-            font-size: 0.9rem;
+            padding: 10px 15px;
+            font-size: 0.8rem;
             font-weight: 600;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
         }
         button:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
         }
         .start-btn {
             background: linear-gradient(135deg, var(--success), #2e7d32);
@@ -260,100 +245,83 @@
         .correct-btn {
             background: linear-gradient(135deg, var(--success), #2e7d32);
             color: white;
-            padding: 10px 20px;
         }
         .wrong-btn {
             background: linear-gradient(135deg, var(--danger), #c62828);
             color: white;
-            padding: 10px 20px;
         }
         .answer-controls {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             justify-content: center;
-            margin-top: 15px;
             align-items: center;
+        }
+        .answering-player {
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            border: 2px solid var(--primary);
         }
         .hidden {
             display: none !important;
         }
-        .stats-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 15px 0;
-            flex-wrap: wrap;
-        }
-        .stat-box {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 12px;
+        .total-money-display {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, var(--gold), var(--warning));
+            color: white;
+            padding: 8px 12px;
             border-radius: 8px;
-            border: 2px solid var(--primary);
-            min-width: 120px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        }
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--primary);
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
-        .stat-value {
-            font-size: 1.3rem;
+            font-size: 0.9rem;
             font-weight: 700;
-            color: var(--primary);
+            border: 2px solid var(--accent);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            z-index: 1000;
         }
-        
         .setup-screen {
             text-align: center;
-            padding: 20px 10px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            border: 2px solid var(--accent);
         }
         .team-setup {
             display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin: 20px 0;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 15px;
+            margin: 15px 0;
         }
         .team-input {
             background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
+            padding: 15px;
             border-radius: 12px;
             border: 2px solid var(--primary);
-            width: 300px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         .team-input h3 {
             color: var(--primary);
-            margin-bottom: 20px;
-            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
             font-weight: 700;
         }
         input, select {
             width: 100%;
-            padding: 12px;
-            margin: 8px 0;
+            padding: 10px;
+            margin: 5px 0;
             border: 2px solid var(--info);
             border-radius: 6px;
             background: white;
             font-size: 0.9rem;
-            font-weight: 500;
-        }
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 8px rgba(255, 171, 0, 0.3);
         }
         .player-input {
             display: flex;
-            gap: 10px;
-            margin: 12px 0;
+            gap: 8px;
+            margin: 10px 0;
             align-items: center;
         }
         .add-player-btn {
@@ -361,155 +329,134 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: bold;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
-        }
-        .add-player-btn:hover {
-            background: var(--success);
-            transform: scale(1.1);
         }
         .player-list {
-            margin-top: 15px;
-            max-height: 200px;
+            margin-top: 10px;
+            max-height: 150px;
             overflow-y: auto;
             background: rgba(248, 249, 250, 0.8);
             border-radius: 8px;
-            padding: 12px;
+            padding: 10px;
             border: 2px solid var(--info);
         }
         .player-list-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            margin: 6px 0;
+            padding: 8px;
+            margin: 5px 0;
             background: white;
             border-radius: 6px;
-            font-size: 0.9rem;
-            font-weight: 500;
+            font-size: 0.8rem;
             border: 2px solid var(--info);
-            transition: all 0.3s ease;
-        }
-        .player-list-item:hover {
-            background: var(--info);
-            color: white;
-            transform: translateX(5px);
         }
         .remove-player-btn {
             background: var(--danger);
             color: white;
             border: none;
             border-radius: 50%;
-            width: 25px;
-            height: 25px;
+            width: 22px;
+            height: 22px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
         }
-        .remove-player-btn:hover {
-            background: #c62828;
-            transform: scale(1.1);
+        .character-selection {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin: 10px 0;
         }
-        .answering-player {
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 8px;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 8px;
-            border: 2px solid var(--primary);
+        .character-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--info);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            background: white;
         }
-        .menu-btn {
-            background: linear-gradient(135deg, var(--info), #1565c0);
+        .character-option.selected {
+            border-color: var(--success);
+            background: var(--success);
             color: white;
-            margin-top: 15px;
         }
         
         /* Schermata di Transizione */
         .transition-screen {
             text-align: center;
-            padding: 20px 10px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            padding: 15px;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 12px;
-            margin: 10px;
             border: 2px solid var(--accent);
-        }
-        .transition-content {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
         }
         .team-selection {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             justify-content: center;
-            margin: 20px 0;
+            margin: 15px 0;
             flex-wrap: wrap;
         }
         .team-option {
-            padding: 20px;
+            padding: 15px;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 12px;
             border: 3px solid var(--info);
             cursor: pointer;
             transition: all 0.3s ease;
-            width: 200px;
+            width: 100%;
+            max-width: 300px;
             text-align: center;
         }
         .team-option:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         .team-option.selected {
             border-color: var(--success);
             background: rgba(76, 175, 80, 0.1);
             transform: scale(1.05);
         }
-        .team-name {
-            font-size: 1.2rem;
+        .transition-team-name {
+            font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: var(--primary);
         }
         .money-input-container {
-            margin: 15px 0;
+            margin: 10px 0;
             text-align: left;
         }
         .money-input-container label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             font-weight: 600;
             color: var(--primary);
         }
         .total-display {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            margin: 20px 0;
-            padding: 15px;
+            margin: 15px 0;
+            padding: 12px;
             background: linear-gradient(135deg, var(--gold), var(--warning));
             border-radius: 10px;
             border: 2px solid var(--accent);
             color: white;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
         
-        /* Gioco Finale - L'ULTIMA CATENA (NUOVA VERSIONE) */
+        /* Gioco Finale - L'ULTIMA CATENA */
         .final-game-screen {
             position: fixed;
             top: 0;
@@ -527,40 +474,36 @@
         }
         .final-game-content {
             background: rgba(255, 255, 255, 0.15);
-            padding: 25px;
+            padding: 20px;
             border-radius: 15px;
             border: 3px solid rgba(253, 187, 45, 0.5);
             text-align: center;
-            max-width: 900px;
-            width: 95%;
+            max-width: 95%;
+            width: 100%;
             backdrop-filter: blur(15px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
         }
         .final-game-title {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             color: var(--gold);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-weight: 800;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
         }
         .final-game-subtitle {
-            font-size: 1.4rem;
-            margin-bottom: 25px;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         .prize-display {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            margin: 20px 0;
-            padding: 20px;
+            margin: 15px 0;
+            padding: 15px;
             background: rgba(46, 204, 113, 0.4);
             border-radius: 12px;
             border: 3px solid var(--success);
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
-        /* Stile per la catena (come "Una tira l'altra") */
         .chain-game-container {
             display: flex;
             flex-direction: column;
@@ -580,12 +523,11 @@
         
         .chain-container {
             width: 100%;
-            max-width: 500px;
             margin: 10px auto;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
             border-radius: 12px;
             padding: 15px;
-            max-height: 75vh;
+            max-height: 50vh;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -593,47 +535,37 @@
         }
         
         .chain-word {
-            padding: 12px;
+            padding: 10px;
             background: rgba(0, 0, 0, 0.4);
             border-radius: 10px;
-            min-height: 50px;
+            min-height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+            font-size: 1rem;
             font-weight: 700;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             transition: all 0.3s ease;
             border-left: 4px solid transparent;
-            transform-origin: top;
-            transform: scaleY(0);
-            opacity: 0;
         }
         
         .chain-word.revealed {
             background: linear-gradient(135deg, rgba(253, 187, 45, 0.4), rgba(253, 187, 45, 0.2));
             border-left: 4px solid var(--accent);
             color: #fff;
-            transform: scaleY(1);
-            opacity: 1;
-            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
         }
         
         .chain-word.hidden-word {
             background: linear-gradient(135deg, rgba(178, 31, 31, 0.3), rgba(178, 31, 31, 0.2));
             border-left: 4px solid var(--secondary);
             color: #fff;
-            transform: scaleY(1);
-            opacity: 1;
         }
         
         .chain-word.completely-hidden {
             background: linear-gradient(135deg, rgba(178, 31, 31, 0.5), rgba(178, 31, 31, 0.4));
             border-left: 4px solid var(--secondary);
             color: transparent;
-            text-shadow: none;
         }
         
         .chain-word.current-word {
@@ -644,13 +576,6 @@
         .chain-word.wrong-answer {
             background: linear-gradient(135deg, rgba(231, 76, 60, 0.4), rgba(192, 57, 43, 0.3));
             border-left: 4px solid var(--danger);
-            animation: shake 0.5s ease-in-out;
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
         }
         
         .chain-controls-section {
@@ -668,8 +593,8 @@
         .chain-direction {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin: 12px 0;
+            gap: 10px;
+            margin: 10px 0;
         }
         
         .direction-btn {
@@ -681,7 +606,7 @@
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s ease;
-            font-size: clamp(0.8rem, 1.4vw, 0.9rem);
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -695,44 +620,43 @@
         .chain-main-controls {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             width: 100%;
             flex-wrap: wrap;
         }
         
         .chain-timer {
             text-align: center;
-            margin: 12px 0;
-            padding: 10px;
+            margin: 10px 0;
+            padding: 8px;
             background: linear-gradient(135deg, rgba(231, 76, 60, 0.3), rgba(192, 57, 43, 0.2));
             border-radius: 10px;
             border: 2px solid var(--danger);
-            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+            font-size: 0.9rem;
             font-weight: bold;
             color: var(--accent);
         }
         
         .jolly-counter {
-            font-size: 1.2rem;
-            margin: 15px 0;
-            padding: 15px;
+            font-size: 1rem;
+            margin: 10px 0;
+            padding: 10px;
             background: rgba(155, 89, 182, 0.4);
             border-radius: 10px;
             border: 2px solid #9b59b6;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
         
         .final-game-controls {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             justify-content: center;
-            margin-top: 20px;
+            margin-top: 15px;
             flex-wrap: wrap;
         }
         
         .final-game-btn {
-            padding: 15px 25px;
-            font-size: 1rem;
+            padding: 10px 15px;
+            font-size: 0.9rem;
             font-weight: bold;
             border: none;
             border-radius: 50px;
@@ -741,13 +665,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         
         .final-game-btn:hover:not(:disabled) {
             transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
         
         .final-game-btn:disabled {
@@ -770,225 +693,15 @@
             color: white;
         }
 
-        /* Total Money Display */
-        .total-money-display {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            background: linear-gradient(135deg, var(--gold), var(--warning));
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border: 2px solid var(--accent);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-            z-index: 1000;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Character Selection */
-        .character-selection {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-            margin: 15px 0;
-        }
-        .character-option {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 2px solid var(--info);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            background: white;
-        }
-        .character-option:hover {
-            transform: scale(1.1);
-            border-color: var(--accent);
-        }
-        .character-option.selected {
-            border-color: var(--success);
-            background: var(--success);
-            color: white;
-            transform: scale(1.1);
-        }
-
-        /* Money Input */
-        .money-input-container {
-            margin: 8px 0;
-        }
-        .money-input-container label {
-            display: block;
-            margin-bottom: 4px;
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 0.9rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 8px;
-            }
-            
-            .game-layout {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .team-sidebar {
-                flex: 0 0 auto;
-                min-height: 180px;
-                width: 100%;
-            }
-            
+        @media (min-width: 768px) {
             .team-setup {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
+                flex-direction: row;
             }
-            
-            .team-input {
-                width: 100%;
-                max-width: 350px;
-                padding: 15px;
+            .teams-container {
+                flex-direction: row;
             }
-            
-            .word {
-                font-size: 2rem;
-                padding: 15px;
-            }
-            
-            .timer {
-                font-size: 2rem;
-                padding: 12px 20px;
-            }
-            
-            .seconds-label {
-                font-size: 1rem;
-            }
-            
-            .stats-container {
-                gap: 8px;
-            }
-            
-            .stat-box {
-                min-width: 100px;
-                padding: 10px;
-            }
-            
-            .stat-label {
-                font-size: 0.7rem;
-            }
-            
-            .stat-value {
-                font-size: 1.1rem;
-            }
-            
-            .team-selection {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
-            
             .team-option {
-                width: 100%;
-                max-width: 300px;
-            }
-            
-            .final-game-title {
-                font-size: 2rem;
-            }
-            
-            .final-game-subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .chain-container {
-                max-height: 60vh;
-            }
-            
-            .chain-word {
-                padding: 8px;
-                min-height: 40px;
-                font-size: clamp(0.8rem, 1.6vw, 1rem);
-            }
-            
-            .final-game-btn {
-                padding: 12px 20px;
-                font-size: 0.9rem;
-            }
-            
-            .final-game-content {
-                padding: 20px;
-            }
-            
-            .total-money-display {
-                position: relative;
-                top: auto;
-                right: auto;
-                margin: 10px auto;
-                width: fit-content;
-                font-size: 1rem;
-                padding: 10px 15px;
-            }
-            
-            button {
-                padding: 10px 15px;
-                font-size: 0.8rem;
-            }
-            
-            .controls {
-                gap: 8px;
-            }
-            
-            .chain-game-container {
-                flex-direction: column;
-            }
-            
-            .chain-controls-section {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            .team-name {
-                font-size: 1rem;
-                padding: 10px;
-            }
-            
-            .score {
-                font-size: 1.3rem;
-                padding: 10px;
-            }
-            
-            .word {
-                font-size: 1.8rem;
-            }
-            
-            .timer {
-                font-size: 1.8rem;
-                padding: 10px 15px;
-            }
-            
-            .character-option {
-                width: 50px;
-                height: 50px;
-                font-size: 1.3rem;
-            }
-            
-            .final-game-title {
-                font-size: 1.8rem;
+                width: 45%;
             }
         }
     </style>
@@ -1058,7 +771,7 @@
             </div>
         </div>
       
-        <button class="start-btn" id="startGameBtn" style="padding: 15px 30px; margin: 0 auto; font-size: 1rem;">
+        <button class="start-btn" id="startGameBtn" style="padding: 12px 25px; margin: 0 auto;">
             <i class="fas fa-play-circle"></i> INIZIA IL GIOCO
         </button>
     </div>
@@ -1069,13 +782,21 @@
             <h1>🎯 INTESA VINCENTE</h1>
         </header>
       
-        <div class="game-layout">
-            <!-- Squadra A -->
-            <div class="team-sidebar" id="teamASidebar">
-                <div class="team-name" id="displayTeamA"><i class="fas fa-users"></i> Squadra A</div>
-                <div class="score" id="scoreA">0 Punti</div>
-                <div class="money-display">€<span id="moneyA">0</span></div>
-                <div class="players-list" id="teamAPlayersList"></div>
+        <div class="game-area">
+            <div class="teams-container">
+                <!-- Squadra A -->
+                <div class="team-card" id="teamACard">
+                    <div class="team-name" id="displayTeamA"><i class="fas fa-users"></i> Squadra A</div>
+                    <div class="score" id="scoreA">0 Punti</div>
+                    <div class="money-display">€<span id="moneyA">0</span></div>
+                </div>
+              
+                <!-- Squadra B -->
+                <div class="team-card" id="teamBCard">
+                    <div class="team-name" id="displayTeamB"><i class="fas fa-users"></i> Squadra B</div>
+                    <div class="score" id="scoreB">0 Punti</div>
+                    <div class="money-display">€<span id="moneyB">0</span></div>
+                </div>
             </div>
           
             <!-- Area Centrale di Gioco -->
@@ -1128,7 +849,7 @@
                     <div class="answering-player" id="answeringPlayer">
                         <i class="fas fa-user"></i> Risponde: Squadra A
                     </div>
-                    <div style="display: flex; gap: 15px;">
+                    <div class="controls">
                         <button class="correct-btn" id="correctBtn">
                             <i class="fas fa-check"></i> ESATTA (+€1000)
                         </button>
@@ -1137,14 +858,6 @@
                         </button>
                     </div>
                 </div>
-            </div>
-          
-            <!-- Squadra B -->
-            <div class="team-sidebar" id="teamBSidebar">
-                <div class="team-name" id="displayTeamB"><i class="fas fa-users"></i> Squadra B</div>
-                <div class="score" id="scoreB">0 Punti</div>
-                <div class="money-display">€<span id="moneyB">0</span></div>
-                <div class="players-list" id="teamBPlayersList"></div>
             </div>
         </div>
     </div>
@@ -1159,11 +872,11 @@
         <div class="transition-content">
             <div class="team-selection">
                 <div class="team-option" id="teamAOption" data-team="A">
-                    <div class="team-name" id="transitionTeamAName">Squadra A</div>
+                    <div class="transition-team-name" id="transitionTeamAName">Squadra A</div>
                     <p>Seleziona per far passare la Squadra A al gioco finale</p>
                 </div>
                 <div class="team-option" id="teamBOption" data-team="B">
-                    <div class="team-name" id="transitionTeamBName">Squadra B</div>
+                    <div class="transition-team-name" id="transitionTeamBName">Squadra B</div>
                     <p>Seleziona per far passare la Squadra B al gioco finale</p>
                 </div>
             </div>
@@ -1188,7 +901,7 @@
         </div>
     </div>
 
-    <!-- Schermata Gioco Finale - L'ULTIMA CATENA (NUOVA VERSIONE) -->
+    <!-- Schermata Gioco Finale - L'ULTIMA CATENA -->
     <div class="final-game-screen hidden" id="finalGameScreen">
         <div class="final-game-content">
             <div class="final-game-title">
@@ -1287,7 +1000,7 @@
         let maxRaddoppi = 2;
         let gameCompleted = false;
         
-        // Variabili per il gioco finale (NUOVA VERSIONE)
+        // Variabili per il gioco finale
         let finalGameActive = false;
         let finalChainWords = [];
         let finalCurrentWordIndex = 0;
@@ -1337,7 +1050,7 @@
         const totalForFinalGame = document.getElementById('totalForFinalGame');
         const proceedToFinalGameBtn = document.getElementById('proceedToFinalGameBtn');
         
-        // Elementi DOM per il gioco finale (NUOVA VERSIONE)
+        // Elementi DOM per il gioco finale
         const winningTeamName = document.getElementById('winningTeamName');
         const finalPrizeAmount = document.getElementById('finalPrizeAmount');
         const finalPrizeDisplay = document.getElementById('currentPrize');
@@ -1376,7 +1089,7 @@
         // Event listener per procedere al gioco finale
         proceedToFinalGameBtn.addEventListener('click', proceedToFinalGame);
         
-        // Event listeners per il gioco finale (NUOVA VERSIONE)
+        // Event listeners per il gioco finale
         finalStartBtn.addEventListener('click', startFinalGame);
         finalBuzzer.addEventListener('click', handleFinalBuzzer);
         finalJollyBtn.addEventListener('click', useJolly);
@@ -1463,31 +1176,12 @@
             puntiA = 0;
             puntiB = 0;
           
-            // Aggiorna liste giocatori
-            updatePlayersInSidebars();
-          
             // Passa alla schermata di gioco
             setupScreen.classList.add('hidden');
             gameScreen.classList.remove('hidden');
           
             // Inizializza il gioco
             initGame();
-        }
-        
-        function updatePlayersInSidebars() {
-            updatePlayersInSidebar('teamAPlayersList', teamAPlayers);
-            updatePlayersInSidebar('teamBPlayersList', teamBPlayers);
-        }
-        
-        function updatePlayersInSidebar(elementId, players) {
-            const element = document.getElementById(elementId);
-            element.innerHTML = '';
-            players.forEach(player => {
-                const playerItem = document.createElement('div');
-                playerItem.className = 'player-item';
-                playerItem.innerHTML = `${player.character} ${player.name}`;
-                element.appendChild(playerItem);
-            });
         }
         
         function initGame() {
@@ -1530,13 +1224,13 @@
         }
         
         function updateActiveTeam() {
-            document.getElementById('teamASidebar').classList.remove('active');
-            document.getElementById('teamBSidebar').classList.remove('active');
+            document.getElementById('teamACard').classList.remove('active');
+            document.getElementById('teamBCard').classList.remove('active');
           
             if (currentTeam === 'A') {
-                document.getElementById('teamASidebar').classList.add('active');
+                document.getElementById('teamACard').classList.add('active');
             } else {
-                document.getElementById('teamBSidebar').classList.add('active');
+                document.getElementById('teamBCard').classList.add('active');
             }
           
             document.getElementById('answeringPlayer').innerHTML = `<i class="fas fa-user"></i> Risponde: ${currentTeam === 'A' ? document.getElementById('displayTeamA').textContent : document.getElementById('displayTeamB').textContent}`;
@@ -1840,7 +1534,7 @@
             initFinalGame();
         }
         
-        // GIOCO FINALE - L'ULTIMA CATENA (NUOVA VERSIONE)
+        // GIOCO FINALE - L'ULTIMA CATENA
         function initFinalGame() {
             finalChainWords = finalChain.words;
             finalCurrentWordIndex = 0;
@@ -1897,17 +1591,6 @@
                 
                 chainContainer.appendChild(chainWord);
             }
-            
-            // Animazione a fisarmonica - rivelazione progressiva
-            setTimeout(() => {
-                const words = document.querySelectorAll('.chain-word');
-                words.forEach((word, index) => {
-                    setTimeout(() => {
-                        word.style.transform = 'scaleY(1)';
-                        word.style.opacity = '1';
-                    }, index * 200); // Ritardo progressivo
-                });
-            }, 500);
         }
         
         function handleDirectionChoice(direction) {
