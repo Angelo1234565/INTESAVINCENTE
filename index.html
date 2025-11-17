@@ -547,7 +547,7 @@
             box-shadow: 0 5px 15px rgba(255, 171, 0, 0.3);
         }
         
-        /* Gioco Finale - RIDOTTO E OTTIMIZZATO */
+        /* GIOCO FINALE - LAYOUT A DUE COLONNE */
         .final-game-screen {
             position: fixed;
             top: 0;
@@ -560,16 +560,17 @@
             justify-content: center;
             align-items: center;
             z-index: 2000;
-            padding: 10px;
+            padding: 15px;
             color: white;
         }
         .final-game-content {
             background: rgba(255, 255, 255, 0.15);
-            padding: 15px;
+            padding: 20px;
             border-radius: 15px;
             border: 3px solid rgba(253, 187, 45, 0.5);
             text-align: center;
             width: 95%;
+            max-width: 1200px;
             max-height: 95vh;
             backdrop-filter: blur(15px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
@@ -577,72 +578,63 @@
             flex-direction: column;
         }
         .final-game-title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: var(--gold);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             font-weight: 800;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
         }
         .final-game-subtitle {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
-        .prize-display {
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin: 10px 0;
-            padding: 12px;
-            background: rgba(46, 204, 113, 0.4);
-            border-radius: 10px;
-            border: 3px solid var(--success);
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
         
-        .chain-game-container {
+        .final-game-layout {
             display: flex;
-            flex-direction: column;
-            width: 100%;
-            gap: 12px;
+            gap: 20px;
             flex: 1;
             min-height: 0;
+        }
+        
+        /* COLONNA SINISTRA - CATENA */
+        .chain-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
         }
         
         .chain-display-section {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 8px;
-            flex: 1;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 15px;
             min-height: 0;
-            max-height: 45vh;
         }
         
         .chain-container {
-            width: 100%;
-            margin: 8px auto;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-            border-radius: 12px;
-            padding: 12px;
-            max-height: 100%;
-            overflow-y: auto;
+            flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
+            overflow-y: auto;
+            min-height: 0;
         }
         
         .chain-word {
-            padding: 12px;
+            padding: 15px;
             background: rgba(0, 0, 0, 0.4);
-            border-radius: 8px;
-            min-height: 50px;
+            border-radius: 10px;
+            min-height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
@@ -686,55 +678,62 @@
             75% { transform: translateX(5px); }
         }
         
-        .chain-controls-section {
-            width: 100%;
+        /* COLONNA DESTRA - CONTROLLI E INFO */
+        .controls-column {
+            flex: 0 0 350px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            gap: 12px;
-            margin-top: 10px;
+            gap: 15px;
         }
         
-        .chain-main-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            flex-wrap: wrap;
-            margin: 10px 0;
-        }
-        
-        /* TIMER MIGLIORATO - PIÙ VISIBILE */
+        /* TIMER MIGLIORATO */
         .chain-timer {
             text-align: center;
-            margin: 8px 0;
-            padding: 12px;
+            padding: 15px;
             background: linear-gradient(135deg, rgba(231, 76, 60, 0.5), rgba(192, 57, 43, 0.4));
             border-radius: 12px;
             border: 3px solid var(--danger);
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: white;
             box-shadow: 0 0 20px rgba(244, 67, 54, 0.5);
-            width: 100%;
-            max-width: 250px;
+        }
+        
+        /* MONTEPREMI */
+        .prize-display {
+            font-size: 1.6rem;
+            font-weight: bold;
+            padding: 20px;
+            background: rgba(46, 204, 113, 0.4);
+            border-radius: 12px;
+            border: 3px solid var(--success);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
         /* CERCHIETTI JOLLY */
+        .jolly-section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .jolly-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+        
         .jolly-indicators {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 10px 0;
+            gap: 20px;
         }
         
         .jolly-indicator {
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             background: linear-gradient(135deg, #9b59b6, #8e44ad);
             border: 2px solid white;
@@ -743,7 +742,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             color: white;
         }
         
@@ -753,17 +752,38 @@
             box-shadow: none;
         }
         
-        .final-game-controls {
+        /* CONTROLLI PRINCIPALI */
+        .controls-section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            flex: 1;
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .final-message {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 10px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
             justify-content: center;
-            margin-top: 10px;
-            flex-wrap: wrap;
+        }
+        
+        .chain-main-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
         
         .final-game-btn {
-            padding: 10px 16px;
-            font-size: 0.85rem;
+            padding: 12px 20px;
+            font-size: 0.9rem;
             font-weight: bold;
             border: none;
             border-radius: 50px;
@@ -772,9 +792,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            min-width: 130px;
         }
         
         .final-game-btn:hover:not(:disabled) {
@@ -807,25 +826,24 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            justify-content: center;
-            align-items: center;
-            margin-top: 12px;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            width: 100%;
+            margin-top: 10px;
+        }
+
+        .final-answering-player {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-align: center;
         }
 
         .final-answer-buttons {
             display: flex;
-            gap: 15px;
-            justify-content: center;
-            width: 100%;
-            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .final-correct-btn, .final-wrong-btn {
-            padding: 10px 20px;
+            padding: 12px;
             font-size: 0.9rem;
             font-weight: bold;
             border: none;
@@ -834,9 +852,10 @@
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            min-width: 120px;
+            flex: 1;
         }
 
         .final-correct-btn {
@@ -847,14 +866,6 @@
         .final-wrong-btn {
             background: linear-gradient(135deg, var(--danger), #c62828);
             color: white;
-        }
-
-        .final-answering-player {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--gold);
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            margin-bottom: 8px;
         }
 
         /* Total Money Display */
@@ -920,81 +931,16 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 8px;
-            }
-            
-            .game-layout {
+            .final-game-layout {
                 flex-direction: column;
-                gap: 8px;
             }
             
-            .team-sidebar {
+            .controls-column {
                 flex: 0 0 auto;
-                min-height: 180px;
-                width: 100%;
             }
             
-            .team-setup {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
-            
-            .team-input {
-                width: 100%;
-                max-width: 350px;
+            .final-game-content {
                 padding: 15px;
-            }
-            
-            .word {
-                font-size: 2rem;
-                padding: 15px;
-            }
-            
-            .timer {
-                font-size: 2rem;
-                padding: 12px 20px;
-            }
-            
-            .seconds-label {
-                font-size: 1rem;
-            }
-            
-            .stats-container {
-                gap: 8px;
-            }
-            
-            .stat-box {
-                min-width: 100px;
-                padding: 10px;
-            }
-            
-            .stat-label {
-                font-size: 0.7rem;
-            }
-            
-            .stat-value {
-                font-size: 1.1rem;
-            }
-            
-            .team-selection {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
-            
-            .team-option {
-                width: 100%;
-                max-width: 300px;
-            }
-            
-            .transition-title {
-                font-size: 1.8rem;
-            }
-            
-            .transition-subtitle {
-                font-size: 1.1rem;
             }
             
             .final-game-title {
@@ -1004,147 +950,31 @@
             .final-game-subtitle {
                 font-size: 1rem;
             }
-            
-            .chain-container {
-                max-height: 40vh;
-            }
-            
-            .chain-word {
-                padding: 10px;
-                min-height: 45px;
-                font-size: 1rem;
-            }
-            
-            .final-game-btn {
-                padding: 8px 14px;
-                font-size: 0.8rem;
-                min-width: 120px;
-            }
-            
-            .final-game-content {
-                padding: 12px;
-            }
-            
-            .total-money-display {
-                position: relative;
-                top: auto;
-                right: auto;
-                margin: 10px auto;
-                width: fit-content;
-                font-size: 1rem;
-                padding: 10px 15px;
-            }
-            
-            button {
-                padding: 10px 15px;
-                font-size: 0.8rem;
-            }
-            
-            .controls {
-                gap: 8px;
-            }
-            
-            .chain-game-container {
-                flex-direction: column;
-            }
-            
-            .chain-controls-section {
-                width: 100%;
-            }
-
-            .final-correct-btn, .final-wrong-btn {
-                padding: 8px 16px;
-                font-size: 0.85rem;
-                min-width: 110px;
-            }
-            
-            .chain-timer {
-                font-size: 1.2rem;
-                padding: 10px;
-            }
-            
-            .prize-display {
-                font-size: 1.2rem;
-                padding: 10px;
-            }
         }
 
         @media (max-width: 480px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            .team-name {
-                font-size: 1rem;
+            .final-game-content {
                 padding: 10px;
-            }
-            
-            .score {
-                font-size: 1.3rem;
-                padding: 10px;
-            }
-            
-            .word {
-                font-size: 1.8rem;
-            }
-            
-            .timer {
-                font-size: 1.8rem;
-                padding: 10px 15px;
-            }
-            
-            .character-option {
-                width: 50px;
-                height: 50px;
-                font-size: 1.3rem;
-            }
-            
-            .transition-title {
-                font-size: 1.6rem;
             }
             
             .final-game-title {
                 font-size: 1.4rem;
             }
-
-            .chain-main-controls {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .final-game-btn {
-                width: 100%;
-                max-width: 200px;
-            }
-
-            .final-answer-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .final-correct-btn, .final-wrong-btn {
-                width: 100%;
-                max-width: 160px;
-            }
-            
-            .chain-container {
-                max-height: 35vh;
-            }
             
             .chain-word {
-                padding: 8px;
-                min-height: 40px;
-                font-size: 0.9rem;
-            }
-            
-            .chain-timer {
-                font-size: 1.1rem;
-                padding: 8px;
+                padding: 12px;
+                min-height: 50px;
+                font-size: 1rem;
             }
             
             .prize-display {
-                font-size: 1.1rem;
-                padding: 8px;
+                font-size: 1.3rem;
+                padding: 15px;
+            }
+            
+            .chain-timer {
+                font-size: 1.3rem;
+                padding: 12px;
             }
         }
     </style>
@@ -1354,7 +1184,7 @@
         </div>
     </div>
 
-    <!-- Schermata Gioco Finale - L'ULTIMA CATENA - OTTIMIZZATA -->
+    <!-- Schermata Gioco Finale - LAYOUT A DUE COLONNE -->
     <div class="final-game-screen hidden" id="finalGameScreen">
         <div class="final-game-content">
             <div class="final-game-title">
@@ -1365,65 +1195,76 @@
                 La squadra <span id="winningTeamName">VINCITRICE</span> gioca per €<span id="finalPrizeAmount">0</span>!
             </div>
             
-            <!-- CERCHIETTI JOLLY -->
-            <div class="jolly-indicators" id="jollyIndicators">
-                <div class="jolly-indicator" id="jolly1">1</div>
-                <div class="jolly-indicator" id="jolly2">2</div>
-            </div>
-            
-            <div class="chain-game-container">
-                <div class="chain-display-section">
-                    <div class="chain-container" id="chainContainer">
-                        <!-- Le parole della catena verranno inserite qui dinamicamente -->
-                    </div>
-                    
-                    <!-- TIMER MIGLIORATO - PIÙ VISIBILE -->
-                    <div class="chain-timer hidden" id="chainTimer">
-                        <i class="fas fa-clock"></i> <span id="chainTimeLeft">20</span> secondi
-                    </div>
-                </div>
-                
-                <div class="chain-controls-section">
-                    <div class="message" id="finalMessage"><i class="fas fa-bullseye"></i> Premi "INIZIA CATENA" per cominciare!</div>
-                    
-                    <!-- PULSANTI PRINCIPALI - SEMPRE VISIBILI -->
-                    <div class="chain-main-controls">
-                        <button class="final-game-btn final-start-btn" id="finalStartBtn">
-                            <i class="fas fa-rocket"></i> INIZIA CATENA
-                        </button>
-                        <button class="final-game-btn final-answer-btn" id="finalBuzzer">
-                            <i class="fas fa-fire"></i> BUZZER
-                        </button>
-                        <button class="final-game-btn final-jolly-btn" id="finalJollyBtn">
-                            <i class="fas fa-star"></i> USA JOLLY
-                        </button>
-                    </div>
-                    
-                    <!-- PULSANTI ESATTA/ERRATA - APPAIONO QUANDO SI PREME BUZZER -->
-                    <div class="final-answer-controls hidden" id="finalAnswerControls">
-                        <div class="final-answering-player" id="finalAnsweringPlayer"></div>
-                        <div class="final-answer-buttons">
-                            <button class="final-correct-btn" id="finalCorrectBtn">
-                                <i class="fas fa-check"></i> ESATTA
-                            </button>
-                            <button class="final-wrong-btn" id="finalWrongBtn">
-                                <i class="fas fa-times"></i> ERRATA
-                            </button>
+            <div class="final-game-layout">
+                <!-- COLONNA SINISTRA - CATENA -->
+                <div class="chain-column">
+                    <div class="chain-display-section">
+                        <div class="chain-container" id="chainContainer">
+                            <!-- Le parole della catena verranno inserite qui dinamicamente -->
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- MONTE PREMI IN FONDO -->
-            <div class="prize-display" id="finalPrizeDisplay">
-                Montepremi attuale: €<span id="currentPrize">0</span>
+                
+                <!-- COLONNA DESTRA - CONTROLLI E INFO -->
+                <div class="controls-column">
+                    <!-- TIMER -->
+                    <div class="chain-timer hidden" id="chainTimer">
+                        <i class="fas fa-clock"></i> <span id="chainTimeLeft">20</span> secondi
+                    </div>
+                    
+                    <!-- MONTEPREMI -->
+                    <div class="prize-display" id="finalPrizeDisplay">
+                        <i class="fas fa-trophy"></i> €<span id="currentPrize">0</span>
+                    </div>
+                    
+                    <!-- JOLLY -->
+                    <div class="jolly-section">
+                        <div class="jolly-title">JOLLY DISPONIBILI</div>
+                        <div class="jolly-indicators" id="jollyIndicators">
+                            <div class="jolly-indicator" id="jolly1">1</div>
+                            <div class="jolly-indicator" id="jolly2">2</div>
+                        </div>
+                    </div>
+                    
+                    <!-- CONTROLLI PRINCIPALI -->
+                    <div class="controls-section">
+                        <div class="final-message" id="finalMessage">
+                            <i class="fas fa-bullseye"></i> Premi "INIZIA CATENA" per cominciare!
+                        </div>
+                        
+                        <div class="chain-main-controls">
+                            <button class="final-game-btn final-start-btn" id="finalStartBtn">
+                                <i class="fas fa-rocket"></i> INIZIA CATENA
+                            </button>
+                            <button class="final-game-btn final-answer-btn" id="finalBuzzer">
+                                <i class="fas fa-fire"></i> BUZZER
+                            </button>
+                            <button class="final-game-btn final-jolly-btn" id="finalJollyBtn">
+                                <i class="fas fa-star"></i> USA JOLLY
+                            </button>
+                        </div>
+                        
+                        <!-- PULSANTI ESATTA/ERRATA -->
+                        <div class="final-answer-controls hidden" id="finalAnswerControls">
+                            <div class="final-answering-player" id="finalAnsweringPlayer"></div>
+                            <div class="final-answer-buttons">
+                                <button class="final-correct-btn" id="finalCorrectBtn">
+                                    <i class="fas fa-check"></i> ESATTA
+                                </button>
+                                <button class="final-wrong-btn" id="finalWrongBtn">
+                                    <i class="fas fa-times"></i> ERRATA
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Il codice JavaScript rimane identico al precedente
-        // ... (tutto il codice JavaScript della versione precedente)
+        // Il codice JavaScript rimane identico alle versioni precedenti
+        // ... (tutto il codice JavaScript)
         
         // Variabili globali per il gioco principale
         let teamAPlayers = [];
