@@ -1342,10 +1342,10 @@
                     </div>
                     <div style="display: flex; gap: 15px;">
                         <button class="correct-btn" id="correctBtn">
-                            <i class="fas fa-check"></i> ESATTA (+€1000)
+                            <i class="fas fa-check"></i> ESATTA
                         </button>
                         <button class="wrong-btn" id="wrongBtn">
-                            <i class="fas fa-times"></i> ERRATA (-€1000)
+                            <i class="fas fa-times"></i> ERRATA
                         </button>
                     </div>
                 </div>
@@ -1901,6 +1901,8 @@
             teamB_raddoppiUtilizzati = 0;
             normalWordIndex = 0;
             doubleWordIndex = 0;
+            
+            updateAnswerButtonsText(); // Aggiorna i testi dei pulsanti
         }
         
         function shuffleWords() {
@@ -1953,6 +1955,16 @@
             document.getElementById('raddoppiRestanti').textContent = Math.max(0, maxRaddoppi - raddoppiUtilizzati);
         }
         
+        // NUOVA FUNZIONE: Aggiorna i testi dei pulsanti di risposta
+        function updateAnswerButtonsText() {
+            const isDouble = isRaddoppioAttivo && raddoppioPerParola;
+            const correctBtn = document.getElementById('correctBtn');
+            const wrongBtn = document.getElementById('wrongBtn');
+            
+            correctBtn.innerHTML = `<i class="fas fa-check"></i> ESATTA (+€${isDouble ? '2000' : '1000'} / +${isDouble ? '2' : '1'} punto)`;
+            wrongBtn.innerHTML = `<i class="fas fa-times"></i> ERRATA (-€${isDouble ? '2000' : '1000'} / -${isDouble ? '2' : '1'} punto)`;
+        }
+        
         function showNextWord() {
             if (isRaddoppioAttivo && raddoppioPerParola) {
                 if (doubleWordIndex < availableDoubleWords.length) {
@@ -1991,6 +2003,7 @@
             document.getElementById('passoBtn').disabled = false;
             document.getElementById('answerControls').classList.add('hidden');
           
+            updateAnswerButtonsText(); // AGGIUNTO: aggiorna i testi dei pulsanti
             showNextWord();
             startTimer();
         }
@@ -2030,6 +2043,8 @@
             document.getElementById('raddoppioBtn').disabled = true;
             document.getElementById('raddoppioBtn').innerHTML = '<i class="fas fa-bolt"></i> RADDOPPIO ATTIVO';
             updateStats();
+            
+            updateAnswerButtonsText(); // AGGIUNTO: aggiorna i testi dei pulsanti
           
             // Mostra subito una parola doppia
             showNextWord();
@@ -2082,6 +2097,8 @@
             document.getElementById('stopTimerBtn').disabled = false;
             document.getElementById('raddoppioBtn').disabled = false;
             document.getElementById('passoBtn').disabled = false;
+            
+            updateAnswerButtonsText(); // AGGIUNTO: aggiorna i testi dei pulsanti
           
             showNextWord();
             startTimer();
@@ -2089,28 +2106,33 @@
         
         function handleWrongAnswer() {
             const valorePunto = 1000; // €1000 per punto
-          
-            // Togli €1000 quando si sbaglia (solo se hanno soldi)
-            if (currentTeam === 'A' && moneyA > 0) {
-                moneyA = Math.max(0, moneyA - valorePunto);
-            } else if (currentTeam === 'B' && moneyB > 0) {
-                moneyB = Math.max(0, moneyB - valorePunto);
+            const punti = isRaddoppioAttivo && raddoppioPerParola ? 2 : 1;
+            
+            // Togli punti e soldi quando si sbaglia
+            if (currentTeam === 'A') {
+                puntiA = Math.max(0, puntiA - punti);
+                moneyA = Math.max(0, moneyA - (punti * valorePunto));
+            } else {
+                puntiB = Math.max(0, puntiB - punti);
+                moneyB = Math.max(0, moneyB - (punti * valorePunto));
             }
-          
+            
             // Disattiva il raddoppio dopo una risposta errata
             if (isRaddoppioAttivo && raddoppioPerParola) {
                 isRaddoppioAttivo = false;
                 raddoppioPerParola = false;
                 document.getElementById('raddoppioBtn').innerHTML = '<i class="fas fa-bolt"></i> RADDOPPIA';
             }
-          
+            
             updatePunti();
             updateMoney();
             document.getElementById('answerControls').classList.add('hidden');
             document.getElementById('stopTimerBtn').disabled = false;
             document.getElementById('raddoppioBtn').disabled = false;
             document.getElementById('passoBtn').disabled = false;
-          
+            
+            updateAnswerButtonsText(); // AGGIUNTO: aggiorna i testi dei pulsanti
+            
             showNextWord();
             startTimer();
         }
