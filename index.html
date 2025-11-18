@@ -976,6 +976,122 @@
             color: white;
         }
 
+        /* NUOVO: CATENA ZIP */
+        .zip-chain-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .zip-chain-word {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            min-height: 80px;
+            min-width: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .zip-chain-word.top {
+            background: linear-gradient(135deg, rgba(253, 187, 45, 0.6), rgba(253, 187, 45, 0.4));
+            border-color: var(--accent);
+        }
+
+        .zip-chain-word.middle {
+            background: linear-gradient(135deg, rgba(41, 128, 185, 0.6), rgba(52, 152, 219, 0.4));
+            border-color: var(--info);
+            font-size: 2rem;
+            min-height: 100px;
+        }
+
+        .zip-chain-word.bottom {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.6), rgba(192, 57, 43, 0.4));
+            border-color: var(--danger);
+        }
+
+        .zip-chain-word.hidden {
+            color: transparent;
+            text-shadow: none;
+        }
+
+        .zip-chain-word.partial {
+            color: white;
+            letter-spacing: 5px;
+        }
+
+        .zip-chain-word.revealed {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.6), rgba(39, 174, 96, 0.4));
+            border-color: var(--success);
+        }
+
+        /* NUOVO: Controlli per la catena zip */
+        .zip-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .zip-timer {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.5), rgba(192, 57, 43, 0.4));
+            border-radius: 12px;
+            border: 3px solid var(--danger);
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 20px rgba(244, 67, 54, 0.5);
+        }
+
+        .zip-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .zip-btn {
+            padding: 15px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            flex: 1;
+        }
+
+        .zip-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .zip-buy-btn {
+            background: linear-gradient(135deg, var(--info), #2980b9);
+            color: white;
+        }
+
+        .zip-guess-btn {
+            background: linear-gradient(135deg, var(--success), #27ae60);
+            color: white;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .final-game-layout {
@@ -1324,6 +1440,74 @@
         </div>
     </div>
 
+    <!-- NUOVA SCHERMATA: CATENA ZIP -->
+    <div class="final-game-screen hidden" id="zipChainScreen">
+        <div class="final-game-content">
+            <div class="final-game-title">
+                <i class="fas fa-link"></i> CATENA FINALE - ZIP
+            </div>
+            
+            <div class="final-game-subtitle">
+                Trova la parola mancante per vincere €<span id="zipPrizeAmount">0</span>!
+            </div>
+            
+            <div class="final-game-layout">
+                <!-- COLONNA SINISTRA - CATENA ZIP -->
+                <div class="chain-column">
+                    <div class="chain-display-section">
+                        <div class="zip-chain-container" id="zipChainContainer">
+                            <!-- La catena zip verrà inserita qui dinamicamente -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- COLONNA DESTRA - CONTROLLI E INFO -->
+                <div class="controls-column">
+                    <!-- TIMER ZIP -->
+                    <div class="zip-timer hidden" id="zipTimer">
+                        <i class="fas fa-clock"></i> <span id="zipTimeLeft">60</span> secondi
+                    </div>
+                    
+                    <!-- MONTEPREMI ZIP -->
+                    <div class="prize-display" id="zipPrizeDisplay">
+                        <i class="fas fa-trophy"></i> €<span id="zipCurrentPrize">0</span>
+                    </div>
+                    
+                    <!-- CONTROLLI ZIP -->
+                    <div class="controls-section">
+                        <div class="final-message" id="zipMessage">
+                            <i class="fas fa-bullseye"></i> Hai 60 secondi per trovare la parola mancante!
+                        </div>
+                        
+                        <div class="zip-controls">
+                            <div class="zip-buttons">
+                                <button class="zip-btn zip-buy-btn" id="zipBuyBtn">
+                                    <i class="fas fa-shopping-cart"></i> COMPRA TERZO ELEMENTO (€10.000)
+                                </button>
+                                <button class="zip-btn zip-guess-btn" id="zipGuessBtn">
+                                    <i class="fas fa-lightbulb"></i> PROVA A INDOVINARE
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- PULSANTI ESATTA/ERRATA ZIP -->
+                        <div class="final-answer-controls hidden" id="zipAnswerControls">
+                            <div class="final-answering-player" id="zipAnsweringPlayer"></div>
+                            <div class="final-answer-buttons">
+                                <button class="final-correct-btn" id="zipCorrectBtn">
+                                    <i class="fas fa-check"></i> ESATTA
+                                </button>
+                                <button class="final-wrong-btn" id="zipWrongBtn">
+                                    <i class="fas fa-times"></i> ERRATA
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Variabili globali per il gioco principale
         let teamAPlayers = [];
@@ -1368,6 +1552,29 @@
         let chainTimerInterval;
         let chainTimeLeft = 20;
         
+        // NUOVE VARIABILI PER LA CATENA ZIP
+        let zipChainActive = false;
+        let zipTimerInterval;
+        let zipTimeLeft = 60;
+        let zipChainWords = [];
+        let zipMissingWord = '';
+        let zipTopWord = '';
+        let zipMiddleWord = 'BRASILE';
+        let zipBottomWord = '';
+        let zipPrize = 0;
+        const zipChainThemes = {
+            "BRASILE": [
+                { top: "SAMBA", bottom: "DANZA" },
+                { top: "COPACABANA", bottom: "SPIAGGIA" },
+                { top: "PELÉ", bottom: "CALCIATORE" },
+                { top: "CAIPIRINHA", bottom: "COCKTAIL" },
+                { top: "RIO", bottom: "CITTÀ" },
+                { top: "CARNEVALE", bottom: "FESTA" },
+                { top: "AMAZZONIA", bottom: "FORESTA" },
+                { top: "JANEIRO", bottom: "CITTÀ" }
+            ]
+        };
+        
         // NUOVA CATENA TEMATICA BRASILE
         const finalChain = {
             words: ["SAMBA", "CARNEVALE", "COPACABANA", "CAIPIRINHA", "PELÉ", "AMAZZONIA"]
@@ -1392,6 +1599,7 @@
         const gameScreen = document.getElementById('gameScreen');
         const transitionScreen = document.getElementById('transitionScreen');
         const finalGameScreen = document.getElementById('finalGameScreen');
+        const zipChainScreen = document.getElementById('zipChainScreen');
         const timerDisplay = document.getElementById('timer');
         const currentWordDisplay = document.getElementById('currentWord');
         const totalMoneyDisplay = document.getElementById('totalMoney');
@@ -1429,6 +1637,20 @@
         const useJollyBtn = document.getElementById('useJollyBtn');
         const halvePrizeBtn = document.getElementById('halvePrizeBtn');
         
+        // NUOVI ELEMENTI DOM per la catena zip
+        const zipChainContainer = document.getElementById('zipChainContainer');
+        const zipTimer = document.getElementById('zipTimer');
+        const zipTimeLeftDisplay = document.getElementById('zipTimeLeft');
+        const zipPrizeAmount = document.getElementById('zipPrizeAmount');
+        const zipPrizeDisplay = document.getElementById('zipCurrentPrize');
+        const zipMessage = document.getElementById('zipMessage');
+        const zipBuyBtn = document.getElementById('zipBuyBtn');
+        const zipGuessBtn = document.getElementById('zipGuessBtn');
+        const zipAnswerControls = document.getElementById('zipAnswerControls');
+        const zipAnsweringPlayer = document.getElementById('zipAnsweringPlayer');
+        const zipCorrectBtn = document.getElementById('zipCorrectBtn');
+        const zipWrongBtn = document.getElementById('zipWrongBtn');
+        
         // Setup giocatori
         document.getElementById('addTeamAPlayer').addEventListener('click', () => addPlayer('A'));
         document.getElementById('addTeamBPlayer').addEventListener('click', () => addPlayer('B'));
@@ -1455,6 +1677,12 @@
         // NUOVI Event listeners per quando il tempo scade
         useJollyBtn.addEventListener('click', handleUseJollyWhenTimeExpired);
         halvePrizeBtn.addEventListener('click', handleHalvePrizeWhenTimeExpired);
+        
+        // NUOVI Event listeners per la catena zip
+        zipBuyBtn.addEventListener('click', handleZipBuy);
+        zipGuessBtn.addEventListener('click', handleZipGuess);
+        zipCorrectBtn.addEventListener('click', handleZipCorrectAnswer);
+        zipWrongBtn.addEventListener('click', handleZipWrongAnswer);
         
         // Character selection
         document.querySelectorAll('.character-option').forEach(option => {
@@ -2253,12 +2481,188 @@
             }
             updateMoney();
             
+            // AVVIA LA CATENA ZIP DOPO LA CATENA NORMALE
+            setTimeout(() => {
+                startZipChain();
+            }, 3000);
+        }
+        
+        // NUOVA FUNZIONE: Inizia la catena zip
+        function startZipChain() {
+            finalGameScreen.classList.add('hidden');
+            zipChainScreen.classList.remove('hidden');
+            
+            // Imposta il premio per la catena zip
+            zipPrize = finalPrize;
+            zipPrizeAmount.textContent = zipPrize.toLocaleString();
+            zipPrizeDisplay.textContent = zipPrize.toLocaleString();
+            
+            // Seleziona casualmente una catena dal tema Brasile
+            const brasilChains = zipChainThemes["BRASILE"];
+            const randomChain = brasilChains[Math.floor(Math.random() * brasilChains.length)];
+            
+            zipTopWord = randomChain.top;
+            zipBottomWord = randomChain.bottom;
+            zipMissingWord = zipTopWord; // La parola mancante è quella in alto
+            
+            // Crea la visualizzazione della catena zip
+            createZipChainDisplay();
+            
+            // Inizializza i controlli
+            zipBuyBtn.disabled = false;
+            zipGuessBtn.disabled = false;
+            zipAnswerControls.classList.add('hidden');
+            zipTimer.classList.add('hidden');
+            
+            zipMessage.textContent = "Hai 60 secondi per trovare la parola mancante!";
+        }
+        
+        // NUOVA FUNZIONE: Crea la visualizzazione della catena zip
+        function createZipChainDisplay() {
+            zipChainContainer.innerHTML = '';
+            
+            // Parola in alto (rivelata)
+            const topWord = document.createElement('div');
+            topWord.className = 'zip-chain-word top';
+            topWord.textContent = zipTopWord;
+            zipChainContainer.appendChild(topWord);
+            
+            // Parola centrale (BRASILE con 2 lettere visibili)
+            const middleWord = document.createElement('div');
+            middleWord.className = 'zip-chain-word middle';
+            middleWord.textContent = 'B R A S I L E';
+            middleWord.innerHTML = 'B R <span style="color: transparent; text-shadow: none;">A S I</span> L E';
+            zipChainContainer.appendChild(middleWord);
+            
+            // Parola in basso (nascosta)
+            const bottomWord = document.createElement('div');
+            bottomWord.className = 'zip-chain-word bottom hidden';
+            bottomWord.textContent = '? ? ? ? ?';
+            zipChainContainer.appendChild(bottomWord);
+        }
+        
+        // NUOVA FUNZIONE: Gestisce l'acquisto del terzo elemento
+        function handleZipBuy() {
+            // Verifica che la squadra abbia abbastanza soldi
+            const teamMoney = winningTeam === 'A' ? moneyA : moneyB;
+            const buyCost = 10000; // €10.000 per comprare il terzo elemento
+            
+            if (teamMoney < buyCost) {
+                alert("Non hai abbastanza soldi per comprare il terzo elemento!");
+                return;
+            }
+            
+            // Sottrai i soldi
+            if (winningTeam === 'A') {
+                moneyA -= buyCost;
+            } else {
+                moneyB -= buyCost;
+            }
+            updateMoney();
+            
+            // Rivelare la parola in basso
+            const bottomWord = document.querySelector('.zip-chain-word.bottom');
+            bottomWord.textContent = zipBottomWord;
+            bottomWord.classList.remove('hidden');
+            bottomWord.classList.add('revealed');
+            
+            // Disabilita il pulsante di acquisto
+            zipBuyBtn.disabled = true;
+            
+            zipMessage.textContent = "Hai comprato il terzo elemento! Ora prova a indovinare la parola mancante!";
+        }
+        
+        // NUOVA FUNZIONE: Gestisce il tentativo di indovinare
+        function handleZipGuess() {
+            stopZipTimer();
+            
+            const teamName = winningTeam === 'A' ? document.getElementById('teamAName').value : document.getElementById('teamBName').value;
+            zipAnsweringPlayer.textContent = `Risponde: ${teamName}`;
+            zipMessage.textContent = `${teamName}, qual è la parola mancante?`;
+            zipBuyBtn.disabled = true;
+            zipGuessBtn.disabled = true;
+            zipAnswerControls.classList.remove('hidden');
+        }
+        
+        // NUOVA FUNZIONE: Gestisce la risposta corretta nella catena zip
+        function handleZipCorrectAnswer() {
+            // Rivelare la parola mancante (quella in alto)
+            const topWord = document.querySelector('.zip-chain-word.top');
+            topWord.textContent = zipTopWord;
+            
+            zipMessage.textContent = `Esatto! La parola è "${zipTopWord}". Hai vinto €${zipPrize.toLocaleString()}!`;
+            
+            zipAnswerControls.classList.add('hidden');
+            
+            // Aggiungi il premio alla squadra vincente
+            if (winningTeam === 'A') {
+                moneyA += zipPrize;
+            } else {
+                moneyB += zipPrize;
+            }
+            updateMoney();
+            
             // Torna al menu principale dopo 5 secondi
             setTimeout(() => {
-                finalGameScreen.classList.add('hidden');
+                zipChainScreen.classList.add('hidden');
                 setupScreen.classList.remove('hidden');
                 resetGame();
             }, 5000);
+        }
+        
+        // NUOVA FUNZIONE: Gestisce la risposta errata nella catena zip
+        function handleZipWrongAnswer() {
+            // DIMEZZA IL MONTEPREMI quando si sbaglia
+            zipPrize = Math.floor(zipPrize / 2);
+            zipPrizeDisplay.textContent = zipPrize.toLocaleString();
+            
+            zipMessage.textContent = `Risposta errata! Il montepremi è stato dimezzato a €${zipPrize.toLocaleString()}.`;
+            zipAnswerControls.classList.add('hidden');
+            
+            // Ripristina i controlli per un nuovo tentativo
+            zipBuyBtn.disabled = false;
+            zipGuessBtn.disabled = false;
+            
+            // Riavvia il timer
+            startZipTimer();
+        }
+        
+        // NUOVA FUNZIONE: Avvia il timer per la catena zip
+        function startZipTimer() {
+            zipTimer.classList.remove('hidden');
+            zipTimeLeft = 60;
+            zipTimeLeftDisplay.textContent = zipTimeLeft;
+            
+            clearInterval(zipTimerInterval);
+            zipTimerInterval = setInterval(() => {
+                zipTimeLeft--;
+                zipTimeLeftDisplay.textContent = zipTimeLeft;
+                
+                if (zipTimeLeft <= 0) {
+                    clearInterval(zipTimerInterval);
+                    handleZipTimeExpired();
+                }
+            }, 1000);
+        }
+        
+        // NUOVA FUNZIONE: Ferma il timer per la catena zip
+        function stopZipTimer() {
+            clearInterval(zipTimerInterval);
+            zipTimer.classList.add('hidden');
+        }
+        
+        // NUOVA FUNZIONE: Gestisce il tempo scaduto nella catena zip
+        function handleZipTimeExpired() {
+            zipTimer.classList.add('hidden');
+            zipMessage.textContent = `Tempo scaduto! Il montepremi è stato dimezzato.`;
+            
+            // Dimezza il premio
+            zipPrize = Math.floor(zipPrize / 2);
+            zipPrizeDisplay.textContent = zipPrize.toLocaleString();
+            
+            // Ripristina i controlli
+            zipBuyBtn.disabled = false;
+            zipGuessBtn.disabled = false;
         }
         
         function resetGame() {
