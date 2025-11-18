@@ -929,6 +929,53 @@
             font-size: 0.9rem;
         }
 
+        /* NUOVO: Pulsanti per scelta quando il tempo scade */
+        .time-expired-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .time-expired-message {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .time-expired-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .time-expired-btn {
+            padding: 12px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            flex: 1;
+        }
+
+        .use-jolly-btn {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+        }
+
+        .halve-prize-btn {
+            background: linear-gradient(135deg, var(--danger), #c62828);
+            color: white;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .final-game-layout {
@@ -1256,6 +1303,21 @@
                                 </button>
                             </div>
                         </div>
+                        
+                        <!-- NUOVO: PULSANTI PER QUANDO IL TEMPO SCADE -->
+                        <div class="time-expired-controls hidden" id="timeExpiredControls">
+                            <div class="time-expired-message" id="timeExpiredMessage">
+                                Tempo scaduto! Cosa vuoi fare?
+                            </div>
+                            <div class="time-expired-buttons">
+                                <button class="time-expired-btn use-jolly-btn" id="useJollyBtn">
+                                    <i class="fas fa-star"></i> USA JOLLY
+                                </button>
+                                <button class="time-expired-btn halve-prize-btn" id="halvePrizeBtn">
+                                    <i class="fas fa-cut"></i> DIMEZZA PREMIO
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1263,9 +1325,6 @@
     </div>
 
     <script>
-        // Il codice JavaScript rimane identico alle versioni precedenti
-        // ... (tutto il codice JavaScript)
-        
         // Variabili globali per il gioco principale
         let teamAPlayers = [];
         let teamBPlayers = [];
@@ -1364,6 +1423,12 @@
         const jolly1 = document.getElementById('jolly1');
         const jolly2 = document.getElementById('jolly2');
         
+        // NUOVI ELEMENTI DOM per gestire il tempo scaduto
+        const timeExpiredControls = document.getElementById('timeExpiredControls');
+        const timeExpiredMessage = document.getElementById('timeExpiredMessage');
+        const useJollyBtn = document.getElementById('useJollyBtn');
+        const halvePrizeBtn = document.getElementById('halvePrizeBtn');
+        
         // Setup giocatori
         document.getElementById('addTeamAPlayer').addEventListener('click', () => addPlayer('A'));
         document.getElementById('addTeamBPlayer').addEventListener('click', () => addPlayer('B'));
@@ -1386,6 +1451,10 @@
         finalJollyBtn.addEventListener('click', useJolly);
         finalCorrectBtn.addEventListener('click', handleFinalCorrectAnswer);
         finalWrongBtn.addEventListener('click', handleFinalWrongAnswer);
+        
+        // NUOVI Event listeners per quando il tempo scade
+        useJollyBtn.addEventListener('click', handleUseJollyWhenTimeExpired);
+        halvePrizeBtn.addEventListener('click', handleHalvePrizeWhenTimeExpired);
         
         // Character selection
         document.querySelectorAll('.character-option').forEach(option => {
@@ -1879,6 +1948,7 @@
             finalBuzzer.disabled = true;
             finalJollyBtn.disabled = true;
             finalAnswerControls.classList.add('hidden');
+            timeExpiredControls.classList.add('hidden');
             chainTimer.classList.add('hidden');
             
             finalMessage.textContent = "Premi 'INIZIA CATENA' per cominciare!";
@@ -1913,7 +1983,7 @@
             
             finalGameActive = true;
             finalStartBtn.disabled = true;
-            finalBuzzer.disabled = false;
+            finalBuzzer.disabled = false; // BUZZER SEMPRE ABILITATO
             finalJollyBtn.disabled = false;
             
             // Inizia dalla PRIMA parola
@@ -1963,14 +2033,67 @@
         
         function handleChainTimeExpired() {
             chainTimer.classList.add('hidden');
-            finalMessage.textContent = `Tempo scaduto! Viene aggiunta una lettera!`;
+            finalMessage.textContent = `Tempo scaduto!`;
             
+            // Mostra i pulsanti per scegliere cosa fare
+            timeExpiredControls.classList.remove('hidden');
+            finalBuzzer.disabled = true;
+            finalJollyBtn.disabled = true;
+        }
+        
+        // NUOVA FUNZIONE: Gestisce l'uso del jolly quando il tempo scade
+        function handleUseJollyWhenTimeExpired() {
+            if (finalJollyCount <= 0) {
+                alert("Non hai più jolly disponibili!");
+                return;
+            }
+            
+            finalJollyCount--;
+            
+            // Aggiorna i cerchietti jolly
+            if (finalJollyCount === 1) {
+                jolly2.classList.add('used');
+            } else if (finalJollyCount === 0) {
+                jolly1.classList.add('used');
+            }
+            
+            // Rivela una lettera aggiuntiva
             revealAdditionalLetter();
             
-            finalAnswerControls.classList.add('hidden');
-            finalBuzzer.disabled = false;
+            finalJollyBtn.disabled = finalJollyCount === 0;
             
-            highlightCurrentWord();
+            // Nascondi i controlli del tempo scaduto
+            timeExpiredControls.classList.add('hidden');
+            
+            // Ripristina i controlli normali
+            finalBuzzer.disabled = false;
+            finalJollyBtn.disabled = finalJollyCount === 0;
+            
+            finalMessage.textContent = `Hai usato un jolly! Una lettera è stata rivelata. Indovina la parola nascosta!`;
+            
+            // Riavvia il timer
+            startChainTimer();
+        }
+        
+        // NUOVA FUNZIONE: Gestisce il dimezzamento del premio quando il tempo scade
+        function handleHalvePrizeWhenTimeExpired() {
+            // DIMEZZA IL MONTEPREMI
+            finalPrize = Math.floor(finalPrize / 2);
+            finalPrizeDisplay.textContent = finalPrize.toLocaleString();
+            
+            // Rivela una lettera aggiuntiva
+            revealAdditionalLetter();
+            
+            // Nascondi i controlli del tempo scaduto
+            timeExpiredControls.classList.add('hidden');
+            
+            // Ripristina i controlli normali
+            finalBuzzer.disabled = false;
+            finalJollyBtn.disabled = finalJollyCount === 0;
+            
+            finalMessage.textContent = `Il montepremi è stato dimezzato a €${finalPrize.toLocaleString()}. Una lettera è stata rivelata. Indovina la parola nascosta!`;
+            
+            // Riavvia il timer
             startChainTimer();
         }
         
@@ -1992,6 +2115,7 @@
             finalAnsweringPlayer.textContent = `Risponde: ${teamName}`;
             finalMessage.textContent = `${teamName}, qual è la parola nascosta?`;
             finalBuzzer.disabled = true;
+            finalJollyBtn.disabled = true;
             finalAnswerControls.classList.remove('hidden');
         }
         
@@ -2018,6 +2142,8 @@
                 revealFirstLetter(finalCurrentWordIndex);
                 highlightCurrentWord();
                 finalMessage.textContent = `Indovina la prossima parola nascosta!`;
+                finalBuzzer.disabled = false; // RIABILITA IL BUZZER
+                finalJollyBtn.disabled = finalJollyCount === 0;
                 startChainTimer();
             } else {
                 // Non ci sono più parole nascoste, completa la catena
@@ -2038,7 +2164,8 @@
                 
                 finalMessage.textContent = `Risposta errata! Il montepremi è stato dimezzato a €${finalPrize.toLocaleString()}. Una lettera è stata rivelata.`;
                 finalAnswerControls.classList.add('hidden');
-                finalBuzzer.disabled = false;
+                finalBuzzer.disabled = false; // RIABILITA IL BUZZER
+                finalJollyBtn.disabled = finalJollyCount === 0;
                 
                 highlightCurrentWord();
                 startChainTimer();
@@ -2116,6 +2243,7 @@
             
             finalBuzzer.disabled = true;
             finalAnswerControls.classList.add('hidden');
+            timeExpiredControls.classList.add('hidden');
             
             // Aggiungi il premio alla squadra vincente
             if (winningTeam === 'A') {
