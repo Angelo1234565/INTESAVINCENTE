@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Tutti gli stili CSS rimangono identici */
         * {
             margin: 0;
             padding: 0;
@@ -1263,9 +1264,6 @@
     </div>
 
     <script>
-        // Il codice JavaScript rimane identico alle versioni precedenti
-        // ... (tutto il codice JavaScript)
-        
         // Variabili globali per il gioco principale
         let teamAPlayers = [];
         let teamBPlayers = [];
@@ -1689,12 +1687,16 @@
             updatePunti();
             updateMoney();
             document.getElementById('answerControls').classList.add('hidden');
-            document.getElementById('stopTimerBtn').disabled = false;
-            document.getElementById('raddoppioBtn').disabled = false;
-            document.getElementById('passoBtn').disabled = false;
-          
+            
+            // MODIFICA: Dopo una risposta corretta, il timer si ferma e devo riavviarlo manualmente
+            clearInterval(timerInterval);
+            document.getElementById('startTurnBtn').disabled = false;
+            document.getElementById('stopTimerBtn').disabled = true;
+            document.getElementById('raddoppioBtn').disabled = true;
+            document.getElementById('passoBtn').disabled = true;
+            
+            // Mostra la prossima parola ma NON avvia automaticamente il timer
             showNextWord();
-            startTimer();
         }
         
         function handleWrongAnswer() {
@@ -1717,12 +1719,16 @@
             updatePunti();
             updateMoney();
             document.getElementById('answerControls').classList.add('hidden');
-            document.getElementById('stopTimerBtn').disabled = false;
-            document.getElementById('raddoppioBtn').disabled = false;
-            document.getElementById('passoBtn').disabled = false;
-          
+            
+            // MODIFICA: Dopo una risposta errata, il timer si ferma e devo riavviarlo manualmente
+            clearInterval(timerInterval);
+            document.getElementById('startTurnBtn').disabled = false;
+            document.getElementById('stopTimerBtn').disabled = true;
+            document.getElementById('raddoppioBtn').disabled = true;
+            document.getElementById('passoBtn').disabled = true;
+            
+            // Mostra la prossima parola ma NON avvia automaticamente il timer
             showNextWord();
-            startTimer();
         }
         
         function endTurn() {
