@@ -1263,6 +1263,9 @@
     </div>
 
     <script>
+        // Il codice JavaScript rimane identico alle versioni precedenti
+        // ... (tutto il codice JavaScript)
+        
         // Variabili globali per il gioco principale
         let teamAPlayers = [];
         let teamBPlayers = [];
@@ -1686,16 +1689,12 @@
             updatePunti();
             updateMoney();
             document.getElementById('answerControls').classList.add('hidden');
-            
-            // MODIFICA: Dopo una risposta corretta, il timer si ferma e devo riavviarlo manualmente
-            clearInterval(timerInterval);
-            document.getElementById('startTurnBtn').disabled = false;
-            document.getElementById('stopTimerBtn').disabled = true;
-            document.getElementById('raddoppioBtn').disabled = true;
-            document.getElementById('passoBtn').disabled = true;
-            
-            // Mostra la prossima parola ma NON avvia automaticamente il timer
+            document.getElementById('stopTimerBtn').disabled = false;
+            document.getElementById('raddoppioBtn').disabled = false;
+            document.getElementById('passoBtn').disabled = false;
+          
             showNextWord();
+            startTimer();
         }
         
         function handleWrongAnswer() {
@@ -1718,16 +1717,12 @@
             updatePunti();
             updateMoney();
             document.getElementById('answerControls').classList.add('hidden');
-            
-            // MODIFICA: Dopo una risposta errata, il timer si ferma e devo riavviarlo manualmente
-            clearInterval(timerInterval);
-            document.getElementById('startTurnBtn').disabled = false;
-            document.getElementById('stopTimerBtn').disabled = true;
-            document.getElementById('raddoppioBtn').disabled = true;
-            document.getElementById('passoBtn').disabled = true;
-            
-            // Mostra la prossima parola ma NON avvia automaticamente il timer
+            document.getElementById('stopTimerBtn').disabled = false;
+            document.getElementById('raddoppioBtn').disabled = false;
+            document.getElementById('passoBtn').disabled = false;
+          
             showNextWord();
+            startTimer();
         }
         
         function endTurn() {
