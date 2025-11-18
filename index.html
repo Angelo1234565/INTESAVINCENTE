@@ -2492,16 +2492,33 @@
             finalGameScreen.classList.add('hidden');
             zipChainScreen.classList.remove('hidden');
             
-            // Imposta il premio per la catena zip
+            // CORREZIONE: Il premio per la catena zip è quello accumulato nella catena precedente
             zipPrize = finalPrize;
             zipPrizeAmount.textContent = zipPrize.toLocaleString();
             zipPrizeDisplay.textContent = zipPrize.toLocaleString();
             
-            // Seleziona casualmente una catena dal tema Brasile
-            const brasilChains = zipChainThemes["BRASILE"];
-            const randomChain = brasilChains[Math.floor(Math.random() * brasilChains.length)];
+            // CORREZIONE: L'ultima parola della catena normale diventa la prima della catena zip
+            const lastWord = finalChainWords[finalChainWords.length - 1];
             
-            zipTopWord = randomChain.top;
+            // Seleziona casualmente una catena dal tema Brasile che abbia come parola in basso l'ultima parola della catena
+            const brasilChains = zipChainThemes["BRASILE"];
+            let randomChain;
+            
+            // Cerca una catena che abbia come parola in basso l'ultima parola della catena normale
+            const matchingChains = brasilChains.filter(chain => 
+                chain.bottom === lastWord || chain.top === lastWord
+            );
+            
+            if (matchingChains.length > 0) {
+                // Usa una catena che si collega all'ultima parola
+                randomChain = matchingChains[Math.floor(Math.random() * matchingChains.length)];
+            } else {
+                // Se non trova corrispondenze, usa una catena casuale
+                randomChain = brasilChains[Math.floor(Math.random() * brasilChains.length)];
+            }
+            
+            // CORREZIONE: L'ultima parola della catena normale diventa la prima della catena zip
+            zipTopWord = lastWord;
             zipBottomWord = randomChain.bottom;
             zipMissingWord = zipTopWord; // La parola mancante è quella in alto
             
@@ -2515,13 +2532,16 @@
             zipTimer.classList.add('hidden');
             
             zipMessage.textContent = "Hai 60 secondi per trovare la parola mancante!";
+            
+            // Avvia il timer per la catena zip
+            startZipTimer();
         }
         
         // NUOVA FUNZIONE: Crea la visualizzazione della catena zip
         function createZipChainDisplay() {
             zipChainContainer.innerHTML = '';
             
-            // Parola in alto (rivelata)
+            // Parola in alto (rivelata) - CORREZIONE: è l'ultima parola della catena normale
             const topWord = document.createElement('div');
             topWord.className = 'zip-chain-word top';
             topWord.textContent = zipTopWord;
