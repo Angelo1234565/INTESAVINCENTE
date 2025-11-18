@@ -1215,7 +1215,7 @@
     <div class="container setup-screen screen" id="setupScreen">
         <header>
             <h1>🎯 INTESA VINCENTE</h1>
-            <p class="subtitle">3 passi per squadra - 2 raddoppi. Inizia sempre Squadra A.</p>
+            <p class="subtitle">1 solo turno per squadra - 2 raddoppi. Inizia sempre Squadra A.</p>
         </header>
       
         <div class="team-setup">
@@ -1342,10 +1342,10 @@
                     </div>
                     <div style="display: flex; gap: 15px;">
                         <button class="correct-btn" id="correctBtn">
-                            <i class="fas fa-check"></i> ESATTA
+                            <i class="fas fa-check"></i> ESATTA (+€1000)
                         </button>
                         <button class="wrong-btn" id="wrongBtn">
-                            <i class="fas fa-times"></i> ERRATA
+                            <i class="fas fa-times"></i> ERRATA (-€1000)
                         </button>
                     </div>
                 </div>
@@ -1624,6 +1624,9 @@
         let maxRaddoppi = 2;
         let gameCompleted = false;
         
+        // MODIFICA: Solo un turno per squadra
+        let isFirstTurn = true;
+        
         // Variabili per il gioco finale
         let finalGameActive = false;
         let finalChainWords = [];
@@ -1646,31 +1649,36 @@
         let zipMiddleWord = 'BRASILE';
         let zipBottomWord = '';
         let zipPrize = 0;
+        
+        // MODIFICA: NUOVA CATENA TEMATICA AMAZZONIA
+        const finalChain = {
+            words: ["BARCHE", "ESPORAZIONE", "ANIMALI", "TERRITORIO", "BIODIVERSITÀ", "AMAZZONIA"]
+        };
+        
+        // MODIFICA: NUOVE CATENE ZIP CON COLLEGAMENTI AMAZZONIA-BRASILE-FORESTA
         const zipChainThemes = {
-            "BRASILE": [
-                { top: "SAMBA", bottom: "DANZA" },
-                { top: "COPACABANA", bottom: "SPIAGGIA" },
-                { top: "PELÉ", bottom: "CALCIATORE" },
-                { top: "CAIPIRINHA", bottom: "COCKTAIL" },
-                { top: "RIO", bottom: "CITTÀ" },
-                { top: "CARNEVALE", bottom: "FESTA" },
+            "AMAZZONIA": [
                 { top: "AMAZZONIA", bottom: "FORESTA" },
-                { top: "JANEIRO", bottom: "CITTÀ" }
+                { top: "BIODIVERSITÀ", bottom: "VITA" },
+                { top: "ESPORAZIONE", bottom: "AVVENTURA" },
+                { top: "BARCHE", bottom: "TRASPORTO" },
+                { top: "ANIMALI", bottom: "FAUNA" },
+                { top: "TERRITORIO", bottom: "AREA" }
             ]
         };
         
-        // NUOVA CATENA TEMATICA BRASILE
-        const finalChain = {
-            words: ["SAMBA", "CARNEVALE", "COPACABANA", "CAIPIRINHA", "PELÉ", "AMAZZONIA"]
-        };
-        
-        // Database di parole
+        // MODIFICA: Database di parole aggiornato
         const words = [
             "LAMPADINA", "TRENO", "PIZZA", "CANE", "OMBRELLO",
             "SOLDATO", "MARE", "COMPUTER", "DOTTORE", "LUNA",
             "MARTELLO", "CHITARRA", "SCUOLA", "BAMBINO", "CAFFÈ",
             "AEREO", "SCARPE", "GIARDINO", "LEONE", "TAVOLO",
-            "GELATO", "TELEFONO", "OROLOGIO", "NUVOLA", "BIBLIOTECA"
+            "GELATO", "TELEFONO", "OROLOGIO", "NUVOLA", "BIBLIOTECA",
+            "SOLE", "LIBRO", "VINO", "GATTO", "FINESTRA",
+            "INSEGNANTE", "FIORE", "TELEVISIONE", "INGEGNERE", "STELLA",
+            "SELLA", "PIANOFORTE", "UNIVERSITÀ", "BAMBINA", "TÈ",
+            "CALZE", "PALAZZO", "TIGRE", "SEDIA", "TORTA",
+            "RADIO", "CALENDARIO", "PIOGGIA", "MUSEO"
         ];
 
         const doublePhrases = [
@@ -1901,8 +1909,7 @@
             teamB_raddoppiUtilizzati = 0;
             normalWordIndex = 0;
             doubleWordIndex = 0;
-            
-            updateAnswerButtonsText(); // Aggiorna i testi dei pulsanti
+            isFirstTurn = true;
         }
         
         function shuffleWords() {
@@ -1955,30 +1962,25 @@
             document.getElementById('raddoppiRestanti').textContent = Math.max(0, maxRaddoppi - raddoppiUtilizzati);
         }
         
-        // NUOVA FUNZIONE: Aggiorna i testi dei pulsanti di risposta
-        function updateAnswerButtonsText() {
-            const isDouble = isRaddoppioAttivo && raddoppioPerParola;
-            const correctBtn = document.getElementById('correctBtn');
-            const wrongBtn = document.getElementById('wrongBtn');
-            
-            correctBtn.innerHTML = `<i class="fas fa-check"></i> ESATTA (+€${isDouble ? '2000' : '1000'} / +${isDouble ? '2' : '1'} punto)`;
-            wrongBtn.innerHTML = `<i class="fas fa-times"></i> ERRATA (-€${isDouble ? '2000' : '1000'} / -${isDouble ? '2' : '1'} punto)`;
-        }
-        
         function showNextWord() {
             if (isRaddoppioAttivo && raddoppioPerParola) {
                 if (doubleWordIndex < availableDoubleWords.length) {
                     currentWordDisplay.textContent = availableDoubleWords[doubleWordIndex++];
                 } else {
-                    currentWordDisplay.textContent = "FINE PAROLE DOPPIE";
-                    endTurn();
+                    // Se finiscono le parole doppie, torna alle parole normali
+                    isRaddoppioAttivo = false;
+                    raddoppioPerParola = false;
+                    document.getElementById('raddoppioBtn').innerHTML = '<i class="fas fa-bolt"></i> RADDOPPIA';
+                    document.getElementById('raddoppioBtn').disabled = true;
+                    showNextWord();
                     return;
                 }
             } else {
                 if (normalWordIndex < availableWords.length) {
                     currentWordDisplay.textContent = availableWords[normalWordIndex++];
                 } else {
-                    currentWordDisplay.textContent = "FINE PAROLE";
+                    // Se finiscono tutte le parole, mostra un messaggio ma continua il turno
+                    currentWordDisplay.textContent = "FINE PAROLE - TEMPO SCADUTO";
                     endTurn();
                     return;
                 }
@@ -2003,7 +2005,6 @@
             document.getElementById('passoBtn').disabled = false;
             document.getElementById('answerControls').classList.add('hidden');
           
-            updateAnswerButtonsText(); // AGGIUNTO: aggiorna i testi dei pulsanti
             showNextWord();
             startTimer();
         }
@@ -2043,8 +2044,6 @@
             document.getElementById('raddoppioBtn').disabled = true;
             document.getElementById('raddoppioBtn').innerHTML = '<i class="fas fa-bolt"></i> RADDOPPIO ATTIVO';
             updateStats();
-            
-            updateAnswerButtonsText(); // AGGIUNTO: aggiorna i testi dei pulsanti
           
             // Mostra subito una parola doppia
             showNextWord();
@@ -2097,8 +2096,6 @@
             document.getElementById('stopTimerBtn').disabled = false;
             document.getElementById('raddoppioBtn').disabled = false;
             document.getElementById('passoBtn').disabled = false;
-            
-            updateAnswerButtonsText(); // AGGIUNTO: aggiorna i testi dei pulsanti
           
             showNextWord();
             startTimer();
@@ -2106,33 +2103,28 @@
         
         function handleWrongAnswer() {
             const valorePunto = 1000; // €1000 per punto
-            const punti = isRaddoppioAttivo && raddoppioPerParola ? 2 : 1;
-            
-            // Togli punti e soldi quando si sbaglia
-            if (currentTeam === 'A') {
-                puntiA = Math.max(0, puntiA - punti);
-                moneyA = Math.max(0, moneyA - (punti * valorePunto));
-            } else {
-                puntiB = Math.max(0, puntiB - punti);
-                moneyB = Math.max(0, moneyB - (punti * valorePunto));
+          
+            // Togli €1000 quando si sbaglia (solo se hanno soldi)
+            if (currentTeam === 'A' && moneyA > 0) {
+                moneyA = Math.max(0, moneyA - valorePunto);
+            } else if (currentTeam === 'B' && moneyB > 0) {
+                moneyB = Math.max(0, moneyB - valorePunto);
             }
-            
+          
             // Disattiva il raddoppio dopo una risposta errata
             if (isRaddoppioAttivo && raddoppioPerParola) {
                 isRaddoppioAttivo = false;
                 raddoppioPerParola = false;
                 document.getElementById('raddoppioBtn').innerHTML = '<i class="fas fa-bolt"></i> RADDOPPIA';
             }
-            
+          
             updatePunti();
             updateMoney();
             document.getElementById('answerControls').classList.add('hidden');
             document.getElementById('stopTimerBtn').disabled = false;
             document.getElementById('raddoppioBtn').disabled = false;
             document.getElementById('passoBtn').disabled = false;
-            
-            updateAnswerButtonsText(); // AGGIUNTO: aggiorna i testi dei pulsanti
-            
+          
             showNextWord();
             startTimer();
         }
@@ -2148,35 +2140,28 @@
             document.getElementById('answerControls').classList.add('hidden');
             currentWordDisplay.classList.add('hidden');
 
-            // Segna che la squadra corrente ha completato il suo turno
+            // MODIFICA: Solo un turno per squadra - dopo il turno della squadra B, vai direttamente alla fase finale
             if (currentTeam === 'A') {
-                teamA_completedRounds = 1;
+                // Squadra A ha finito, passa alla squadra B
+                currentTeam = 'B';
+                updateActiveTeam();
+                updateStats();
+                
+                // Reset dei contatori per il turno della squadra B
+                teamA_passiUtilizzati = 0;
+                teamB_passiUtilizzati = 0;
+                teamA_raddoppiUtilizzati = 0;
+                teamB_raddoppiUtilizzati = 0;
+                
+                document.getElementById('startTurnBtn').innerHTML = `<i class="fas fa-play"></i> TOCCA A ${document.getElementById('displayTeamB').textContent.toUpperCase()} - INIZIA`;
+                document.getElementById('raddoppioBtn').innerHTML = '<i class="fas fa-bolt"></i> RADDOPPIA';
+                document.getElementById('raddoppioBtn').disabled = true;
+                document.getElementById('passoBtn').disabled = true;
             } else {
-                teamB_completedRounds = 1;
-            }
-
-            // CONTROLLO PRINCIPALE: se entrambe le squadre hanno completato il loro turno
-            if (teamA_completedRounds === 1 && teamB_completedRounds === 1) {
+                // Squadra B ha finito, vai alla fase finale
                 determineWinningTeam();
                 startTransitionScreen();
-                return;
             }
-
-            // Se non è il caso di andare al gioco finale, passa alla squadra successiva
-            currentTeam = currentTeam === 'A' ? 'B' : 'A';
-            updateActiveTeam();
-            updateStats();
-            
-            // Reset dei contatori per il turno successivo
-            teamA_passiUtilizzati = 0;
-            teamB_passiUtilizzati = 0;
-            teamA_raddoppiUtilizzati = 0;
-            teamB_raddoppiUtilizzati = 0;
-            
-            document.getElementById('startTurnBtn').innerHTML = `<i class="fas fa-play"></i> TOCCA A ${currentTeam === 'A' ? document.getElementById('displayTeamA').textContent.toUpperCase() : document.getElementById('displayTeamB').textContent.toUpperCase()} - INIZIA`;
-            document.getElementById('raddoppioBtn').innerHTML = '<i class="fas fa-bolt"></i> RADDOPPIA';
-            document.getElementById('raddoppioBtn').disabled = true;
-            document.getElementById('passoBtn').disabled = true;
         }
         
         function determineWinningTeam() {
@@ -2612,29 +2597,27 @@
             zipPrizeAmount.textContent = zipPrize.toLocaleString();
             zipPrizeDisplay.textContent = zipPrize.toLocaleString();
             
-            // CORREZIONE: L'ultima parola della catena normale diventa la prima della catena zip
-            const lastWord = finalChainWords[finalChainWords.length - 1];
+            // MODIFICA: L'ultima parola della catena normale (AMAZZONIA) diventa la prima della catena zip
+            const lastWord = finalChainWords[finalChainWords.length - 1]; // AMAZZONIA
             
-            // Seleziona casualmente una catena dal tema Brasile che abbia come parola in basso l'ultima parola della catena
-            const brasilChains = zipChainThemes["BRASILE"];
+            // Seleziona casualmente una catena dal tema Amazzonia che abbia come parola in alto AMAZZONIA
+            const amazonChains = zipChainThemes["AMAZZONIA"];
             let randomChain;
             
-            // Cerca una catena che abbia come parola in basso l'ultima parola della catena normale
-            const matchingChains = brasilChains.filter(chain => 
-                chain.bottom === lastWord || chain.top === lastWord
-            );
+            // Cerca una catena che abbia come parola in alto AMAZZONIA
+            const matchingChains = amazonChains.filter(chain => chain.top === lastWord);
             
             if (matchingChains.length > 0) {
                 // Usa una catena che si collega all'ultima parola
                 randomChain = matchingChains[Math.floor(Math.random() * matchingChains.length)];
             } else {
                 // Se non trova corrispondenze, usa una catena casuale
-                randomChain = brasilChains[Math.floor(Math.random() * brasilChains.length)];
+                randomChain = amazonChains[Math.floor(Math.random() * amazonChains.length)];
             }
             
-            // CORREZIONE: L'ultima parola della catena normale diventa la prima della catena zip
-            zipTopWord = lastWord;
-            zipBottomWord = randomChain.bottom;
+            // MODIFICA: L'ultima parola della catena normale diventa la prima della catena zip
+            zipTopWord = lastWord; // AMAZZONIA
+            zipBottomWord = randomChain.bottom; // FORESTA
             zipMissingWord = zipTopWord; // La parola mancante è quella in alto
             
             // Crea la visualizzazione della catena zip
@@ -2656,7 +2639,7 @@
         function createZipChainDisplay() {
             zipChainContainer.innerHTML = '';
             
-            // Parola in alto (rivelata) - CORREZIONE: è l'ultima parola della catena normale
+            // Parola in alto (rivelata) - MODIFICA: è AMAZZONIA (ultima parola della catena normale)
             const topWord = document.createElement('div');
             topWord.className = 'zip-chain-word top';
             topWord.textContent = zipTopWord;
@@ -2668,10 +2651,10 @@
             middleWord.innerHTML = 'B _ _ _ I _ E';
             zipChainContainer.appendChild(middleWord);
             
-            // Parola in basso (nascosta)
+            // Parola in basso (nascosta) - MODIFICA: è FORESTA
             const bottomWord = document.createElement('div');
             bottomWord.className = 'zip-chain-word bottom hidden';
-            bottomWord.textContent = '? ? ? ? ?';
+            bottomWord.textContent = '? ? ? ? ? ?';
             zipChainContainer.appendChild(bottomWord);
         }
         
@@ -2833,6 +2816,7 @@
             teamA_raddoppiUtilizzati = 0;
             teamB_raddoppiUtilizzati = 0;
             gameCompleted = false;
+            isFirstTurn = true;
             
             // Reset degli input
             document.getElementById('teamAInitialMoney').value = '0';
