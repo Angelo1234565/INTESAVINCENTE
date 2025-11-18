@@ -1483,17 +1483,17 @@
                             </div>
                         </div>
                         
-                        <!-- NUOVO: PULSANTI PER QUANDO IL TEMPO SCADE -->
+                        <!-- MODIFICA: PULSANTI PER QUANDO IL TEMPO SCADE - ORA SOLO "RISPOSTA" -->
                         <div class="time-expired-controls hidden" id="timeExpiredControls">
                             <div class="time-expired-message" id="timeExpiredMessage">
-                                Tempo scaduto! Cosa vuoi fare?
+                                Tempo scaduto! Prova a rispondere!
                             </div>
-                            <div class="time-expired-buttons">
-                                <button class="time-expired-btn use-jolly-btn" id="useJollyBtn">
-                                    <i class="fas fa-star"></i> USA JOLLY
+                            <div class="final-answer-buttons">
+                                <button class="final-correct-btn" id="timeExpiredCorrectBtn">
+                                    <i class="fas fa-check"></i> ESATTA
                                 </button>
-                                <button class="time-expired-btn halve-prize-btn" id="halvePrizeBtn">
-                                    <i class="fas fa-cut"></i> DIMEZZA PREMIO
+                                <button class="final-wrong-btn" id="timeExpiredWrongBtn">
+                                    <i class="fas fa-times"></i> ERRATA
                                 </button>
                             </div>
                         </div>
@@ -1652,7 +1652,7 @@
         
         // MODIFICA: NUOVA CATENA TEMATICA AMAZZONIA
         const finalChain = {
-            words: ["BARCHE", "ESPORAZIONE", "ANIMALI", "TERRITORIO", "BIODIVERSITÀ", "AMAZZONIA"]
+            words: ["BARCA", "NAVIGAZIONE", "ANIMALI", "TERRITORIO", "BIODIVERSITÀ", "AMAZZONIA"]
         };
         
         // MODIFICA: NUOVE CATENE ZIP CON COLLEGAMENTI AMAZZONIA-BRASILE-FORESTA
@@ -1660,8 +1660,8 @@
             "AMAZZONIA": [
                 { top: "AMAZZONIA", bottom: "FORESTA" },
                 { top: "BIODIVERSITÀ", bottom: "VITA" },
-                { top: "ESPORAZIONE", bottom: "AVVENTURA" },
-                { top: "BARCHE", bottom: "TRASPORTO" },
+                { top: "NAVIGAZIONE", bottom: "VIAGGIO" },
+                { top: "BARCA", bottom: "TRASPORTO" },
                 { top: "ANIMALI", bottom: "FAUNA" },
                 { top: "TERRITORIO", bottom: "AREA" }
             ]
@@ -1724,11 +1724,11 @@
         const jolly1 = document.getElementById('jolly1');
         const jolly2 = document.getElementById('jolly2');
         
-        // NUOVI ELEMENTI DOM per gestire il tempo scaduto
+        // MODIFICA: NUOVI ELEMENTI DOM per gestire il tempo scaduto - ORA SOLO PULSANTI RISPOSTA
         const timeExpiredControls = document.getElementById('timeExpiredControls');
         const timeExpiredMessage = document.getElementById('timeExpiredMessage');
-        const useJollyBtn = document.getElementById('useJollyBtn');
-        const halvePrizeBtn = document.getElementById('halvePrizeBtn');
+        const timeExpiredCorrectBtn = document.getElementById('timeExpiredCorrectBtn');
+        const timeExpiredWrongBtn = document.getElementById('timeExpiredWrongBtn');
         
         // NUOVI ELEMENTI DOM per la catena zip
         const zipChainContainer = document.getElementById('zipChainContainer');
@@ -1772,9 +1772,9 @@
         finalCorrectBtn.addEventListener('click', handleFinalCorrectAnswer);
         finalWrongBtn.addEventListener('click', handleFinalWrongAnswer);
         
-        // NUOVI Event listeners per quando il tempo scade
-        useJollyBtn.addEventListener('click', handleUseJollyWhenTimeExpired);
-        halvePrizeBtn.addEventListener('click', handleHalvePrizeWhenTimeExpired);
+        // MODIFICA: NUOVI Event listeners per quando il tempo scade - ORA SOLO PULSANTI RISPOSTA
+        timeExpiredCorrectBtn.addEventListener('click', handleTimeExpiredCorrectAnswer);
+        timeExpiredWrongBtn.addEventListener('click', handleTimeExpiredWrongAnswer);
         
         // NUOVI Event listeners per la catena zip
         zipBuyBtn.addEventListener('click', handleZipBuy);
@@ -2104,11 +2104,15 @@
         function handleWrongAnswer() {
             const valorePunto = 1000; // €1000 per punto
           
-            // Togli €1000 quando si sbaglia (solo se hanno soldi)
-            if (currentTeam === 'A' && moneyA > 0) {
+            // CORREZIONE: Togli sia i soldi che il punto quando si sbaglia
+            if (currentTeam === 'A') {
+                // Togli €1000 e 1 punto
                 moneyA = Math.max(0, moneyA - valorePunto);
-            } else if (currentTeam === 'B' && moneyB > 0) {
+                puntiA = Math.max(0, puntiA - 1);
+            } else if (currentTeam === 'B') {
+                // Togli €1000 e 1 punto
                 moneyB = Math.max(0, moneyB - valorePunto);
+                puntiB = Math.max(0, puntiB - 1);
             }
           
             // Disattiva il raddoppio dopo una risposta errata
@@ -2361,68 +2365,67 @@
         
         function handleChainTimeExpired() {
             chainTimer.classList.add('hidden');
-            finalMessage.textContent = `Tempo scaduto!`;
+            finalMessage.textContent = `Tempo scaduto! Prova a rispondere!`;
             
-            // Mostra i pulsanti per scegliere cosa fare
+            // MODIFICA: Ora mostra solo i pulsanti di risposta quando il tempo scade
             timeExpiredControls.classList.remove('hidden');
             finalBuzzer.disabled = true;
             finalJollyBtn.disabled = true;
         }
         
-        // NUOVA FUNZIONE: Gestisce l'uso del jolly quando il tempo scade
-        function handleUseJollyWhenTimeExpired() {
-            if (finalJollyCount <= 0) {
-                alert("Non hai più jolly disponibili!");
-                return;
-            }
+        // MODIFICA: NUOVA FUNZIONE - Gestisce la risposta corretta quando il tempo scade
+        function handleTimeExpiredCorrectAnswer() {
+            const correctWord = finalChainWords[finalCurrentWordIndex];
             
-            finalJollyCount--;
+            const wordElement = document.getElementById(`chain-word-${finalCurrentWordIndex}`);
+            wordElement.textContent = correctWord;
+            wordElement.classList.remove('hidden-word');
+            wordElement.classList.add('revealed');
+            wordElement.classList.remove('current-word');
+            wordElement.classList.remove('wrong-answer');
             
-            // Aggiorna i cerchietti jolly
-            if (finalJollyCount === 1) {
-                jolly2.classList.add('used');
-            } else if (finalJollyCount === 0) {
-                jolly1.classList.add('used');
-            }
+            finalMessage.textContent = `Esatto! La parola è "${correctWord}".`;
             
-            // Rivela una lettera aggiuntiva
-            revealAdditionalLetter();
-            
-            finalJollyBtn.disabled = finalJollyCount === 0;
-            
-            // Nascondi i controlli del tempo scaduto
             timeExpiredControls.classList.add('hidden');
             
-            // Ripristina i controlli normali
-            finalBuzzer.disabled = false;
-            finalJollyBtn.disabled = finalJollyCount === 0;
+            // Controlla se ci sono altre parole nascoste
+            const hasMoreHiddenWords = checkForMoreHiddenWords();
             
-            finalMessage.textContent = `Hai usato un jolly! Una lettera è stata rivelata. Indovina la parola nascosta!`;
-            
-            // Riavvia il timer
-            startChainTimer();
+            if (hasMoreHiddenWords) {
+                // Passa alla prossima parola
+                finalCurrentWordIndex++;
+                revealFirstLetter(finalCurrentWordIndex);
+                highlightCurrentWord();
+                finalMessage.textContent = `Indovina la prossima parola nascosta!`;
+                finalBuzzer.disabled = false; // RIABILITA IL BUZZER
+                finalJollyBtn.disabled = finalJollyCount === 0;
+                startChainTimer();
+            } else {
+                // Non ci sono più parole nascoste, completa la catena
+                completeChain();
+            }
         }
         
-        // NUOVA FUNZIONE: Gestisce il dimezzamento del premio quando il tempo scade
-        function handleHalvePrizeWhenTimeExpired() {
-            // DIMEZZA IL MONTEPREMI
+        // MODIFICA: NUOVA FUNZIONE - Gestisce la risposta errata quando il tempo scade
+        function handleTimeExpiredWrongAnswer() {
+            const wordElement = document.getElementById(`chain-word-${finalCurrentWordIndex}`);
+            wordElement.classList.add('wrong-answer');
+            
+            // DIMEZZA IL MONTEPREMI quando si sbaglia
             finalPrize = Math.floor(finalPrize / 2);
             finalPrizeDisplay.textContent = finalPrize.toLocaleString();
             
-            // Rivela una lettera aggiuntiva
-            revealAdditionalLetter();
-            
-            // Nascondi i controlli del tempo scaduto
-            timeExpiredControls.classList.add('hidden');
-            
-            // Ripristina i controlli normali
-            finalBuzzer.disabled = false;
-            finalJollyBtn.disabled = finalJollyCount === 0;
-            
-            finalMessage.textContent = `Il montepremi è stato dimezzato a €${finalPrize.toLocaleString()}. Una lettera è stata rivelata. Indovina la parola nascosta!`;
-            
-            // Riavvia il timer
-            startChainTimer();
+            setTimeout(() => {
+                revealAdditionalLetter();
+                
+                finalMessage.textContent = `Risposta errata! Il montepremi è stato dimezzato a €${finalPrize.toLocaleString()}. Una lettera è stata rivelata.`;
+                timeExpiredControls.classList.add('hidden');
+                finalBuzzer.disabled = false; // RIABILITA IL BUZZER
+                finalJollyBtn.disabled = finalJollyCount === 0;
+                
+                highlightCurrentWord();
+                startChainTimer();
+            }, 1000);
         }
         
         function highlightCurrentWord() {
