@@ -1127,6 +1127,11 @@
             border-radius: 15px;
             border: 4px solid var(--gold);
             animation: pulse 2s infinite;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 8px;
         }
 
         @keyframes pulse {
@@ -1576,13 +1581,10 @@
                 Hai completato la catena finale!
             </div>
             <div class="victory-word" id="victoryWord">
-                BRASILE
+                <!-- La parola BRASILE apparirà qui lettera per lettera -->
             </div>
             <div class="victory-prize">
                 HAI VINTO €<span id="victoryPrize">0</span>!
-            </div>
-            <div class="victory-message">
-                La parola era: <strong>BRASILE</strong>
             </div>
             <button class="final-game-btn final-start-btn" id="backToMenuBtn" style="margin-top: 30px;">
                 <i class="fas fa-home"></i> TORNA AL MENU PRINCIPALE
@@ -2707,7 +2709,8 @@
             
             victoryPrize.textContent = zipPrize.toLocaleString();
             
-            // Animazione di caricamento per la parola BRASILE
+            // Animazione di scrittura per la parola BRASILE - SOLO UNA VOLTA
+            victoryWord.textContent = ''; // Pulisci il contenuto
             const letters = ['B', 'R', 'A', 'S', 'I', 'L', 'E'];
             let currentIndex = 0;
             
@@ -2717,7 +2720,7 @@
                     currentIndex++;
                 } else {
                     clearInterval(typeWriter);
-                    // Aggiungi un effetto di evidenziazione
+                    // Aggiungi un effetto di evidenziazione finale
                     victoryWord.style.background = 'linear-gradient(135deg, var(--success), #27ae60)';
                     victoryWord.style.boxShadow = '0 0 30px rgba(46, 204, 113, 0.8)';
                 }
